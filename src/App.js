@@ -1,13 +1,13 @@
 import { useContext, useEffect } from "react";
 import "./app.css";
-import { ThemeContext } from "./components/context/ThemeContext";
-import { DARK_THEME, LIGHT_THEME } from "./components/constants/themeConstants";
+import { ThemeContext } from "./context/ThemeContext";
+import { DARK_THEME, LIGHT_THEME } from ".//constants/themeConstants";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MoonIcon from "./assets/icons/moon.svg";
 import SunIcon from "./assets/icons/sun.svg";
 import BaseLayout from "./components/layout/BaseLayout";
 import {PageNotFound } from "./components/screens";
-import ListTour from "./components/pages/Tour/ListTour/ListTour";
+import ListTour from "./components/pages/Tour/ListTour/ListTour"
 
 function App() {
     const { theme, toggleTheme } = useContext(ThemeContext);

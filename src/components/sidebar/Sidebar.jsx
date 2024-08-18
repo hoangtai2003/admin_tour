@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef } from "react";
-import { ThemeContext } from '../context/ThemeContext'
-import { LIGHT_THEME } from "../constants/themeConstants";
+import { ThemeContext } from '../../context/ThemeContext'
+import { LIGHT_THEME } from "../../constants/themeConstants";
 import LogoBlue from "../../assets/images/logo_blue.svg";
 import LogoWhite from "../../assets/images/logo_white.svg";
 import {
@@ -15,9 +15,9 @@ import {
   MdOutlineSettings,
   MdOutlineShoppingBag,
 } from "react-icons/md";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./sidebar.css";
-import { SidebarContext } from "../context/SideBarContext";
+import { SidebarContext } from "../../context/SideBarContext";
 
 const Sidebar = () => {
   const { theme } = useContext(ThemeContext);
@@ -50,7 +50,7 @@ const Sidebar = () => {
       <div className="sidebar-top">
         <div className="sidebar-brand">
           <img src={theme === LIGHT_THEME ? LogoBlue : LogoWhite} alt="" />
-          <span className="sidebar-brand-text">tabernam.</span>
+          <span className="sidebar-brand-text">Travel tour.</span>
         </div>
         <button className="sidebar-close-btn" onClick={closeSidebar}>
           <MdOutlineClose size={24} />
@@ -72,7 +72,7 @@ const Sidebar = () => {
                 <span className="menu-link-icon">
                   <MdOutlineBarChart size={20} />
                 </span>
-                <span className="menu-link-text">Tour</span>
+                <span className="menu-link-text">Tours</span>
               </Link>
             </li>
             <li className="menu-item">
