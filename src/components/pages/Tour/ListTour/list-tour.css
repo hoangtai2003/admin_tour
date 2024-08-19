@@ -25,11 +25,14 @@
 }
 
 .content-area-table .data-table-diagram table td,
-.content-area-table .data-table-diagram table th {
+.content-area-table .data-table-diagram table th
+{
     padding: 14px 12px;
     border: 1px solid var(--tbl-border-color); 
 }
-
+.content-area-table .data-table-diagram table p {
+    padding: 14px 12px;
+}
 @media (max-width: 768px) {
     .content-area-table .data-table-diagram table td,
     .content-area-table .data-table-diagram table th {
@@ -50,38 +53,7 @@
 
 .content-area-table .data-table-diagram table .dt-cell-action {
     text-align: center;
-}
-
-.content-area-table .data-table-diagram table .dt-status {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    column-gap: 6px;
-}
-
-.content-area-table .data-table-diagram table .dt-status .dt-status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 100%;
-}
-
-.content-area-table .data-table-diagram table .dt-status .dt-status-dot.dot-pending {
-    background-color: var(--orange-color);
-}
-
-.content-area-table .data-table-diagram table .dt-status .dt-status-dot.dot-canceled {
-    background-color: var(--red-color);
-}
-
-.content-area-table .data-table-diagram table .dt-status .dt-status-dot.dot-delivered {
-    background-color: var(--green-color);
-}
-
-.content-area-table .data-table-diagram table .dt-status .dt-status-text {
-    text-transform: capitalize;
-}
-
-  
+}  
 .content-area-table .action-dropdown-btn {
     color: var(--text-color-inverted);
     position: relative;

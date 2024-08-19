@@ -44,7 +44,7 @@ const ListTour = () => {
                             </div>
                         </td>
                         <td>
-                            <p><b>Lịch trình: </b>{tour.itinerary}</p>
+                            <p><b>Lịch trình: </b>{tour.description_itinerary}</p>
                             <p><b>Hành trình: </b>{tour.duration}</p>
                             {tour.tourChildren.length > 0 && (
                                 <>
@@ -56,7 +56,11 @@ const ListTour = () => {
                             )}
                         </td>
                         <td>
-                            <p><b>Địa điểm: </b>{}</p>
+                            <p><b>Địa điểm: </b>
+                                {tour.tourLocations.map((tourLocation, i) => (
+                                    <span key={i}>{tourLocation.location.name}{i < tour.tourLocations.length - 1 ? ' - ' : ''}</span>
+                                ))}
+                            </p>
                             <p><b>Di chuyển: </b>{tour.transportations}</p>
                             <p><b>Điểm xuất phát: </b>{tour.departure_city}</p>
                             {tour.tourChildren.length > 0 && (
