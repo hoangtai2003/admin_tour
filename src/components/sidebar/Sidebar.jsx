@@ -1,8 +1,4 @@
 import { useContext, useEffect, useRef } from "react";
-import { ThemeContext } from '../../context/ThemeContext'
-import { LIGHT_THEME } from "../../constants/themeConstants";
-import LogoBlue from "../../assets/images/logo_blue.svg";
-import LogoWhite from "../../assets/images/logo_white.svg";
 import {
   MdOutlineAttachMoney,
   MdOutlineBarChart,
@@ -20,7 +16,6 @@ import "./sidebar.css";
 import { SidebarContext } from "../../context/SideBarContext";
 
 const Sidebar = () => {
-  const { theme } = useContext(ThemeContext);
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
   const navbarRef = useRef(null);
 
@@ -49,7 +44,6 @@ const Sidebar = () => {
     >
       <div className="sidebar-top">
         <div className="sidebar-brand">
-          <img src={theme === LIGHT_THEME ? LogoBlue : LogoWhite} alt="" />
           <span className="sidebar-brand-text">Travel tour.</span>
         </div>
         <button className="sidebar-close-btn" onClick={closeSidebar}>
@@ -76,7 +70,7 @@ const Sidebar = () => {
               </Link>
             </li>
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <Link to="/list-location" className="menu-link">
                 <span className="menu-link-icon">
                   <MdOutlineAttachMoney size={20} />
                 </span>

@@ -1,8 +1,11 @@
 import LisTourAction from "./ListTourAction";
-import "./list-tour.css";
-import { BASE_URL } from '../../../../utils/config';
-import useFetch from '../../../../hooks/useFetch';
+import "../../table.css";
+// import { BASE_URL } from '../../../../utils/config';
 
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+const BASE_URL = "http://localhost:4000/api/v1"
 const TABLE_HEADS = [
   "STT",
   "Tiêu đề",
@@ -13,12 +16,22 @@ const TABLE_HEADS = [
 ];
 
 const ListTour = () => {
-    const {data: toursData, error, loading } = useFetch(`${BASE_URL}/tours`);
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
-  
-    const tours = toursData?.data;
-  
+    const [tours, setTours] = useState([])
+    useEffect(() => {
+        const fetchTours = async () => {
+            try {
+                const response = await axios.get(`${BASE_URL}/tours`)
+                setTours(response.data.data)
+            } catch (error) {
+                console.error('Error fetching tours:', error);
+            }
+        }
+        fetchTours();
+    }, [])
+    const stripHTML = (html) => {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      return doc.body.textContent || "";
+    };
     return (
       <section className="content-area-table">
         <div className="data-table-info">
@@ -39,12 +52,12 @@ const ListTour = () => {
                         <td>{index + 1}</td>
                         <td>{tour.name}</td>
                         <td>
-                            <div className="tour-image-container">
-                                <img src={tour.tour_image} alt={tour.name} className="tour-image" />
+                            <div className="image-container">
+                                <img src={tour.tour_image} alt={tour.name} className="image" />
                             </div>
                         </td>
                         <td>
-                            <p><b>Lịch trình: </b>{tour.description_itinerary}</p>
+                            {/* <div dangerouslySetInnerHTML={{ __html: tour.description_itinerary }} /> */}
                             <p><b>Hành trình: </b>{tour.duration}</p>
                             {tour.tourChildren.length > 0 && (
                                 <>

@@ -88,14 +88,14 @@
 .content-area-table .dropdown-menu-link:hover {
     opacity: 0.9;
 }
-.tour-image-container {
+.image-container {
     display: flex;
     justify-content: center; 
     align-items: center; 
     height: 100%;
 }
 
-.tour-image {
+.image {
     border-radius: 15px;
     max-width: 100%;
     height: auto;
