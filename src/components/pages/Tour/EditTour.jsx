@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import './add-tour.css';
 import Select from 'react-select';
 import axios from 'axios';
-import { BASE_URL } from '../../../../utils/config'
+import { BASE_URL } from '../../../utils/config'
 import { CKEditor} from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { FaSave } from "react-icons/fa";
 import { GrPowerReset } from "react-icons/gr";
-import { useNavigate } from 'react-router-dom'
-const  AddTour = () =>  {
+import { useNavigate, useParams } from 'react-router-dom'
+const  EditTour = () =>  {
+    const { id } = useParams()  
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
         name: '',
         description_itinerary: '',
@@ -25,8 +27,53 @@ const  AddTour = () =>  {
         introduct_tour: '',
         location_ids: [] 
     });
-    const navigate = useNavigate()
     const [locations, setLocations] = useState([]);
+
+    const [selectedLocations, setSelectedLocations] = useState([]);
+
+    useEffect(() => {
+        const fetchTourData = async () => {
+            try {
+                const response = await axios.get(`${BASE_URL}/tours/${id}`);
+                const tourData = response.data.data;
+                // Extract location IDs
+                const locationIds = tourData.tourLocations.map(loc => loc.location_id);
+
+                // Set form data
+                setFormData({
+                    name: tourData.name,
+                    description_itinerary: tourData.description_itinerary,
+                    price: tourData.price,
+                    duration: tourData.duration,
+                    departure_city: tourData.departure_city,
+                    transportations: tourData.transportations,
+                    start_date: tourData.tourChildren[0]?.start_date || '',
+                    end_date: tourData.tourChildren[0]?.end_date || '',
+                    price_adult: tourData.tourChildren[0]?.price_adult || '',
+                    price_child: tourData.tourChildren[0]?.price_child || '',
+                    total_seats: tourData.tourChildren[0]?.total_seats || '',
+                    introduct_tour: tourData.introduct_tour,
+                    location_ids: locationIds || []
+                });
+
+                // Map tourLocations to select options
+                const selectedOptions = tourData.tourLocations.map(loc => ({
+                    value: loc.location_id,
+                    label: loc.location.name
+                }));
+                setSelectedLocations(selectedOptions);
+            } catch (error) {
+                console.error('Error fetching tour data:', error);
+            }
+        };
+
+        // Fetch tour data only when locations are loaded
+        if (locations.length > 0) {
+            fetchTourData();
+        }
+    }, [id, locations]);
+
+
     // Lấy dữ liệu của location
     useEffect(() => {
         const fetchLocations = async () => {
@@ -66,8 +113,12 @@ const  AddTour = () =>  {
     
     // Xử lý lấy dữ liệu từ Select
     const handleSelectChange = (selectedOptions) => {
-        const selectedValues = selectedOptions ? selectedOptions.map(option => option.value) : [];
-        setFormData(prev => ({ ...prev, location_ids: selectedValues }));
+        setSelectedLocations(selectedOptions);
+        const ids = selectedOptions.map(option => option.value);
+        setFormData(prevState => ({
+            ...prevState,
+            location_ids: ids
+        }));
     };
     
     // Xử lý lấy dữ liệu từ CkEditor
@@ -99,27 +150,27 @@ const  AddTour = () =>  {
                 ...formatOptions(location.children, indent + 1)
             ]);
         };
-
+        
         return formatOptions(result);
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch(`${BASE_URL}/tours`, {
-                method: 'post',
+            const res = await fetch(`${BASE_URL}/tours/${id}`, {
+                method: 'put',
                 headers: {
                     'content-type': 'application/json'
-                }, 
+                },
                 credentials: 'include',
                 body: JSON.stringify(formData)
-            })
-            const result = res.json()
-            if (!res.ok){
-                return alert(result.message)
+            });
+            const result = await res.json();
+            if (!res.ok) {
+                return alert(result.message);
             }
-            navigate("/list-tour")
+            navigate("/list-tour");
         } catch (error) {
-            alert(error.message)
+            alert(error.message);
         }
     };
     
@@ -142,6 +193,7 @@ const  AddTour = () =>  {
                             className="basic-multi-select"
                             classNamePrefix="select"
                             onChange={handleSelectChange}
+                            value={selectedLocations}
                         />
 
                     </div>
@@ -190,14 +242,15 @@ const  AddTour = () =>  {
                 <div className="form-group">
                     <label>Lịch trình <span>*</span></label>
                     <CKEditor
-                        editor={ClassicEditor}
-                        config={{
-                            ckfinder: {
-                                uploadUrl: 'http://localhost:4000/uploads'
-                            }
-                        }}
-                        onChange={(event, editor) => handleEditorChange(event, editor, 'description_itinerary')}
-                    />
+                            editor={ClassicEditor}
+                            config={{
+                                ckfinder: {
+                                    uploadUrl: 'http://localhost:4000/uploads'
+                                }
+                            }}
+                            data={formData.description_itinerary}
+                            onChange={(event, editor) => handleEditorChange(event, editor, 'description_itinerary')}
+                        />
                 </div>
                 <div className="form-group">
                     <label>Giới thiệu tour <span>*</span></label>
@@ -208,6 +261,7 @@ const  AddTour = () =>  {
                                 uploadUrl: 'http://localhost:4000/uploads'
                             }
                         }}
+                        data={formData.introduct_tour}
                         onChange={(event, editor) => handleEditorChange(event, editor, 'introduct_tour')}
                     />
 
@@ -224,9 +278,9 @@ const  AddTour = () =>  {
                     <input type="date" name="end_date" value={formData.end_date} required onChange={handleChange}/>
                 </div>
                 <h4>Hình ảnh</h4>
-                {/* <div className="form-group">
-                    <input type="file" name="tour_image" value={formData.tour_image} onChange={(e) => setFile(e.target.files)}/>
-                </div> */}
+                <div className="form-group">
+                    <input type="file" name="tour_image" value={formData.tour_image}/>
+                </div>
                 <div className="form-actions">
                     <button type="submit"><FaSave className='icon' />Lưu dữ liệu</button>
                     <button type="button" ><GrPowerReset className='icon' /> Reset</button>
@@ -237,5 +291,5 @@ const  AddTour = () =>  {
   );
 }
 
-export default AddTour;
+export default EditTour;
 

@@ -1,5 +1,5 @@
 import LisTourAction from "./ListTourAction";
-import "../../table.css";
+import "../table.css";
 // import { BASE_URL } from '../../../../utils/config';
 
 import { useEffect, useState } from "react";
@@ -28,6 +28,7 @@ const ListTour = () => {
         }
         fetchTours();
     }, [])
+    
     const stripHTML = (html) => {
       const doc = new DOMParser().parseFromString(html, 'text/html');
       return doc.body.textContent || "";
@@ -84,7 +85,7 @@ const ListTour = () => {
                             )}
                         </td>
                         <td className="dt-cell-action">
-                            <LisTourAction />
+                            <LisTourAction id={tour.id} />
                         </td>
                     </tr>
                 ))}
