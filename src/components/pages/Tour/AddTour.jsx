@@ -16,7 +16,7 @@ const  AddTour = () =>  {
         duration: '',
         departure_city: '',
         transportations: '',
-        // tour_image: '',
+        tour_image: '',
         start_date: '',
         end_date: '',
         price_adult: '',
@@ -44,24 +44,45 @@ const  AddTour = () =>  {
 
     // Xử lý lấy dữ liệu từ ô input
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, files } = e.target;
     
-        if (name === 'start_date' || name === 'end_date') {
-            // Chuyển đổi từ mm/dd/yyyy sang yyyy/mm/dd
+        if (name === 'tour_image' && files && files[0]) {
+            // If the input is for the tour image
+            const formData = new FormData();
+            formData.append('upload', files[0]);
+    
+            // Upload the image to the backend
+            fetch('http://localhost:4000/uploads', {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.uploaded) {
+                        setFormData(prev => ({ ...prev, tour_image: data.url }));
+                    } else {
+                        alert('Image upload failed');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error uploading image:', error);
+                    alert('Error uploading image');
+                });
+        } else if (name === 'start_date' || name === 'end_date') {
+            // Handle date input by formatting it to yyyy-mm-dd
             const [year, month, day] = value.split('-'); 
-            const formattedDate = `${year}-${month}-${day}`;;
+            const formattedDate = `${year}-${month}-${day}`;
     
-            setFormData({
-                ...formData,
+            setFormData(prev => ({
+                ...prev,
                 [name]: formattedDate,
-            });
+            }));
         } else {
-            setFormData({
-                ...formData,
-                [name]: value,
-            });
+            // Handle other inputs
+            setFormData(prev => ({ ...prev, [name]: value }));
         }
     };
+    
     
     
     // Xử lý lấy dữ liệu từ Select
@@ -102,6 +123,7 @@ const  AddTour = () =>  {
 
         return formatOptions(result);
     };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -224,9 +246,9 @@ const  AddTour = () =>  {
                     <input type="date" name="end_date" value={formData.end_date} required onChange={handleChange}/>
                 </div>
                 <h4>Hình ảnh</h4>
-                {/* <div className="form-group">
-                    <input type="file" name="tour_image" value={formData.tour_image} onChange={(e) => setFile(e.target.files)}/>
-                </div> */}
+                <div className="form-group">
+                    <input type="file" name="tour_image" required onChange={handleChange}/>
+                </div>
                 <div className="form-actions">
                     <button type="submit"><FaSave className='icon' />Lưu dữ liệu</button>
                     <button type="button" ><GrPowerReset className='icon' /> Reset</button>
