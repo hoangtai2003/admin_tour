@@ -28,10 +28,12 @@ const ListTour = () => {
         }
         fetchTours();
     }, [])
-    
     const stripHTML = (html) => {
       const doc = new DOMParser().parseFromString(html, 'text/html');
       return doc.body.textContent || "";
+    };
+    const handleDelete = (id) => {
+        setTours(tours.filter(tour => tour.id !== id)); 
     };
     return (
       <section className="content-area-table">
@@ -85,7 +87,7 @@ const ListTour = () => {
                             )}
                         </td>
                         <td className="dt-cell-action">
-                            <LisTourAction id={tour.id} />
+                            <LisTourAction id={tour.id}  onDelete={handleDelete}/>
                         </td>
                     </tr>
                 ))}

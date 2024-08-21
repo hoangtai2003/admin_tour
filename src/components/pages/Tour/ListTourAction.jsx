@@ -1,14 +1,14 @@
-import { useEffect, useRef, useState } from "react";
-import { HiDotsHorizontal } from "react-icons/hi";
-import { Link } from "react-router-dom";
-
-const ListTourAction = ({ id }) => {  // Destructure the id prop here
+import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { HiDotsHorizontal } from 'react-icons/hi';
+import {BASE_URL} from '../../../utils/config'
+const ListTourAction = ({ id, onDelete }) => {
     const [showDropdown, setShowDropdown] = useState(false);
+    const dropdownRef = useRef(null);
+
     const handleDropdown = () => {
         setShowDropdown(!showDropdown);
     };
-
-    const dropdownRef = useRef(null);
 
     const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -19,12 +19,34 @@ const ListTourAction = ({ id }) => {  // Destructure the id prop here
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
-            document.addEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
-    const handleDeleteTour = () => {
-        
-    }
+
+    const handleDeleteTour = async () => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this tour?");
+        if (!confirmDelete) return;
+
+        try {
+            const response = await fetch(`${BASE_URL}/tours/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                alert("Tour successfully deleted");
+                onDelete(id);
+            } else {
+                alert("Failed to delete the tour");
+            }
+        } catch (error) {
+            console.error("Error deleting tour:", error);
+            alert("An error occurred while deleting the tour. Please try again.");
+        }
+    };
+
     return (
         <>
             <button
@@ -47,9 +69,13 @@ const ListTourAction = ({ id }) => {  // Destructure the id prop here
                                 </Link>
                             </li>
                             <li className="dropdown-menu-item">
-                                <Link to={`/delete-tour/${id}`} className="dropdown-menu-link" onClick={handleDeleteTour}>
+                                <button 
+                                    onClick={handleDeleteTour} 
+                                    className="dropdown-menu-link"
+                                    style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+                                >
                                     Delete
-                                </Link>
+                                </button>
                             </li>
                         </ul>
                     </div>
