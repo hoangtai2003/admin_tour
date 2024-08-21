@@ -247,8 +247,14 @@ const  AddTour = () =>  {
                 </div>
                 <h4>Hình ảnh</h4>
                 <div className="form-group">
-                    <input type="file" name="tour_image" required onChange={handleChange}/>
+                    <input type="file" name="tour_image" onChange={handleChange} />
+                    {formData.tour_image && (
+                        <div className="image-preview">
+                            <img src={formData.tour_image} alt="Tour Preview" style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }} />
+                        </div>
+                    )}
                 </div>
+
                 <div className="form-actions">
                     <button type="submit"><FaSave className='icon' />Lưu dữ liệu</button>
                     <button type="button" ><GrPowerReset className='icon' /> Reset</button>
