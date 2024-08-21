@@ -18,7 +18,7 @@ const  EditTour = () =>  {
         duration: '',
         departure_city: '',
         transportations: '',
-        // tour_image: '',
+        tour_image: '',
         start_date: '',
         end_date: '',
         price_adult: '',
@@ -47,6 +47,7 @@ const  EditTour = () =>  {
                     duration: tourData.duration,
                     departure_city: tourData.departure_city,
                     transportations: tourData.transportations,
+                    tour_image: tourData.tour_image,
                     start_date: tourData.tourChildren[0]?.start_date || '',
                     end_date: tourData.tourChildren[0]?.end_date || '',
                     price_adult: tourData.tourChildren[0]?.price_adult || '',
@@ -91,22 +92,42 @@ const  EditTour = () =>  {
 
     // Xử lý lấy dữ liệu từ ô input
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, files } = e.target;
     
-        if (name === 'start_date' || name === 'end_date') {
-            // Chuyển đổi từ mm/dd/yyyy sang yyyy/mm/dd
+        if (name === 'tour_image' && files && files[0]) {
+            // If the input is for the tour image
+            const formData = new FormData();
+            formData.append('upload', files[0]);
+    
+            // Upload the image to the backend
+            fetch('http://localhost:4000/uploads', {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.uploaded) {
+                        setFormData(prev => ({ ...prev, tour_image: data.url }));
+                    } else {
+                        alert('Image upload failed');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error uploading image:', error);
+                    alert('Error uploading image');
+                });
+        } else if (name === 'start_date' || name === 'end_date') {
+            // Handle date input by formatting it to yyyy-mm-dd
             const [year, month, day] = value.split('-'); 
-            const formattedDate = `${year}-${month}-${day}`;;
+            const formattedDate = `${year}-${month}-${day}`;
     
-            setFormData({
-                ...formData,
+            setFormData(prev => ({
+                ...prev,
                 [name]: formattedDate,
-            });
+            }));
         } else {
-            setFormData({
-                ...formData,
-                [name]: value,
-            });
+            // Handle other inputs
+            setFormData(prev => ({ ...prev, [name]: value }));
         }
     };
     
@@ -279,7 +300,12 @@ const  EditTour = () =>  {
                 </div>
                 <h4>Hình ảnh</h4>
                 <div className="form-group">
-                    <input type="file" name="tour_image" value={formData.tour_image}/>
+                    <input type="file" name="tour_image" onChange={handleChange} />
+                    {formData.tour_image && (
+                        <div className="image-preview">
+                            <img src={formData.tour_image} alt="Tour Preview" style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }} />
+                        </div>
+                    )}
                 </div>
                 <div className="form-actions">
                     <button type="submit"><FaSave className='icon' />Lưu dữ liệu</button>
