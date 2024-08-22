@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import {
   MdOutlineAttachMoney,
   MdOutlineBarChart,
@@ -11,24 +11,28 @@ import {
   MdOutlineSettings,
   MdOutlineShoppingBag,
 } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./sidebar.css";
 import { SidebarContext } from "../../context/SideBarContext";
+import { AuthContext } from "../../context/AuthContext";
+import { Button } from "reactstrap";
 
 const Sidebar = () => {
-  const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
-  const navbarRef = useRef(null);
+    const navigate = useNavigate()
+    const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
+    const {dispatch} = useContext(AuthContext)
+    const navbarRef = useRef(null);
 
 
-  const handleClickOutside = (event) => {
-    if (
-      navbarRef.current &&
-      !navbarRef.current.contains(event.target) &&
-      event.target.className !== "sidebar-open-btn"
-    ) {
-      closeSidebar();
-    }
-  };
+    const handleClickOutside = (event) => {
+        if (
+            navbarRef.current &&
+            !navbarRef.current.contains(event.target) &&
+            event.target.className !== "sidebar-open-btn"
+        ) {
+            closeSidebar();
+        }
+    };
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -36,7 +40,10 @@ const Sidebar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
+  const logout = () => {
+    dispatch({type: "LOGOUT"})
+    navigate('/login')
+}
   return (
     <nav
       className={`sidebar ${isSidebarOpen ? "sidebar-show" : ""}`}
@@ -123,12 +130,12 @@ const Sidebar = () => {
               </Link>
             </li>
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <Button type="submit" className="menu-link" onClick={logout}>
                 <span className="menu-link-icon">
                   <MdOutlineLogout size={20} />
                 </span>
                 <span className="menu-link-text">Logout</span>
-              </Link>
+              </Button>
             </li>
           </ul>
         </div>
