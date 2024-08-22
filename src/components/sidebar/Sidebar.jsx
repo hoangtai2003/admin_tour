@@ -1,16 +1,19 @@
 import React, { useContext, useEffect, useRef } from "react";
 import {
-  MdOutlineAttachMoney,
   MdOutlineBarChart,
   MdOutlineClose,
-  MdOutlineCurrencyExchange,
-  MdOutlineGridView,
   MdOutlineLogout,
-  MdOutlineMessage,
-  MdOutlinePeople,
-  MdOutlineSettings,
-  MdOutlineShoppingBag,
 } from "react-icons/md";
+import { FaUser } from "react-icons/fa";
+import { FaHome } from "react-icons/fa";
+import { TfiMenuAlt } from "react-icons/tfi";
+import { TiMessages } from "react-icons/ti";
+import { SlLocationPin } from "react-icons/sl";
+import { FaRegFileWord } from "react-icons/fa";
+import { FaBed } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
+import { FaHammer } from "react-icons/fa";
+
 import { Link, useNavigate } from "react-router-dom";
 import "./sidebar.css";
 import { SidebarContext } from "../../context/SideBarContext";
@@ -21,25 +24,7 @@ const Sidebar = () => {
     const navigate = useNavigate()
     const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
     const {dispatch} = useContext(AuthContext)
-    const navbarRef = useRef(null);
-
-
-    const handleClickOutside = (event) => {
-        if (
-            navbarRef.current &&
-            !navbarRef.current.contains(event.target) &&
-            event.target.className !== "sidebar-open-btn"
-        ) {
-            closeSidebar();
-        }
-    };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+    const navbarRef = useRef(null)
   const logout = () => {
     dispatch({type: "LOGOUT"})
     navigate('/login')
@@ -63,9 +48,33 @@ const Sidebar = () => {
             <li className="menu-item">
               <Link to="/" className="menu-link">
                 <span className="menu-link-icon">
-                  <MdOutlineGridView size={18} />
+                <FaHome size={18}/>
                 </span>
-                <span className="menu-link-text">Dashboard</span>
+                <span className="menu-link-text">Bảng điều khiển</span>
+              </Link>
+            </li>
+            <li className="menu-item">
+              <Link to="/" className="menu-link">
+                <span className="menu-link-icon">
+                  <TfiMenuAlt size={20} />
+                </span>
+                <span className="menu-link-text">Danh mục</span>
+              </Link>
+            </li>
+            <li className="menu-item">
+              <Link to="/" className="menu-link">
+                <span className="menu-link-icon">
+                  <FaRegFileWord size={20}/>
+                </span>
+                <span className="menu-link-text">Bài viết</span>
+              </Link>
+            </li>
+            <li className="menu-item">
+              <Link to="/list-location" className="menu-link">
+                <span className="menu-link-icon">
+                  <SlLocationPin size={20} />
+                </span>
+                <span className="menu-link-text">Địa điểm</span>
               </Link>
             </li>
             <li className="menu-item">
@@ -77,43 +86,43 @@ const Sidebar = () => {
               </Link>
             </li>
             <li className="menu-item">
-              <Link to="/list-location" className="menu-link">
+              <Link to="/list-tour" className="menu-link">
                 <span className="menu-link-icon">
-                  <MdOutlineAttachMoney size={20} />
+                  <FaBed  size={20} />
                 </span>
-                <span className="menu-link-text">Locations</span>
+                <span className="menu-link-text">Khách sạn</span>
+              </Link>
+            </li>
+            <li className="menu-item">
+              <Link to="/list-tour" className="menu-link">
+                <span className="menu-link-icon">
+                  <FaShoppingCart  size={20} />
+                </span>
+                <span className="menu-link-text">Danh sách đặt tour</span>
               </Link>
             </li>
             <li className="menu-item">
               <Link to="/" className="menu-link">
                 <span className="menu-link-icon">
-                  <MdOutlineCurrencyExchange size={18} />
+                  <TiMessages size={20} />
                 </span>
-                <span className="menu-link-text">User</span>
+                <span className="menu-link-text">Quản lý bình luận</span>
               </Link>
             </li>
             <li className="menu-item">
               <Link to="/" className="menu-link">
                 <span className="menu-link-icon">
-                  <MdOutlineShoppingBag size={20} />
+                  <FaUser size={18} />
                 </span>
-                <span className="menu-link-text">Products</span>
+                <span className="menu-link-text">Người dùng</span>
               </Link>
             </li>
             <li className="menu-item">
               <Link to="/" className="menu-link">
                 <span className="menu-link-icon">
-                  <MdOutlinePeople size={20} />
+                  <FaHammer size={18} />
                 </span>
-                <span className="menu-link-text">Customer</span>
-              </Link>
-            </li>
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlineMessage size={18} />
-                </span>
-                <span className="menu-link-text">Messages</span>
+                <span className="menu-link-text">Vai trò</span>
               </Link>
             </li>
           </ul>
@@ -122,19 +131,11 @@ const Sidebar = () => {
         <div className="sidebar-menu sidebar-menu2">
           <ul className="menu-list">
             <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlineSettings size={20} />
-                </span>
-                <span className="menu-link-text">Settings</span>
-              </Link>
-            </li>
-            <li className="menu-item">
               <Button type="submit" className="menu-link" onClick={logout}>
                 <span className="menu-link-icon">
                   <MdOutlineLogout size={20} />
                 </span>
-                <span className="menu-link-text">Logout</span>
+                <span className="menu-link-text" style={{fontSize: '17px'}}>Logout</span>
               </Button>
             </li>
           </ul>

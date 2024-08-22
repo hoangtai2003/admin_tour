@@ -1,11 +1,9 @@
 import LisTourAction from "./ListTourAction";
 import "../table.css";
-// import { BASE_URL } from '../../../../utils/config';
-
+import { BASE_URL } from "../../../utils/config"
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-const BASE_URL = "http://localhost:4000/api/v1"
 const TABLE_HEADS = [
   "STT",
   "Tiêu đề",
@@ -39,6 +37,7 @@ const ListTour = () => {
       <section className="content-area-table">
         <div className="data-table-info">
           <h4 className="data-table-title">List Tour</h4>
+          <Link to="/add-tour" className="create">Tạo mới</Link>
         </div>
         <div className="data-table-diagram">
           <table>

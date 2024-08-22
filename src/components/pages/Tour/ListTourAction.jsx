@@ -59,11 +59,6 @@ const ListTourAction = ({ id, onDelete }) => {
                     <div className="action-dropdown-menu" ref={dropdownRef}>
                         <ul className="dropdown-menu-list">
                             <li className="dropdown-menu-item">
-                                <Link to="/add-tour" className="dropdown-menu-link">
-                                    Add
-                                </Link>
-                            </li>
-                            <li className="dropdown-menu-item">
                                 <Link to={`/edit-tour/${id}`} className="dropdown-menu-link">
                                     Edit
                                 </Link>

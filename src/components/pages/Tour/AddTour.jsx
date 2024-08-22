@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './add-tour.css';
+import './tour.css';
 import Select from 'react-select';
 import axios from 'axios';
 import { BASE_URL } from '../../../utils/config'
