@@ -8,7 +8,8 @@ import ListTour from "./components/pages/Tour/ListTour"
 import AddTour from "./components/pages/Tour/AddTour";
 import EditTour from "./components/pages/Tour/EditTour"
 import ListLocation from "./components/pages/Location/ListLocation";
-
+import AddLocation from "./components/pages/Location/AddLocation";
+import EditLocation from "./components/pages/Location/EditLocation";
 const  App = () => {
   return (
     <>
@@ -31,7 +32,21 @@ const  App = () => {
                             <EditTour />
                         </PrivateRoute>
                     } />
-                    <Route path="/list-location" element={<ListLocation />} />
+                    <Route path="/list-location" element={
+                        <PrivateRoute>
+                            <ListLocation />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/add-location" element={
+                        <PrivateRoute>
+                            <AddLocation />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/edit-location/:id" element={
+                        <PrivateRoute>
+                            <EditLocation />
+                        </PrivateRoute>
+                    } />
                     <Route path="*" element={<PageNotFound />} />
                 </Route>
             </Routes>
