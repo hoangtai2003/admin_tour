@@ -4,6 +4,7 @@ import { BASE_URL } from "../../../utils/config"
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { IoMdAdd } from "react-icons/io";
 const TABLE_HEADS = [
   "STT",
   "Tiêu đề",
@@ -37,7 +38,7 @@ const ListTour = () => {
       <section className="content-area-table">
         <div className="data-table-info">
           <h4 className="data-table-title">List Tour</h4>
-          <Link to="/add-tour" className="create">Tạo mới</Link>
+          <Link to="/add-tour" className="create"><IoMdAdd className="create_icon"/> Tạo mới</Link>
         </div>
         <div className="data-table-diagram">
           <table>

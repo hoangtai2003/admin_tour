@@ -43,31 +43,24 @@ const  AddTour = () =>  {
     }, []);
 
     // Xử lý lấy dữ liệu từ ô input
-    const handleChange = (e) => {
+    const handleChange = async (e) => {
         const { name, value, files } = e.target;
     
         if (name === 'tour_image' && files && files[0]) {
-            // If the input is for the tour image
             const formData = new FormData();
             formData.append('upload', files[0]);
     
-            // Upload the image to the backend
-            fetch('http://localhost:4000/uploads', {
-                method: 'POST',
-                body: formData,
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.uploaded) {
-                        setFormData(prev => ({ ...prev, tour_image: data.url }));
-                    } else {
-                        alert('Image upload failed');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error uploading image:', error);
-                    alert('Error uploading image');
-                });
+            try {
+                const response = await axios.post('http://localhost:4000/uploads', formData);
+                if (response.data.uploaded) {
+                    setFormData(prev => ({ ...prev, tour_image: response.data.url }));
+                } else {
+                    alert('Image upload failed');
+                }
+            } catch (error) {
+                console.error('Error uploading image:', error);
+                alert('Error uploading image');
+            }
         } else if (name === 'start_date' || name === 'end_date') {
             // Handle date input by formatting it to yyyy-mm-dd
             const [year, month, day] = value.split('-'); 
@@ -127,21 +120,13 @@ const  AddTour = () =>  {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch(`${BASE_URL}/tours`, {
-                method: 'post',
-                headers: {
-                    'content-type': 'application/json'
-                }, 
-                credentials: 'include',
-                body: JSON.stringify(formData)
-            })
-            const result = res.json()
-            if (!res.ok){
-                return alert(result.message)
+            const res = await axios.post(`${BASE_URL}/tours`, formData)
+            if (res.status !== 200) {
+                return alert(res.data.message);
             }
             navigate("/list-tour")
         } catch (error) {
-            alert(error.message)
+            alert(error.response?.data?.message || error.message);
         }
     };
     
