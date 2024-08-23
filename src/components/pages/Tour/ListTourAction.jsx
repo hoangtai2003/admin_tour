@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { HiDotsHorizontal } from 'react-icons/hi';
 import {BASE_URL} from '../../../utils/config'
+import axios from 'axios';
 const ListTourAction = ({ id, onDelete }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef(null);
@@ -28,14 +29,9 @@ const ListTourAction = ({ id, onDelete }) => {
         if (!confirmDelete) return;
 
         try {
-            const response = await fetch(`${BASE_URL}/tours/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+            const response  = await axios.delete(`${BASE_URL}/tours/${id}`);
 
-            if (response.ok) {
+            if (response.status === 200) {
                 alert("Tour successfully deleted");
                 onDelete(id);
             } else {
