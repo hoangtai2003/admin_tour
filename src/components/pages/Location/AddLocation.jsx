@@ -118,7 +118,7 @@ const AddLocation = () => {
             <div className="tour-form-container">
                 <div className='tour-form-left'>
                     <div className="form-group">
-                        <label>Tên địa điểm<span>*</span></label>
+                        <label>Tên địa điểm <span>*</span></label>
                         <input type="text" name="name" value={formData.name} required onChange={handleChange} />
                     </div>
                     <div className='form-row'>

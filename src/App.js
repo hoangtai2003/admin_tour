@@ -10,6 +10,9 @@ import EditTour from "./components/pages/Tour/EditTour"
 import ListLocation from "./components/pages/Location/ListLocation";
 import AddLocation from "./components/pages/Location/AddLocation";
 import EditLocation from "./components/pages/Location/EditLocation";
+import ListUser from "./components/pages/User/ListUser"
+import AddUser from "./components/pages/User/AddUser"
+import EditUser from "./components/pages/User/EditUser"
 const  App = () => {
   return (
     <>
@@ -45,6 +48,21 @@ const  App = () => {
                     <Route path="/edit-location/:id" element={
                         <PrivateRoute>
                             <EditLocation />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/list-user" element={
+                        <PrivateRoute>
+                            <ListUser />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/add-user" element={
+                        <PrivateRoute>
+                            <AddUser />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/edit-user/:id" element={
+                        <PrivateRoute>
+                            <EditUser />
                         </PrivateRoute>
                     } />
                     <Route path="*" element={<PageNotFound />} />

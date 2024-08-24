@@ -31,7 +31,7 @@ const ListLocation = () => {
     return (
       <section className="content-area-table">
         <div className="data-table-info">
-            <h4 className="data-table-title">List Tour</h4>
+            <h4 className="data-table-title">Danh sách địa điểm</h4>
             <Link to="/add-location" className="create"><IoMdAdd className="create_icon"/> Tạo mới</Link>
         </div>
         <div className="data-table-diagram">

@@ -110,7 +110,7 @@ const Sidebar = () => {
               </Link>
             </li>
             <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <Link to="/list-user" className="menu-link">
                 <span className="menu-link-icon">
                   <FaUser size={18} />
                 </span>

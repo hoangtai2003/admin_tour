@@ -18,7 +18,6 @@ const EditLocation = () => {
         status: '' 
     });
     const navigate = useNavigate();
-    const [locations, setLocations] = useState([]);
 
     useEffect(() => {
         const fetchLocationData = async () => {
