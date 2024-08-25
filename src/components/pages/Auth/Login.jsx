@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../context/AuthContext'
 import { BASE_URL } from '../../../utils/config'
 import './auth.css'
+import axios from "axios";
 const Login = () => {
     const [formData, setFormData] = useState({
         email: "",  
@@ -22,24 +23,12 @@ const Login = () => {
         dispatch({ type: 'LOGIN_START' });
 
         try {
-            const res = await fetch(`${BASE_URL}/auth/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'include',
-                body: JSON.stringify(formData)
-            });
+            const response = await axios.post(`${BASE_URL}/auth/login`, formData)
 
-            const result = await res.json();
-
-            if (!res.ok) {
-                alert(result.message);
-                dispatch({ type: 'LOGIN_FAILURE', payload: result.message });
-                return;
+            if (response.status !== 200) {
+                return alert(response.data.message);
             }
-
-            dispatch({ type: 'LOGIN_SUCCESS', payload: result.data });
+            dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
             navigate('/list-tour');
         } catch (error) {
             dispatch({ type: 'LOGIN_FAILURE', payload: error.message });
