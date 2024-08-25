@@ -204,8 +204,8 @@
     margin-top: auto;
   }
   
-  
-  .menu-link.active {
-    background-color: #007bff; /* Màu nền xanh cho item đang active */
-    color: white; /* Màu chữ trắng cho item đang active */
+  .menu-item.active .menu-link {
+    background-color: #475be8; 
+    color: white;
   }
+  
