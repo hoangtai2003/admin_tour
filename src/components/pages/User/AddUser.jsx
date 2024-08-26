@@ -5,6 +5,7 @@ import { GrPowerReset } from "react-icons/gr";
 import Select from 'react-select'
 import { BASE_URL } from "../../../utils/config";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const role = [
     { value: 0, label: 'Administrator' },
     { value: 1, label: 'User' },
@@ -39,11 +40,12 @@ const AddUser  = () => {
         try {
             const response = await axios.post(`${BASE_URL}/users`, formData)
             if (response.status !== 200) {
-                return alert(response.data.message);
+                return toast.error(response.data.message);
             }
             navigate('/list-user')
+            toast.success("Create user successfully")
         } catch (error) {
-            alert(error.response?.data?.message || error.message);
+            toast.error(error.response?.data?.message || error.message);
         }
     }
     return (

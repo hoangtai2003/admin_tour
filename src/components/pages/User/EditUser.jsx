@@ -5,6 +5,7 @@ import { BASE_URL } from "../../../utils/config";
 import Select from 'react-select'
 import { FaSave } from "react-icons/fa";
 import { GrPowerReset } from "react-icons/gr";
+import { toast } from "react-toastify";
 const EditUser = () => {
     const navigate = useNavigate()
     const { id } = useParams()
@@ -32,7 +33,7 @@ const EditUser = () => {
                     role: userData.role
                 })
             } catch (error) {
-                console.error('Error fetching user data:', error);
+                toast.error('Error fetching user data');
             }
         }
         fetchUserData()
@@ -51,6 +52,7 @@ const EditUser = () => {
                 return alert(response.data.message);
             }
             navigate("/list-user")
+            toast.success("Edit user successfully")
         } catch (error) {
             alert(error.response?.data?.message || error.message);
         }

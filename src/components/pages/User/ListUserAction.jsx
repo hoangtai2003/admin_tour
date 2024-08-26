@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { HiDotsHorizontal } from 'react-icons/hi';
 import {BASE_URL} from '../../../utils/config'
 import axios from 'axios';
+import { toast } from 'react-toastify';
 const ListUserAction = ({ id, onDelete }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef(null);
@@ -32,14 +33,13 @@ const ListUserAction = ({ id, onDelete }) => {
             const response  = await axios.delete(`${BASE_URL}/users/${id}`);
 
             if (response.status === 200) {
-                alert("User successfully deleted");
                 onDelete(id);
+                toast.success("User successfully deleted");
             } else {
-                alert("Failed to delete the user");
+                toast.error("Failed to delete the user");
             }
         } catch (error) {
-            console.error("Error deleting user:", error);
-            alert("An error occurred while deleting the user. Please try again.");
+            toast.error("An error occurred while deleting the user. Please try again.");
         }
     };
 
