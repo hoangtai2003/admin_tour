@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import {BASE_URL} from '../../../utils/config'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 const ListLocationAction = ({ id, onDelete }) => {
     const [showDropdown, setShowDropdown] = useState(false);
@@ -30,14 +32,13 @@ const ListLocationAction = ({ id, onDelete }) => {
         try {
             const response  = await axios.delete(`${BASE_URL}/location/${id}`);
             if (response.status === 200) {
-                alert("Tour successfully deleted");
                 onDelete(id);
+                toast.success("Tour successfully deleted");
             } else {
-                alert("Failed to delete the tour");
+                toast.error("Failed to delete the tour");
             }
         } catch (error) {
-            console.error("Error deleting tour:", error);
-            alert("An error occurred while deleting the tour. Please try again.");
+            toast.error("An error occurred while deleting the tour. Please try again.");
         }
     };
   return (

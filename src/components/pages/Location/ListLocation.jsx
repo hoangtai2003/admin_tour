@@ -5,6 +5,8 @@ import '../table.css'
 import { Link } from "react-router-dom";
 import { IoMdAdd } from "react-icons/io";
 import Pagination from "../Pagination";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const BASE_URL = "http://localhost:4000/api/v1"
 const TABLE_HEADS = [
   "STT",
@@ -24,7 +26,7 @@ const ListLocation = () => {
                 setLocations(response.data.data)
                 setTotalPages(response.data.totalPages)
             } catch (error) {
-                console.error('Error fetching locations:', error);
+                toast.error('Error fetching locations');
             }
         }
         fetchLocations();
@@ -39,6 +41,7 @@ const ListLocation = () => {
     }
     return (
       <section className="content-area-table">
+        <ToastContainer />
         <div className="data-table-info">
             <h4 className="data-table-title">Danh sách địa điểm</h4>
             <Link to="/add-location" className="create"><IoMdAdd className="create_icon"/> Tạo mới</Link>

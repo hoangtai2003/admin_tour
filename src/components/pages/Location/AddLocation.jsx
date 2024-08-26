@@ -7,6 +7,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { FaSave } from "react-icons/fa";
 import { GrPowerReset } from "react-icons/gr";
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const AddLocation = () => {
     const [formData, setFormData] = useState({
@@ -26,7 +27,7 @@ const AddLocation = () => {
                 const transformedLocations = transformLocations(response.data.data);
                 setLocations(transformedLocations);
             } catch (error) {
-                console.error('Error fetching locations:', error);
+                toast.error('Error fetching locations');
             }
         };
 
@@ -50,11 +51,10 @@ const AddLocation = () => {
                 if (response.data.uploaded) {
                     setFormData(prev => ({ ...prev, location_img: response.data.url }));
                 } else {
-                    alert('Image upload failed');
+                    toast.error('Image upload failed');
                 }
             } catch (error) {
-                console.error('Error uploading image:', error);
-                alert('Error uploading image');
+                toast.error('Error uploading image');
             }
         } else {
             setFormData(prev => ({ ...prev, [name]: value }));
@@ -109,8 +109,9 @@ const AddLocation = () => {
                 return alert(res.data.message);
             }
             navigate("/list-location");
+            toast.success("Create location successfully")
         } catch (error) {
-            alert(error.response?.data?.message || error.message);
+            toast.error(error.response?.data?.message || error.message);
         }
     };
     return (

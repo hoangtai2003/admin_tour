@@ -7,6 +7,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { FaSave } from "react-icons/fa";
 import { GrPowerReset } from "react-icons/gr";
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const EditLocation = () => {
     const { id } = useParams();
@@ -34,7 +35,7 @@ const EditLocation = () => {
                     status: locationData.status.data[1]
                 });
             } catch (error) {
-                console.error('Error fetching location data:', error);
+                toast.error('Error fetching location data');
             }
         };
         fetchLocationData();
@@ -57,11 +58,10 @@ const EditLocation = () => {
                 if (response.data.uploaded) {
                     setFormData(prev => ({ ...prev, location_img: response.data.url }));
                 } else {
-                    alert('Image upload failed');
+                    toast.error('Image upload failed');
                 }
             } catch (error) {
-                console.error('Error uploading image:', error);
-                alert('Error uploading image');
+                toast.error('Error uploading image');
             }
         } else {
             setFormData(prev => ({ ...prev, [name]: value }));
@@ -85,6 +85,7 @@ const EditLocation = () => {
                 return alert(res.data.message);
             }
             navigate("/list-location");
+            toast.success("Edit location successfullly")
         } catch (error) {
             alert(error.response?.data?.message || error.message);
         }

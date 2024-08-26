@@ -5,6 +5,7 @@ import { AuthContext } from '../../../context/AuthContext'
 import { BASE_URL } from '../../../utils/config'
 import './auth.css'
 import axios from "axios";
+import { toast } from "react-toastify";
 const Login = () => {
     const [formData, setFormData] = useState({
         email: "",  
@@ -30,6 +31,7 @@ const Login = () => {
             }
             dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
             navigate('/list-tour');
+            toast.success("Login successfully")
         } catch (error) {
             dispatch({ type: 'LOGIN_FAILURE', payload: error.message });
         }

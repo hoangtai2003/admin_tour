@@ -8,6 +8,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { FaSave } from "react-icons/fa";
 import { GrPowerReset } from "react-icons/gr";
 import { useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify';
 const  EditTour = () =>  {
     const { id } = useParams()  
     const navigate = useNavigate()
@@ -64,7 +65,7 @@ const  EditTour = () =>  {
                 }));
                 setSelectedLocations(selectedOptions);
             } catch (error) {
-                console.error('Error fetching tour data:', error);
+                toast.error('Error fetching tour data');
             }
         };
 
@@ -103,11 +104,10 @@ const  EditTour = () =>  {
                 if (response.data.uploaded) {
                     setFormData(prev => ({ ...prev, tour_image: response.data.url }));
                 } else {
-                    alert('Image upload failed');
+                    toast.error('Image upload failed');
                 }
             } catch (error) {
-                console.error('Error uploading image:', error);
-                alert('Error uploading image');
+                toast.error('Error uploading image');
             }
         }  else if (name === 'start_date' || name === 'end_date') {
             // Handle date input by formatting it to yyyy-mm-dd
@@ -175,8 +175,9 @@ const  EditTour = () =>  {
                 return alert(res.data.message);
             }
             navigate("/list-tour");
+            toast.success("Edit tour successfully")
         } catch (error) {
-            alert(error.response?.data?.message || error.message);
+           toast.error(error.response?.data?.message || error.message);
         }
     };
     
