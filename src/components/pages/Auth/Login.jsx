@@ -5,7 +5,7 @@ import { AuthContext } from '../../../context/AuthContext'
 import { BASE_URL } from '../../../utils/config'
 import './auth.css'
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 const Login = () => {
     const [formData, setFormData] = useState({
         email: "",  
@@ -25,20 +25,18 @@ const Login = () => {
 
         try {
             const response = await axios.post(`${BASE_URL}/auth/login`, formData)
-
-            if (response.status !== 200) {
-                return alert(response.data.message);
-            }
             dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
             navigate('/list-tour');
             toast.success("Login successfully")
         } catch (error) {
             dispatch({ type: 'LOGIN_FAILURE', payload: error.message });
+            toast.error("Login failed!");
         }
     }
 
     return (
         <Container className="login-container">
+            <ToastContainer />
             <Form onSubmit={handleSubmit} className="login-form">
                 <h2 className="login-title">Login</h2>
                 <FormGroup>

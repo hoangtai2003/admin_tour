@@ -23,7 +23,7 @@ const AddLocation = () => {
     useEffect(() => {
         const fetchLocations = async () => {
             try {
-                const response = await axios.get(`${BASE_URL}/location`);
+                const response = await axios.get(`${BASE_URL}/location/all/getAllLocation`);
                 const transformedLocations = transformLocations(response.data.data);
                 setLocations(transformedLocations);
             } catch (error) {
