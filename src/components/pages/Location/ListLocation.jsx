@@ -4,6 +4,7 @@ import axios from "axios";
 import '../table.css'
 import { Link } from "react-router-dom";
 import { IoMdAdd } from "react-icons/io";
+import Pagination from "../Pagination";
 const BASE_URL = "http://localhost:4000/api/v1"
 const TABLE_HEADS = [
   "STT",
@@ -14,19 +15,27 @@ const TABLE_HEADS = [
 ];
 const ListLocation = () => {
     const [locations, setLocations] = useState([])
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(0)
     useEffect(() => {
         const fetchLocations = async () => {
             try {
-                const response = await axios.get(`${BASE_URL}/location`)
+                const response = await axios.get(`${BASE_URL}/location?page=${currentPage}`)
                 setLocations(response.data.data)
+                setTotalPages(response.data.totalPages)
             } catch (error) {
                 console.error('Error fetching locations:', error);
             }
         }
         fetchLocations();
-    }, [])
+    }, [currentPage])
     const handleDelete = (id) => {
         setLocations(locations.filter(location => location.id !== id))
+    }
+    const onPageChange = (newPage) => {
+        if (newPage >=1 && newPage <= totalPages) {
+            setCurrentPage(newPage)
+        }
     }
     return (
       <section className="content-area-table">
@@ -62,6 +71,12 @@ const ListLocation = () => {
             </tbody>
           </table>
         </div>
+                <Pagination 
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={onPageChange}
+
+                />
       </section>
     );
 };

@@ -5,7 +5,7 @@ import LisTourAction from "./ListTourAction";
 import "../table.css";
 import { BASE_URL } from "../../../utils/config";
 import { IoMdAdd } from "react-icons/io";
-
+import Pagination from "../Pagination";
 const TABLE_HEADS = [
   "STT",
   "Tiêu đề",
@@ -42,7 +42,7 @@ const ListTour = () => {
         setTours(tours.filter(tour => tour.id !== id)); 
     };
 
-    const handlePageChange = (newPage) => {
+    const onPageChange = (newPage) => {
         if (newPage >= 1 && newPage <= totalPages) {
             setCurrentPage(newPage);
         }
@@ -106,12 +106,12 @@ const ListTour = () => {
                     </tbody>
                 </table>
             </div>
-            {/* Pagination Controls */}
-            <div className="pagination">
-                <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
-                <span>Page {currentPage} of {totalPages}</span>
-                <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>Next</button>
-            </div>
+            <Pagination 
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={onPageChange}
+            
+            />
         </section>
     );
 };
