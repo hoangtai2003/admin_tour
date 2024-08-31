@@ -9,9 +9,10 @@ import { FaSave } from "react-icons/fa";
 import { GrPowerReset } from "react-icons/gr";
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify';
+import { AiOutlineDelete } from "react-icons/ai";
 const  EditTour = () =>  {
-    const { id } = useParams()  
-    const navigate = useNavigate()
+    const { id } = useParams();
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
         description_itinerary: '',
@@ -20,16 +21,11 @@ const  EditTour = () =>  {
         departure_city: '',
         transportations: '',
         tour_image: '',
-        start_date: '',
-        end_date: '',
-        price_adult: '',
-        price_child: '',
-        total_seats: '',
         introduct_tour: '',
-        location_ids: [] 
+        location_ids: [],
+        tour_children: [{ start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '' }]
     });
     const [locations, setLocations] = useState([]);
-
     const [selectedLocations, setSelectedLocations] = useState([]);
 
     useEffect(() => {
@@ -37,10 +33,9 @@ const  EditTour = () =>  {
             try {
                 const response = await axios.get(`${BASE_URL}/tours/${id}`);
                 const tourData = response.data.data;
-                // Extract location IDs
+
                 const locationIds = tourData.tourLocations.map(loc => loc.location_id);
 
-                // Set form data
                 setFormData({
                     name: tourData.name,
                     description_itinerary: tourData.description_itinerary,
@@ -49,16 +44,11 @@ const  EditTour = () =>  {
                     departure_city: tourData.departure_city,
                     transportations: tourData.transportations,
                     tour_image: tourData.tour_image,
-                    start_date: tourData.tourChildren[0]?.start_date || '',
-                    end_date: tourData.tourChildren[0]?.end_date || '',
-                    price_adult: tourData.tourChildren[0]?.price_adult || '',
-                    price_child: tourData.tourChildren[0]?.price_child || '',
-                    total_seats: tourData.tourChildren[0]?.total_seats || '',
                     introduct_tour: tourData.introduct_tour,
-                    location_ids: locationIds || []
+                    location_ids: locationIds || [],
+                    tour_children: tourData.tourChildren || [{ start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '' }]
                 });
 
-                // Map tourLocations to select options
                 const selectedOptions = tourData.tourLocations.map(loc => ({
                     value: loc.location_id,
                     label: loc.location.name
@@ -69,14 +59,11 @@ const  EditTour = () =>  {
             }
         };
 
-        // Fetch tour data only when locations are loaded
         if (locations.length > 0) {
             fetchTourData();
         }
     }, [id, locations]);
 
-
-    // Lấy dữ liệu của location
     useEffect(() => {
         const fetchLocations = async () => {
             try {
@@ -91,42 +78,35 @@ const  EditTour = () =>  {
         fetchLocations();
     }, []);
 
-    // Xử lý lấy dữ liệu từ ô input
-    const handleChange = async (e) => {
+    const handleChange = (e, index = null) => {
         const { name, value, files } = e.target;
     
         if (name === 'tour_image' && files && files[0]) {
             const formData = new FormData();
             formData.append('upload', files[0]);
     
-            try {
-                const response = await axios.post('http://localhost:4000/uploads', formData);
-                if (response.data.uploaded) {
-                    setFormData(prev => ({ ...prev, tour_image: response.data.url }));
-                } else {
-                    toast.error('Image upload failed');
-                }
-            } catch (error) {
-                toast.error('Error uploading image');
-            }
-        }  else if (name === 'start_date' || name === 'end_date') {
-            // Handle date input by formatting it to yyyy-mm-dd
-            const [year, month, day] = value.split('-'); 
-            const formattedDate = `${year}-${month}-${day}`;
-    
-            setFormData(prev => ({
-                ...prev,
-                [name]: formattedDate,
-            }));
+            axios.post('http://localhost:4000/uploads', formData)
+                .then(response => {
+                    if (response.data.uploaded) {
+                        setFormData(prev => ({ ...prev, tour_image: response.data.url }));
+                    } else {
+                        toast.error('Image upload failed');
+                    }
+                })
+                .catch(error => {
+                    toast.error('Error uploading image');
+                });
+        } else if (index !== null) {
+            const updatedChildren = [...formData.tour_children];
+            updatedChildren[index] = { ...updatedChildren[index], [name]: value };
+            setFormData(prev => ({ ...prev, tour_children: updatedChildren }));
         } else {
-            // Handle other inputs
             setFormData(prev => ({ ...prev, [name]: value }));
         }
     };
     
-    
-    // Xử lý lấy dữ liệu từ Select
-    const handleSelectChange = (selectedOptions) => {
+
+    const handleSelectChange = selectedOptions => {
         setSelectedLocations(selectedOptions);
         const ids = selectedOptions.map(option => option.value);
         setFormData(prevState => ({
@@ -134,14 +114,13 @@ const  EditTour = () =>  {
             location_ids: ids
         }));
     };
-    
-    // Xử lý lấy dữ liệu từ CkEditor
+
     const handleEditorChange = (event, editor, fieldName) => {
         const data = editor.getData();
         setFormData(prev => ({ ...prev, [fieldName]: data }));
     };
-    
-    const transformLocations = (locations) => {
+
+    const transformLocations = locations => {
         const map = new Map();
         locations.forEach(location => map.set(location.id, { ...location, children: [] }));
         const result = [];
@@ -157,27 +136,41 @@ const  EditTour = () =>  {
             }
         });
 
-       
         const formatOptions = (locations, indent = 0) => {
             return locations.flatMap(location => [
                 { value: location.id, label: `${'-'.repeat(indent)} ${location.name}` },
                 ...formatOptions(location.children, indent + 1)
             ]);
         };
-        
+
         return formatOptions(result);
     };
-    const handleSubmit = async (e) => {
+
+    const handleAddTourChild = () => {
+        setFormData(prev => ({
+            ...prev,
+            tour_children: [...prev.tour_children, { start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '' }]
+        }));
+    };
+
+    const handleRemoveTourChild = index => {
+        setFormData(prev => ({
+            ...prev,
+            tour_children: prev.tour_children.filter((_, i) => i !== index)
+        }));
+    };
+
+    const handleSubmit = async e => {
         e.preventDefault();
         try {
-            const res = await axios.put(`${BASE_URL}/tours/${id}`, formData)
+            const res = await axios.put(`${BASE_URL}/tours/${id}`, formData);
             if (res.status !== 200) {
                 return alert(res.data.message);
             }
             navigate("/list-tour");
-            toast.success("Edit tour successfully")
+            toast.success("Edit tour successfully");
         } catch (error) {
-           toast.error(error.response?.data?.message || error.message);
+            toast.error(error.response?.data?.message || error.message);
         }
     };
     
@@ -206,12 +199,6 @@ const  EditTour = () =>  {
                     </div>
 
                 </div>
-                <div className='form-row'>
-                    <div className="form-group">
-                        <label>Số lượng người tham gia <span>*</span></label>
-                        <input type="number" name="total_seats" value={formData.total_seats}  required onChange={handleChange} />
-                    </div>
-                </div>
                 <div className="form-row">
                     <div className="form-group">
                         <label>Thời gian <span>*</span></label>
@@ -220,17 +207,6 @@ const  EditTour = () =>  {
                     <div className="form-group">
                         <label>Giá tiền <span>*</span></label>
                         <input type="number" name="price" value={formData.price}  required onChange={handleChange} />
-                    </div>
-                </div>
-                <div className='form-row'>
-                    <div className="form-group">
-                        <label>Giá người lớn <span>*</span></label>
-                        <input type="number" name="price_adult" value={formData.price_adult} required onChange={handleChange} />
-                    </div>
-                    
-                    <div className="form-group">
-                        <label>Giá trẻ em <span>*</span></label>
-                        <input type="number" name="price_child" value={formData.price_child} required onChange={handleChange} />
                     </div>
                 </div>
                 <div className="form-row">
@@ -275,15 +251,6 @@ const  EditTour = () =>  {
                 </div>
             </div>
             <div className='tour-form-right'>
-                <h4>Thời gian diễn ra</h4>
-                <div className="form-group">
-                    <label>Ngày bắt đầu <span>*</span></label>
-                    <input type="date" name="start_date" value={formData.start_date}  required  onChange={handleChange}/>
-                </div>
-                <div className="form-group">
-                    <label>Ngày kết thúc <span>*</span></label>
-                    <input type="date" name="end_date" value={formData.end_date} required onChange={handleChange}/>
-                </div>
                 <h4>Hình ảnh</h4>
                 <div className="form-group">
                     <input type="file" name="tour_image" onChange={handleChange} />
@@ -298,6 +265,49 @@ const  EditTour = () =>  {
                     <button type="button" ><GrPowerReset className='icon' /> Reset</button>
                 </div>
             </div>
+        </div>
+        <div className="tour-child-container">
+            {formData.tour_children.map((child, index) => (
+                <div key={index} className="tour-child-form">
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label>Ngày bắt đầu <span>*</span></label>
+                            <input type="date" name="start_date" value={child.start_date} required onChange={(e) => handleChange(e, index)} />
+                        </div>
+                        <div className="form-group">
+                            <label>Ngày kết thúc <span>*</span></label>
+                            <input type="date" name="end_date" value={child.end_date} required onChange={(e) => handleChange(e, index)} />
+                        </div>
+                    </div>
+
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label>Giá tiền người lớn <span>*</span></label>
+                            <input type="number" name="price_adult" value={child.price_adult} required onChange={(e) => handleChange(e, index)} />
+                        </div>
+                        <div className="form-group">
+                            <label>Giá tiền trẻ em <span>*</span></label>
+                            <input type="number" name="price_child" value={child.price_child} required onChange={(e) => handleChange(e, index)} />
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label>Số lượng người tham gia <span>*</span></label>
+                            <input type="number" name="total_seats" value={child.total_seats} required onChange={(e) => handleChange(e, index)} />
+                        </div>
+                        <div className='form-group'>
+                            <input type='text' hidden/>
+                        </div>
+                    </div>
+
+                    <button type="button" onClick={() => handleRemoveTourChild(index)}><div className='icon_delete'><AiOutlineDelete /></div></button>
+                </div>
+            ))}
+        </div>
+
+
+        <div className='add_child'>
+            <button type="button" onClick={handleAddTourChild}>Add Child Tour</button>
         </div>
     </form>
   );

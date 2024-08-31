@@ -57,7 +57,6 @@ const AddTour = () => {
                     toast.error('Image upload failed');
                 }
             } catch (error) {
-                console.error('Error uploading image:', error);
                 toast.error('Error uploading image');
             }
         } else {
@@ -226,40 +225,46 @@ const AddTour = () => {
                     </div>
                 </div>
             </div>
-            {showTourChildren && (
-                <div className="tour-child-container">
-                    {formData.tour_children.map((child, index) => (
-                        <div key={index} className="tour-child-form">
-                            <div className="form-row">
-                                <div className="form-group">
-                                    <label>Ngày bắt đầu <span>*</span></label>
-                                    <input type="date" name="start_date" value={child.start_date} required onChange={(e) => handleTourChildChange(index, e)} />
-                                </div>
-                                <div className="form-group">
-                                    <label>Ngày kết thúc <span>*</span></label>
-                                    <input type="date" name="end_date" value={child.end_date} required onChange={(e) => handleTourChildChange(index, e)} />
-                                </div>
-                            </div>
 
-                            <div className="form-row">
-                                <div className="form-group">
-                                    <label>Giá tiền người lớn <span>*</span></label>
-                                    <input type="number" name="price_adult" value={child.price_adult} required onChange={(e) => handleTourChildChange(index, e)} />
-                                </div>
-                                <div className="form-group">
-                                    <label>Giá tiền trẻ em <span>*</span></label>
-                                    <input type="number" name="price_child" value={child.price_child} required onChange={(e) => handleTourChildChange(index, e)} />
-                                </div>
+            <div className="tour-child-container">
+                {formData.tour_children.map((child, index) => (
+                    <div key={index} className="tour-child-form">
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label>Ngày bắt đầu <span>*</span></label>
+                                <input type="date" name="start_date" value={child.start_date} required onChange={(e) => handleTourChildChange(index, e)} />
                             </div>
+                            <div className="form-group">
+                                <label>Ngày kết thúc <span>*</span></label>
+                                <input type="date" name="end_date" value={child.end_date} required onChange={(e) => handleTourChildChange(index, e)} />
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label>Giá tiền người lớn <span>*</span></label>
+                                <input type="number" name="price_adult" value={child.price_adult} required onChange={(e) => handleTourChildChange(index, e)} />
+                            </div>
+                            <div className="form-group">
+                                <label>Giá tiền trẻ em <span>*</span></label>
+                                <input type="number" name="price_child" value={child.price_child} required onChange={(e) => handleTourChildChange(index, e)} />
+                            </div>
+                        </div>
+                        <div className="form-row">
                             <div className="form-group">
                                 <label>Số lượng người tham gia <span>*</span></label>
                                 <input type="number" name="total_seats" value={child.total_seats} required onChange={(e) => handleTourChildChange(index, e)} />
                             </div>
-                            <button type="button" onClick={() => handleRemoveTourChild(index)}><div className='icon_delete'><AiOutlineDelete /></div></button>
+                            <div className='form-group'>
+                                <input type='text' hidden />
+                            </div>
                         </div>
-                    ))}
-                </div>
-            )}
+
+
+                        <button type="button" onClick={() => handleRemoveTourChild(index)}><div className='icon_delete'><AiOutlineDelete /></div></button>
+                    </div>
+                ))}
+            </div>
             <div className='add_child'>
                 <button type="button" onClick={handleAddTourChild}>Add Child Tour</button>
             </div>
