@@ -206,7 +206,7 @@ const  EditTour = () =>  {
                     </div>
                     <div className="form-group">
                         <label>Giá tiền <span>*</span></label>
-                        <input type="number" name="price" value={formData.price}  required onChange={handleChange} />
+                        <input type="text" name="price" value={formData.price}  required onChange={handleChange} />
                     </div>
                 </div>
                 <div className="form-row">
@@ -283,11 +283,11 @@ const  EditTour = () =>  {
                     <div className="form-row">
                         <div className="form-group">
                             <label>Giá tiền người lớn <span>*</span></label>
-                            <input type="number" name="price_adult" value={child.price_adult} required onChange={(e) => handleChange(e, index)} />
+                            <input type="text" name="price_adult" value={child.price_adult} required onChange={(e) => handleChange(e, index)} />
                         </div>
                         <div className="form-group">
                             <label>Giá tiền trẻ em <span>*</span></label>
-                            <input type="number" name="price_child" value={child.price_child} required onChange={(e) => handleChange(e, index)} />
+                            <input type="text" name="price_child" value={child.price_child} required onChange={(e) => handleChange(e, index)} />
                         </div>
                     </div>
                     <div className="form-row">
