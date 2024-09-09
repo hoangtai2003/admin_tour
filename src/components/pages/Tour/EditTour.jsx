@@ -23,7 +23,7 @@ const  EditTour = () =>  {
         tour_image: '',
         introduct_tour: '',
         location_ids: [],
-        tour_children: [{ start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '' }]
+        tour_children: [{ start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '', price_sale: '' }]
     });
     const [locations, setLocations] = useState([]);
     const [selectedLocations, setSelectedLocations] = useState([]);
@@ -46,7 +46,7 @@ const  EditTour = () =>  {
                     tour_image: tourData.tour_image,
                     introduct_tour: tourData.introduct_tour,
                     location_ids: locationIds || [],
-                    tour_children: tourData.tourChildren || [{ start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '' }]
+                    tour_children: tourData.tourChildren || [{ start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '', price_sale: '' }]
                 });
 
                 const selectedOptions = tourData.tourLocations.map(loc => ({
@@ -149,7 +149,7 @@ const  EditTour = () =>  {
     const handleAddTourChild = () => {
         setFormData(prev => ({
             ...prev,
-            tour_children: [...prev.tour_children, { start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '' }]
+            tour_children: [...prev.tour_children, { start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '', price_sale: '' }]
         }));
     };
 
@@ -296,7 +296,8 @@ const  EditTour = () =>  {
                             <input type="number" name="total_seats" value={child.total_seats} required onChange={(e) => handleChange(e, index)} />
                         </div>
                         <div className='form-group'>
-                            <input type='text' hidden/>
+                            <label>Giảm giá </label>
+                            <input type='number' name='price_sale' value={child.price_sale} onChange={(e) => handleChange(e, index)} />
                         </div>
                     </div>
 

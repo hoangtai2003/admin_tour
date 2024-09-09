@@ -21,10 +21,10 @@ const AddTour = () => {
         tour_image: '',
         introduct_tour: '',
         location_ids: [],
-        tour_children: [{ start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '' }]
+        tour_children: [{ start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '', price_sale: '' }]
     });
     
-    const [showTourChildren, setShowTourChildren] = useState(false); // State to control showing tour children
+    const [showTourChildren, setShowTourChildren] = useState(false); 
     const navigate = useNavigate();
     const [locations, setLocations] = useState([]);
 
@@ -91,7 +91,7 @@ const AddTour = () => {
         } else {
             setFormData(prev => ({
                 ...prev,
-                tour_children: [...prev.tour_children, { start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '' }]
+                tour_children: [...prev.tour_children, { start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '', price_sale: '' }]
             }));
         }
     };
@@ -256,7 +256,8 @@ const AddTour = () => {
                                 <input type="number" name="total_seats" value={child.total_seats} required onChange={(e) => handleTourChildChange(index, e)} />
                             </div>
                             <div className='form-group'>
-                                <input type='text' hidden />
+                                <label>Giảm giá </label>
+                                <input type='number' name='price_sale' value={child.price_sale} onChange={(e) => handleTourChildChange(index, e)} />
                             </div>
                         </div>
 
