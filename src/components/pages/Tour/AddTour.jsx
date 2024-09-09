@@ -171,7 +171,7 @@ const AddTour = () => {
                         </div>
                         <div className="form-group">
                             <label>Giá tiền <span>*</span></label>
-                            <input type="text" name="price" value={formData.price} required onChange={handleChange} />
+                            <input type="number" name="price" value={formData.price} required onChange={handleChange} />
                         </div>
                     </div>
                     <div className="form-row">
@@ -243,11 +243,11 @@ const AddTour = () => {
                         <div className="form-row">
                             <div className="form-group">
                                 <label>Giá tiền người lớn <span>*</span></label>
-                                <input type="text" name="price_adult" value={child.price_adult} required onChange={(e) => handleTourChildChange(index, e)} />
+                                <input type="number" name="price_adult" value={child.price_adult} required onChange={(e) => handleTourChildChange(index, e)} />
                             </div>
                             <div className="form-group">
                                 <label>Giá tiền trẻ em <span>*</span></label>
-                                <input type="text" name="price_child" value={child.price_child} required onChange={(e) => handleTourChildChange(index, e)} />
+                                <input type="number" name="price_child" value={child.price_child} required onChange={(e) => handleTourChildChange(index, e)} />
                             </div>
                         </div>
                         <div className="form-row">
