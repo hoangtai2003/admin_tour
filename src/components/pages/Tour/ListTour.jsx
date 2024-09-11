@@ -83,8 +83,8 @@ const ListTour = () => {
                                 </td>
                                 <td>
                                     <p><b>Địa điểm: </b>
-                                        {tour.tourLocations.map((tourLocation, i) => (
-                                            <span key={i}>{tourLocation.location.name}{i < tour.tourLocations.length - 1 ? ' - ' : ''}</span>
+                                        {tour.locations.map((location, i) => (
+                                            <span key={i}>{location.name}{i < tour.locations.length - 1 ? ' - ' : ''}</span>
                                         ))}
                                     </p>
                                     <p><b>Di chuyển: </b>{tour.transportations}</p>

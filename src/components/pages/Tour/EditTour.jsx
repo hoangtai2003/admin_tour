@@ -10,7 +10,7 @@ import { GrPowerReset } from "react-icons/gr";
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import { AiOutlineDelete } from "react-icons/ai";
-const  EditTour = () =>  {
+const EditTour = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -20,7 +20,7 @@ const  EditTour = () =>  {
         duration: '',
         departure_city: '',
         transportations: '',
-        tour_image: [],
+        tour_image: [], // Array to hold image URLs or objects
         introduct_tour: '',
         location_ids: [],
         tour_children: [{ start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '', price_sale: '' }]
@@ -34,7 +34,8 @@ const  EditTour = () =>  {
                 const response = await axios.get(`${BASE_URL}/tours/${id}`);
                 const tourData = response.data.data;
 
-                const locationIds = tourData.tourLocations.map(loc => loc.location_id);
+                const locationIds = tourData.locations.map(loc => loc.name);
+
                 const tourImage = tourData.tourImage.map(image => ({url: image.image_url }))
                 setFormData({
                     name: tourData.name,
@@ -49,9 +50,9 @@ const  EditTour = () =>  {
                     tour_image: tourImage || [],
                 });
 
-                const selectedOptions = tourData.tourLocations.map(loc => ({
-                    value: loc.location_id,
-                    label: loc.location.name
+                const selectedOptions = tourData.locations.map(loc => ({
+                    value: loc.TourLocation.location_id,
+                    label: loc.name
                 }));
                 setSelectedLocations(selectedOptions);
             } catch (error) {
@@ -90,7 +91,7 @@ const  EditTour = () =>  {
 
             setFormData(prev => ({
                 ...prev,
-                tour_image: [...prev.tour_image, ...newImages] // Append new images
+                tour_image: [...prev.tour_image, ...newImages]
             }));
         } else if (index !== null) {
             const updatedChildren = [...formData.tour_children];
@@ -118,7 +119,7 @@ const  EditTour = () =>  {
     const handleRemoveImage = (index) => {
             setFormData(prev => ({
                 ...prev,
-                tour_image: prev.tour_image.filter((_, i) => i !== index) // Remove image by index
+                tour_image: prev.tour_image.filter((_, i) => i !== index) 
             }));
         };
     const transformLocations = locations => {
@@ -177,7 +178,7 @@ const  EditTour = () =>  {
 
         if (formData.tour_image && formData.tour_image.length > 0) {
             for (let i = 0; i < formData.tour_image.length; i++) {
-                formDataObj.append('tour_image', formData.tour_image[i]);
+                formDataObj.append('tour_image', formData.tour_image[i].file);
             }
         }
     
@@ -195,8 +196,6 @@ const  EditTour = () =>  {
             toast.error(error.response?.data?.message || error.message);
         }
     };
-    
-    
     
   return (
     <form onSubmit={handleSubmit}>
