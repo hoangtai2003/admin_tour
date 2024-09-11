@@ -20,7 +20,7 @@ const  EditTour = () =>  {
         duration: '',
         departure_city: '',
         transportations: '',
-        tour_image: '',
+        tour_image: [],
         introduct_tour: '',
         location_ids: [],
         tour_children: [{ start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '', price_sale: '' }]
@@ -35,7 +35,7 @@ const  EditTour = () =>  {
                 const tourData = response.data.data;
 
                 const locationIds = tourData.tourLocations.map(loc => loc.location_id);
-
+                const tourImage = tourData.tourImage.map(image => ({url: image.image_url }))
                 setFormData({
                     name: tourData.name,
                     description_itinerary: tourData.description_itinerary,
@@ -43,10 +43,10 @@ const  EditTour = () =>  {
                     duration: tourData.duration,
                     departure_city: tourData.departure_city,
                     transportations: tourData.transportations,
-                    tour_image: tourData.tour_image,
                     introduct_tour: tourData.introduct_tour,
                     location_ids: locationIds || [],
-                    tour_children: tourData.tourChildren || [{ start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '', price_sale: '' }]
+                    tour_children: tourData.tourChildren || [{ start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '', price_sale: '' }],
+                    tour_image: tourImage || [],
                 });
 
                 const selectedOptions = tourData.tourLocations.map(loc => ({
@@ -80,22 +80,18 @@ const  EditTour = () =>  {
 
     const handleChange = (e, index = null) => {
         const { name, value, files } = e.target;
-    
-        if (name === 'tour_image' && files && files[0]) {
-            const formData = new FormData();
-            formData.append('upload', files[0]);
-    
-            axios.post('http://localhost:4000/uploads', formData)
-                .then(response => {
-                    if (response.data.uploaded) {
-                        setFormData(prev => ({ ...prev, tour_image: response.data.url }));
-                    } else {
-                        toast.error('Image upload failed');
-                    }
-                })
-                .catch(error => {
-                    toast.error('Error uploading image');
-                });
+
+        if (name === 'tour_image' && files && files.length > 0) {
+            
+            const newImages = Array.from(files).map(file => ({
+                url: URL.createObjectURL(file),
+                file 
+            }));
+
+            setFormData(prev => ({
+                ...prev,
+                tour_image: [...prev.tour_image, ...newImages] // Append new images
+            }));
         } else if (index !== null) {
             const updatedChildren = [...formData.tour_children];
             updatedChildren[index] = { ...updatedChildren[index], [name]: value };
@@ -119,7 +115,12 @@ const  EditTour = () =>  {
         const data = editor.getData();
         setFormData(prev => ({ ...prev, [fieldName]: data }));
     };
-
+    const handleRemoveImage = (index) => {
+            setFormData(prev => ({
+                ...prev,
+                tour_image: prev.tour_image.filter((_, i) => i !== index) // Remove image by index
+            }));
+        };
     const transformLocations = locations => {
         const map = new Map();
         locations.forEach(location => map.set(location.id, { ...location, children: [] }));
@@ -162,8 +163,29 @@ const  EditTour = () =>  {
 
     const handleSubmit = async e => {
         e.preventDefault();
+        const formDataObj = new FormData();
+    
+        formDataObj.append('name', formData.name);
+        formDataObj.append('description_itinerary', formData.description_itinerary);
+        formDataObj.append('price', formData.price);
+        formDataObj.append('duration', formData.duration);
+        formDataObj.append('departure_city', formData.departure_city);
+        formDataObj.append('transportations', formData.transportations);
+        formDataObj.append('introduct_tour', formData.introduct_tour);
+    
+        formDataObj.append('location_ids', JSON.stringify(formData.location_ids));
+
+        if (formData.tour_image && formData.tour_image.length > 0) {
+            for (let i = 0; i < formData.tour_image.length; i++) {
+                formDataObj.append('tour_image', formData.tour_image[i]);
+            }
+        }
+    
+        formDataObj.append('tour_children', JSON.stringify(formData.tour_children));
         try {
-            const res = await axios.put(`${BASE_URL}/tours/${id}`, formData);
+            const res = await axios.put(`${BASE_URL}/tours/${id}`, formDataObj, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
             if (res.status !== 200) {
                 return alert(res.data.message);
             }
@@ -228,7 +250,7 @@ const  EditTour = () =>  {
                             editor={ClassicEditor}
                             config={{
                                 ckfinder: {
-                                    uploadUrl: 'http://localhost:4000/uploads'
+                                    uploadUrl: 'http://localhost:4000/api/v1/tours/upload'
                                 }
                             }}
                             data={formData.description_itinerary}
@@ -241,7 +263,7 @@ const  EditTour = () =>  {
                         editor={ClassicEditor}
                         config={{
                             ckfinder: {
-                                uploadUrl: 'http://localhost:4000/uploads'
+                               uploadUrl: 'http://localhost:4000/api/v1/tours/upload'
                             }
                         }}
                         data={formData.introduct_tour}
@@ -251,14 +273,43 @@ const  EditTour = () =>  {
                 </div>
             </div>
             <div className='tour-form-right'>
-                <h4>Hình ảnh</h4>
                 <div className="form-group">
-                    <input type="file" name="tour_image" onChange={handleChange} />
-                    {formData.tour_image && (
+                        <label>Hình ảnh <span>*</span></label>
+                        <input
+                            type="file"
+                            name="tour_image"
+                            multiple
+                            accept="image/*"
+                            onChange={handleChange}
+                        />
                         <div className="image-preview">
-                            <img src={formData.tour_image} alt="Tour Preview" style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }} />
+                            {formData.tour_image && formData.tour_image.map((image, index) => (
+                                <div key={index} style={{ position: 'relative', display: 'inline-block' }}>
+                                    <img
+                                        src={image.url}
+                                        alt={`Preview ${index}`}
+                                        style={{ width: '100px', height: '100px', objectFit: 'cover', margin: '5px' }}
+                                    />
+                                    <span
+                                        onClick={() => handleRemoveImage(index)}
+                                        style={{
+                                            position: 'absolute',
+                                            top: '9px',
+                                            right: '8px',
+                                            cursor: 'pointer',
+                                            color: 'red',
+                                            background: 'white',
+                                            borderRadius: '50px',
+                                            padding: '4px',
+                                            fontSize: '12px'
+                                        }}
+                                    >
+                                        &times;
+                                    </span>
+                                </div>
+                            ))}
                         </div>
-                    )}
+
                 </div>
                 <div className="form-actions">
                     <button type="submit"><FaSave className='icon' />Lưu dữ liệu</button>

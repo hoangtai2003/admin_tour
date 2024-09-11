@@ -136,17 +136,14 @@ const AddTour = () => {
         formDataObj.append('transportations', formData.transportations);
         formDataObj.append('introduct_tour', formData.introduct_tour);
     
-        // Append multiple locations as an array (converted to a JSON string)
         formDataObj.append('location_ids', JSON.stringify(formData.location_ids));
     
-        // Append each tour image to FormData
         if (formData.tour_image && formData.tour_image.length > 0) {
             for (let i = 0; i < formData.tour_image.length; i++) {
                 formDataObj.append('tour_image', formData.tour_image[i]);
             }
         }
     
-        // Append tour children as a JSON string
         formDataObj.append('tour_children', JSON.stringify(formData.tour_children));
     
         try {
@@ -213,7 +210,7 @@ const AddTour = () => {
                             editor={ClassicEditor}
                             config={{
                                 ckfinder: {
-                                    uploadUrl: 'http://localhost:4000/uploads'
+                                    uploadUrl: 'http://localhost:4000/api/v1/tours/upload'
                                 }
                             }}
                             onChange={(event, editor) => handleEditorChange(event, editor, 'description_itinerary')}
@@ -225,7 +222,7 @@ const AddTour = () => {
                             editor={ClassicEditor}
                             config={{
                                 ckfinder: {
-                                    uploadUrl: 'http://localhost:4000/uploads'
+                                    uploadUrl: 'http://localhost:4000/api/v1/tours/upload'
                                 }
                             }}
                             onChange={(event, editor) => handleEditorChange(event, editor, 'introduct_tour')}
@@ -243,7 +240,7 @@ const AddTour = () => {
                                             key={index}
                                             src={URL.createObjectURL(file)}
                                             alt={`Tour Preview ${index}`}
-                                            style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }}
+                                            style={{ width: '100px', height: '100px', objectFit: 'cover', margin: '5px' }}
                                         />
                                     ))}
                                 </div>

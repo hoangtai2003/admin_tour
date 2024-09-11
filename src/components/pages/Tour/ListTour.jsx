@@ -27,7 +27,6 @@ const ListTour = () => {
             try {
                 const response = await axios.get(`${BASE_URL}/tours?page=${currentPage}`);
                 setTours(response.data.data);
-                console.log(response.data.data)
                 setTotalPages(response.data.totalPages);
             } catch (error) {
                 toast.error('Error fetching tours');
