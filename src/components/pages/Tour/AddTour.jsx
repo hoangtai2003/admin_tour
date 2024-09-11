@@ -18,7 +18,7 @@ const AddTour = () => {
         duration: '',
         departure_city: '',
         transportations: '',
-        tour_image: '',
+        tour_image: [],
         introduct_tour: '',
         location_ids: [],
         tour_children: [{ start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '', price_sale: '' }]
@@ -42,27 +42,19 @@ const AddTour = () => {
         fetchLocations();
     }, []);
 
-    const handleChange = async (e) => {
-        const { name, value, files } = e.target;
-
-        if (name === 'tour_image' && files && files[0]) {
-            const formData = new FormData();
-            formData.append('upload', files[0]);
-
-            try {
-                const response = await axios.post('http://localhost:4000/uploads', formData);
-                if (response.data.uploaded) {
-                    setFormData(prev => ({ ...prev, tour_image: response.data.url }));
-                } else {
-                    toast.error('Image upload failed');
-                }
-            } catch (error) {
-                toast.error('Error uploading image');
-            }
+    const handleChange = (e) => {
+        const { name, files, value } = e.target;
+        if (name === 'tour_image' && files && files.length > 0) {
+            setFormData(prev => ({
+                ...prev,
+                tour_image: Array.from(files) // Chuyển files thành mảng
+            }));
         } else {
             setFormData(prev => ({ ...prev, [name]: value }));
         }
     };
+    
+    
 
     const handleSelectChange = (selectedOptions) => {
         const selectedValues = selectedOptions ? selectedOptions.map(option => option.value) : [];
@@ -132,17 +124,48 @@ const AddTour = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+    
+        const formDataObj = new FormData();
+    
+        // Append individual fields from formData to formDataObj
+        formDataObj.append('name', formData.name);
+        formDataObj.append('description_itinerary', formData.description_itinerary);
+        formDataObj.append('price', formData.price);
+        formDataObj.append('duration', formData.duration);
+        formDataObj.append('departure_city', formData.departure_city);
+        formDataObj.append('transportations', formData.transportations);
+        formDataObj.append('introduct_tour', formData.introduct_tour);
+    
+        // Append multiple locations as an array (converted to a JSON string)
+        formDataObj.append('location_ids', JSON.stringify(formData.location_ids));
+    
+        // Append each tour image to FormData
+        if (formData.tour_image && formData.tour_image.length > 0) {
+            for (let i = 0; i < formData.tour_image.length; i++) {
+                formDataObj.append('tour_image', formData.tour_image[i]);
+            }
+        }
+    
+        // Append tour children as a JSON string
+        formDataObj.append('tour_children', JSON.stringify(formData.tour_children));
+    
         try {
-            const res = await axios.post(`${BASE_URL}/tours`, formData);
+            const res = await axios.post(`${BASE_URL}/tours`, formDataObj, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+    
             if (res.status !== 200) {
                 return alert(res.data.message);
             }
+    
             navigate("/list-tour");
-            toast.success("Create tour successfully");
+            toast.success("Tour created successfully");
         } catch (error) {
             toast.error(error.response?.data?.message || error.message);
         }
     };
+    
+    
 
     return (
         <form onSubmit={handleSubmit}>
@@ -211,14 +234,21 @@ const AddTour = () => {
                 </div>
                 <div className='tour-form-right'>
                     <h4>Hình ảnh</h4>
-                    <div className="form-group">
-                        <input type="file" name="tour_image" onChange={handleChange} />
-                        {formData.tour_image && (
-                            <div className="image-preview">
-                                <img src={formData.tour_image} alt="Tour Preview" style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }} />
-                            </div>
-                        )}
-                    </div>
+                        <div className="form-group">
+                            <input type="file" multiple name="tour_image" accept="image/*" onChange={handleChange} />
+                            {formData.tour_image && (
+                                <div className="image-preview">
+                                    {Array.from(formData.tour_image).map((file, index) => (
+                                        <img
+                                            key={index}
+                                            src={URL.createObjectURL(file)}
+                                            alt={`Tour Preview ${index}`}
+                                            style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }}
+                                        />
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     <div className="form-actions">
                         <button type="submit"><FaSave className='icon' />Lưu dữ liệu</button>
                         <button type="button" ><GrPowerReset className='icon' /> Reset</button>

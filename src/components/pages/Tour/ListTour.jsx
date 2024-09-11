@@ -27,6 +27,7 @@ const ListTour = () => {
             try {
                 const response = await axios.get(`${BASE_URL}/tours?page=${currentPage}`);
                 setTours(response.data.data);
+                console.log(response.data.data)
                 setTotalPages(response.data.totalPages);
             } catch (error) {
                 toast.error('Error fetching tours');
@@ -34,11 +35,6 @@ const ListTour = () => {
         };
         fetchTours();
     }, [currentPage]);
-
-    const stripHTML = (html) => {
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-        return doc.body.textContent || "";
-    };
 
     const handleDelete = (id) => {
         setTours(tours.filter(tour => tour.id !== id)); 
@@ -73,7 +69,7 @@ const ListTour = () => {
                                 <td>{tour.name}</td>
                                 <td>
                                     <div className="image-container">
-                                        <img src={tour.tour_image} alt={tour.name} className="image" />
+                                        <img src={tour.tourImage[0]?.image_url} alt={tour.name} className="image" />
                                     </div>
                                 </td>
                                 <td>
