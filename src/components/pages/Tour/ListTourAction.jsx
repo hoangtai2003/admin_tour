@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { HiDotsHorizontal } from 'react-icons/hi';
-import {BASE_URL} from '../../../utils/config'
+import { BASE_URL } from '../../../utils/config';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+
 const ListTourAction = ({ id, onDelete }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef(null);
@@ -30,7 +31,7 @@ const ListTourAction = ({ id, onDelete }) => {
         if (!confirmDelete) return;
 
         try {
-            const response  = await axios.delete(`${BASE_URL}/tours/${id}`);
+            const response = await axios.delete(`${BASE_URL}/tours/${id}`);
 
             if (response.status === 200) {
                 onDelete(id);
@@ -45,10 +46,10 @@ const ListTourAction = ({ id, onDelete }) => {
 
     return (
         <>
-            <button
-                type="button"
+            <div
                 className="action-dropdown-btn"
                 onClick={handleDropdown}
+                style={{ cursor: 'pointer' }}
             >
                 <HiDotsHorizontal size={18} />
                 {showDropdown && (
@@ -71,7 +72,7 @@ const ListTourAction = ({ id, onDelete }) => {
                         </ul>
                     </div>
                 )}
-            </button>
+            </div>
         </>
     );
 };

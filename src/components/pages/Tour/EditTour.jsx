@@ -20,7 +20,7 @@ const EditTour = () => {
         duration: '',
         departure_city: '',
         transportations: '',
-        tour_image: [], // Array to hold image URLs or objects
+        tour_image: [], 
         introduct_tour: '',
         location_ids: [],
         tour_children: [{ start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '', price_sale: '' }]
@@ -34,7 +34,7 @@ const EditTour = () => {
                 const response = await axios.get(`${BASE_URL}/tours/${id}`);
                 const tourData = response.data.data;
 
-                const locationIds = tourData.locations.map(loc => loc.name);
+                const locationIds = tourData.locations.map(loc => loc.TourLocation.location_id);
 
                 const tourImage = tourData.tourImage.map(image => ({url: image.image_url }))
                 setFormData({
@@ -111,7 +111,6 @@ const EditTour = () => {
             location_ids: ids
         }));
     };
-
     const handleEditorChange = (event, editor, fieldName) => {
         const data = editor.getData();
         setFormData(prev => ({ ...prev, [fieldName]: data }));
@@ -173,15 +172,13 @@ const EditTour = () => {
         formDataObj.append('departure_city', formData.departure_city);
         formDataObj.append('transportations', formData.transportations);
         formDataObj.append('introduct_tour', formData.introduct_tour);
-    
-        formDataObj.append('location_ids', JSON.stringify(formData.location_ids));
 
         if (formData.tour_image && formData.tour_image.length > 0) {
             for (let i = 0; i < formData.tour_image.length; i++) {
                 formDataObj.append('tour_image', formData.tour_image[i].file);
             }
         }
-    
+        formDataObj.append('location_ids', JSON.stringify(formData.location_ids));
         formDataObj.append('tour_children', JSON.stringify(formData.tour_children));
         try {
             const res = await axios.put(`${BASE_URL}/tours/${id}`, formDataObj, {
