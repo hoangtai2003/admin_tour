@@ -19,11 +19,27 @@ const EditTour = () => {
         price: '',
         duration: '',
         departure_city: '',
-        transportations: '',
         tour_image: [], 
         introduct_tour: '',
         location_ids: [],
-        tour_children: [{ start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '', price_sale: '' }]
+        tour_children: [
+            { 
+                start_date: '', 
+                end_date: '', 
+                price_adult: '', 
+                price_child: '', 
+                price_toddler: '', 
+                price_baby: '', 
+                transportion_start: '', 
+                transportion_end: '',
+                time_goes_start: '',
+                time_comes_start: '',
+                time_goes_end: '',
+                time_comes_end: '',
+                total_seats: '', 
+                price_sale: '' 
+            }
+        ]
     });
     const [locations, setLocations] = useState([]);
     const [selectedLocations, setSelectedLocations] = useState([]);
@@ -46,7 +62,22 @@ const EditTour = () => {
                     transportations: tourData.transportations,
                     introduct_tour: tourData.introduct_tour,
                     location_ids: locationIds || [],
-                    tour_children: tourData.tourChildren || [{ start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '', price_sale: '' }],
+                    tour_children: tourData.tourChildren || [{ 
+                        start_date: '', 
+                        end_date: '', 
+                        price_adult: '', 
+                        price_child: '', 
+                        price_toddler: '', 
+                        price_baby: '', 
+                        transportion_start: '', 
+                        transportion_end: '',
+                        time_goes_start: '',
+                        time_comes_start: '',
+                        time_goes_end: '',
+                        time_comes_end: '',
+                        total_seats: '', 
+                        price_sale: '' 
+                    }],
                     tour_image: tourImage || [],
                 });
 
@@ -150,7 +181,26 @@ const EditTour = () => {
     const handleAddTourChild = () => {
         setFormData(prev => ({
             ...prev,
-            tour_children: [...prev.tour_children, { start_date: '', end_date: '', price_adult: '', price_child: '', total_seats: '', price_sale: '' }]
+            tour_children: [
+                ...prev.tour_children, 
+                { 
+                    start_date: '', 
+                    end_date: '', 
+                    price_adult: '', 
+                    price_child: '', 
+                    price_toddler: '', 
+                    price_baby: '', 
+                    transportion_start: '', 
+                    transportion_end: '',
+                    time_goes_start: '',
+                    time_comes_start: '',
+                    time_goes_end: '',
+                    time_comes_end: '',
+                    total_seats: '', 
+                    price_sale: '' 
+                }
+            
+            ]
         }));
     };
 
@@ -170,7 +220,6 @@ const EditTour = () => {
         formDataObj.append('price', formData.price);
         formDataObj.append('duration', formData.duration);
         formDataObj.append('departure_city', formData.departure_city);
-        formDataObj.append('transportations', formData.transportations);
         formDataObj.append('introduct_tour', formData.introduct_tour);
 
         if (formData.tour_image && formData.tour_image.length > 0) {
@@ -228,11 +277,6 @@ const EditTour = () => {
                     </div>
                 </div>
                 <div className="form-row">
-                    <div className="form-group">
-                        <label>Phương tiện di chuyển <span>*</span></label>
-                        <input type="text" name="transportations" value={formData.transportations} onChange={handleChange} />
-                    </div>
-
                     <div className="form-group">
                         <label>Địa điểm xuất phát <span>*</span></label>
                         <input type="text" name="departure_city" value={formData.departure_city} onChange={handleChange}  />
@@ -335,6 +379,46 @@ const EditTour = () => {
                         <div className="form-group">
                             <label>Giá tiền trẻ em <span>*</span></label>
                             <input type="number" name="price_child" value={child.price_child} required onChange={(e) => handleChange(e, index)} />
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label>Giá tiền trẻ nhỏ <span>*</span></label>
+                            <input type="number" name="price_toddler" value={child.price_toddler} required onChange={(e) => handleChange(e, index)} />
+                        </div>
+                        <div className="form-group">
+                            <label>Giá tiền em bé <span>*</span></label>
+                            <input type="number" name="price_baby" value={child.price_baby} required onChange={(e) => handleChange(e, index)} />
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label>Phương tiện ngày đi <span>*</span></label>
+                            <input type="text" name="transportion_start" value={child.transportion_start} required onChange={(e) => handleChange(e, index)} />
+                        </div>
+                        <div className="form-group">
+                            <label>Phương tiện ngày về <span>*</span></label>
+                            <input type="text" name="transportion_end" value={child.transportion_end} required onChange={(e) => handleChange(e, index)} />
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label>Thời gian khởi hành ngày đi <span>*</span></label>
+                            <input type="time" name="time_goes_start" value={child.time_goes_start} required onChange={(e) => handleChange(e, index)} />
+                        </div>
+                        <div className="form-group">
+                            <label>Thời gian đến ngày đi <span>*</span></label>
+                            <input type="time" name="time_comes_start" value={child.time_comes_start} required onChange={(e) => handleChange(e, index)} />
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label>Thời gian khởi hành ngày về <span>*</span></label>
+                            <input type="time" name="time_goes_end" value={child.time_goes_end} required onChange={(e) => handleChange(e, index)} />
+                        </div>
+                        <div className="form-group">
+                            <label>Thời gian đến ngày về <span>*</span></label>
+                            <input type="time" name="time_comes_end" value={child.time_comes_end} required onChange={(e) => handleChange(e, index)} />
                         </div>
                     </div>
                     <div className="form-row">
