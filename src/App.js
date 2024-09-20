@@ -13,6 +13,7 @@ import EditLocation from "./components/pages/Location/EditLocation";
 import ListUser from "./components/pages/User/ListUser"
 import AddUser from "./components/pages/User/AddUser"
 import EditUser from "./components/pages/User/EditUser"
+import ListBooking from "./components/pages/Booking/ListBooking";
 const  App = () => {
   return (
     <>
@@ -63,6 +64,11 @@ const  App = () => {
                     <Route path="/edit-user/:id" element={
                         <PrivateRoute>
                             <EditUser />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/list-booking" element={
+                        <PrivateRoute>
+                            <ListBooking />
                         </PrivateRoute>
                     } />
                     <Route path="*" element={<PageNotFound />} />

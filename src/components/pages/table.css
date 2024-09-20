@@ -27,11 +27,14 @@
 .content-area-table .data-table-diagram table td,
 .content-area-table .data-table-diagram table th
 {
-    padding: 14px 12px;
-    border: 1px solid var(--tbl-border-color); 
+    padding: 5px 10px;
+    border: 1px solid #eeecec; 
+}
+.content-area-table .data-table-diagram table th{
+    text-align: center;
 }
 .content-area-table .data-table-diagram table p {
-    padding: 14px 12px;
+    padding: 10px;
 }
 @media (max-width: 768px) {
     .content-area-table .data-table-diagram table td,
@@ -133,5 +136,27 @@
 .create_icon{
     font-size: 1.1rem;
     margin-bottom: -4px;
+}
+.gray {
+    background-color: rgb(194, 162, 134);
+    color: white;
+}
+  
+.green {
+    background-color: rgb(27, 117, 27);
+    color: white;
+}
+  
+.red {
+    background-color: rgb(150, 20, 20);
+    color: white;
+}
+.aqua{
+    color: white;
+    background-color: rgb(39, 150, 150);
+}
+.blue{
+    color: white;
+    background-color: rgb(77, 202, 161);
 }
   

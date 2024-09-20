@@ -97,8 +97,8 @@ const Sidebar = () => {
                     <span className="menu-link-text">Khách sạn</span>
                   </Link>
                 </li>
-                <li className={`menu-item ${activeLink === "/" ? "active" : ""}`}>
-                  <Link to="/" className="menu-link" onClick={() => setActiveLink("/")}>
+                <li className={`menu-item ${activeLink === "/list-booking" ? "active" : ""}`}>
+                  <Link to="/list-booking" className="menu-link" onClick={() => setActiveLink("/")}>
                     <span className="menu-link-icon">
                       <FaShoppingCart size={20} />
                     </span>
