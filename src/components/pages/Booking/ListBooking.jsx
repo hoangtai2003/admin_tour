@@ -77,10 +77,10 @@ const ListBooking = () => {
                                     <p><b>Mã Tour: </b>{book?.bookingTourChild?.tour_code}</p>
                                 </td>
                                 <td>
-                                    <p><b>Họ và tên: </b>{book.bookingUser.username}</p>
-                                    <p><b>Email: </b>{book.bookingUser.email}</p>
-                                    <p><b>Số điện thoại: </b>{book.bookingUser.phone}</p>
-                                    <p><b>Địa chỉ: </b>{book.bookingUser.address}</p>
+                                    <p><b>Họ và tên: </b>{book?.full_name}</p>
+                                    <p><b>Email: </b>{book?.email}</p>
+                                    <p><b>Số điện thoại: </b>{book?.phone_number}</p>
+                                    <p><b>Địa chỉ: </b>{book?.address}</p>
                                 </td>
                                 <td>
                                     <p><b>Số người lớn: </b>{book.number_of_adults} - <b>Thành tiền: </b></p>
@@ -88,19 +88,19 @@ const ListBooking = () => {
                                     <p><b>Số trẻ nhỏ: </b>{book.number_of_toddler} - <b>Thành tiền: </b></p>
                                     <p><b>Số trẻ sơ sinh: </b>{book.number_of_baby} - <b>Thành tiền: </b></p>
                                     <p><b>Tổng tiền: </b>{book.total_price.toLocaleString('vi-VN')} vnđ</p>
-                                    <p><b>Mã booking: </b>{book.id} vnđ</p>
+                                    <p><b>Mã booking: </b>{book.booking_code}</p>
                                     <p><b>Điểm đón: </b>{book?.bookingTourChild?.tour?.departure_city} </p>
                                     <p><b>Ghi chú: </b>{book.booking_note}</p>
                                 </td>
                                 <td>
-                                    <p><b>Họ và tên: </b>{book.bookingUser.username}</p>
+                                    {/* <p><b>Họ và tên: </b>{book.bookingUser.username}</p>
                                     <p><b>Email: </b>{book.bookingUser.email}</p>
                                     <p><b>Số điện thoại: </b>{book.bookingUser.phone}</p>
-                                    <p><b>Địa chỉ: </b>{book.bookingUser.address}</p>
+                                    <p><b>Địa chỉ: </b>{book.bookingUser.address}</p> */}
                                 </td>
                                 <td >
                                     <div className={
-                                        book.status === "Tiếp nhận" ? "gray":
+                                        book.status === "Đang chờ xử lý" ? "gray":
                                         book.status === "Đã xác nhận" ? "green" :
                                         book.status === "Đã thanh toán" ? "aqua" :
                                         book.status === "Hoàn thành" ? "blue" :
@@ -111,13 +111,13 @@ const ListBooking = () => {
                                     
                                 </td>
                                 <td>
-                                <Form.Select onChange={(event) => statusHandler(event, book.id)} >
+                                <Form.Select onChange={(event) => statusHandler(event, book.id)} style={{padding:  '5px', borderRadius: '5px'}}>
                                     <option value="" selected disabled>Action</option>
-                                    <option value="Tiếp nhận">Tiếp nhận</option>
                                     <option value="Đã xác nhận">Đã xác nhận</option>
                                     <option value="Đã thanh toán">Đã thanh toán</option>
                                     <option value="Hoàn thành">Hoàn thành</option>
                                     <option value="Hủy bỏ">Hủy bỏ</option>
+                                    <option value="Nhắc nhỏ">Nhắc nhở</option>
                                 </Form.Select>
 
 
