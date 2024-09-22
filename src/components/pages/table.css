@@ -30,6 +30,9 @@
     padding: 5px 10px;
     border: 1px solid #eeecec; 
 }
+.index{
+    text-align: center;
+}
 .content-area-table .data-table-diagram table th{
     text-align: center;
 }

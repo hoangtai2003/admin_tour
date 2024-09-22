@@ -71,10 +71,11 @@ const ListBooking = () => {
                     <tbody>
                         {booking?.map((book, index) => (
                             <tr key={book.id}>
-                                <td>{index + 1}</td>
+                                <td className="index">{index + 1}</td>
                                 <td>
                                     <p>{book?.bookingTourChild?.tour?.name}</p>
-                                    <p><b>Mã Tour: </b>{book?.bookingTourChild?.tour_code}</p>
+                                    <img src={book?.bookingTourChild?.tour?.tourImage[0]?.image_url} alt="" style={{width: "100%", borderRadius: '5px'}}/>
+                                    <p><b>Mã Tour: {book?.bookingTourChild?.tour_code}</b></p>
                                 </td>
                                 <td>
                                     <p><b>Họ và tên: </b>{book?.full_name}</p>
@@ -83,10 +84,10 @@ const ListBooking = () => {
                                     <p><b>Địa chỉ: </b>{book?.address}</p>
                                 </td>
                                 <td>
-                                    <p><b>Số người lớn: </b>{book.number_of_adults} - <b>Thành tiền: </b></p>
-                                    <p><b>Số trẻ em: </b>{book.number_of_child} - <b>Thành tiền: </b></p>
-                                    <p><b>Số trẻ nhỏ: </b>{book.number_of_toddler} - <b>Thành tiền: </b></p>
-                                    <p><b>Số trẻ sơ sinh: </b>{book.number_of_baby} - <b>Thành tiền: </b></p>
+                                    <p><b>Số người lớn: </b>{book.number_of_adults} - <b>Thành tiền: </b>{(book.number_of_adults * book?.bookingTourChild?.price_adult).toLocaleString('vi-VN')} vnđ</p>
+                                    <p><b>Số trẻ em: </b>{book.number_of_children} - <b>Thành tiền: </b>{(book.number_of_children * book?.bookingTourChild?.price_child).toLocaleString('vi-VN')} vnđ</p>
+                                    <p><b>Số trẻ nhỏ: </b>{book.number_of_toddler} - <b>Thành tiền: </b>{(book.number_of_toddler * book?.bookingTourChild?.price_toddler).toLocaleString('vi-VN')} vnđ</p>
+                                    <p><b>Số trẻ sơ sinh: </b>{book.number_of_baby} - <b>Thành tiền: </b>{(book.number_of_baby * book?.bookingTourChild?.price_baby).toLocaleString('vi-VN')} vnđ</p>
                                     <p><b>Tổng tiền: </b>{book.total_price.toLocaleString('vi-VN')} vnđ</p>
                                     <p><b>Mã booking: </b>{book.booking_code}</p>
                                     <p><b>Điểm đón: </b>{book?.bookingTourChild?.tour?.departure_city} </p>
@@ -115,7 +116,6 @@ const ListBooking = () => {
                                     <option value="" selected disabled>Action</option>
                                     <option value="Đã xác nhận">Đã xác nhận</option>
                                     <option value="Đã thanh toán">Đã thanh toán</option>
-                                    <option value="Hoàn thành">Hoàn thành</option>
                                     <option value="Hủy bỏ">Hủy bỏ</option>
                                     <option value="Nhắc nhỏ">Nhắc nhở</option>
                                 </Form.Select>

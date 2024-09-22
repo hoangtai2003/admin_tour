@@ -58,7 +58,7 @@ const ListLocation = () => {
             <tbody>
                 {locations?.map((location, index) => (
                     <tr key={location.id}>
-                        <td>{index + 1}</td>
+                        <td className="index">{index + 1}</td>
                         <td>{location.name}</td>
                         <td>
                             <div className="image-container">

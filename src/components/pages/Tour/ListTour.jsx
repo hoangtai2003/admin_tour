@@ -64,11 +64,11 @@ const ListTour = () => {
                     <tbody>
                         {tours?.map((tour, index) => (
                             <tr key={tour.id}>
-                                <td>{index + 1}</td>
+                                <td className="index">{index + 1}</td>
                                 <td>{tour.name}</td>
                                 <td>
                                     <div className="image-container">
-                                        <img src={tour.tourImage[0]?.image_url} alt={tour.name} className="image" />
+                                        <img src={tour.tourImage[0]?.image_url} alt={tour.name}  style={{width: "80%", borderRadius: "10px"}} />
                                     </div>
                                 </td>
                                 <td>
@@ -87,7 +87,6 @@ const ListTour = () => {
                                             <span key={i}>{location.name}{i < tour.locations.length - 1 ? ' - ' : ''}</span>
                                         ))}
                                     </p>
-                                    <p><b>Di chuyển: </b>{tour.transportations}</p>
                                     <p><b>Điểm xuất phát: </b>{tour.departure_city}</p>
                                     {tour.tourChildren.length > 0 && (
                                         <>
