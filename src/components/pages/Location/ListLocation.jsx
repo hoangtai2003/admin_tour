@@ -65,7 +65,7 @@ const ListLocation = () => {
                                 <img src={location.location_img} alt={location.name} className="image" />
                             </div>
                         </td>
-                        <td>{location.status.data[1] === 0 ? "Hiển thị" : "Không hiển thị" }</td>
+                        <td>{location.status}</td>
                         <td className="dt-cell-action">
                             <ListLocationAction id={location.id} onDelete={handleDelete}/>
                         </td>

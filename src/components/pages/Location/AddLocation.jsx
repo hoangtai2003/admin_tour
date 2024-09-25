@@ -15,7 +15,7 @@ const AddLocation = () => {
         description: '',
         parent_id: 0,
         location_img: '',
-        status: ''  // Giá trị sẽ là 0 hoặc 1
+        status: 0 
     });
     const navigate = useNavigate();
     const [locations, setLocations] = useState([]);
@@ -35,31 +35,27 @@ const AddLocation = () => {
     }, []);
 
     const status = [
-        { value: 0, label: 'Hiển thị' },
-        { value: 1, label: 'Không hiển thị' },
+        { value: "Hiển thị", label: 'Hiển thị' },
+        { value: "Không hiển thị", label: 'Không hiển thị' },
     ];
 
     const handleChange = async (e) => {
         const { name, value, files } = e.target;
     
         if (name === 'location_img' && files && files[0]) {
-            const formData = new FormData();
-            formData.append('upload', files[0]);
+            const file = files[0];
+            const imageUrl = URL.createObjectURL(file); 
     
-            try {
-                const response = await axios.post('http://localhost:4000/uploads', formData);
-                if (response.data.uploaded) {
-                    setFormData(prev => ({ ...prev, location_img: response.data.url }));
-                } else {
-                    toast.error('Image upload failed');
-                }
-            } catch (error) {
-                toast.error('Error uploading image');
-            }
+            setFormData(prev => ({
+                ...prev,
+                location_img: file, 
+                imagePreview: imageUrl 
+            }));
         } else {
             setFormData(prev => ({ ...prev, [name]: value }));
         }
     };
+    
     
 
     const handleSelectChange = (selectedOption) => {
@@ -70,9 +66,9 @@ const AddLocation = () => {
         setFormData(prev => ({ ...prev, status: selectedOption ? selectedOption.value : '' }));
     };
 
-    const handleEditorChange = (event, editor) => {
+    const handleEditorChange = (event, editor, fieldName) => {
         const data = editor.getData();
-        setFormData(prev => ({ ...prev, description: data }));
+        setFormData(prev => ({ ...prev, [fieldName]: data }));
     };
 
     const transformLocations = (locations) => {
@@ -104,16 +100,29 @@ const AddLocation = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post(`${BASE_URL}/location`, formData);
+            const formDataToSubmit = new FormData(); 
+            formDataToSubmit.append('name', formData.name);
+            formDataToSubmit.append('description', formData.description);
+            formDataToSubmit.append('parent_id', formData.parent_id);
+            formDataToSubmit.append('location_img', formData.location_img);
+            formDataToSubmit.append('status', formData.status);
+    
+            const res = await axios.post(`${BASE_URL}/location`, formDataToSubmit, {
+                headers: {
+                    'Content-Type': 'multipart/form-data' 
+                }
+            });
+            
             if (res.status !== 200) {
                 return alert(res.data.message);
             }
             navigate("/list-location");
-            toast.success("Create location successfully")
+            toast.success("Create location successfully");
         } catch (error) {
             toast.error(error.response?.data?.message || error.message);
         }
     };
+    
     return (
         <form onSubmit={handleSubmit}>
             <div className="tour-form-container">
@@ -141,22 +150,23 @@ const AddLocation = () => {
                     <div className="form-group">
                         <label>Hình ảnh </label>
                         <input type="file" name="location_img" onChange={handleChange} />
-                        {formData.location_img && (
+                        {formData.imagePreview && (
                             <div className="image-preview">
-                                <img src={formData.location_img} alt="Location Preview" style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }} />
+                                <img src={formData.imagePreview} alt="Location Preview" style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }} />
                             </div>
                         )}
                     </div>
+
                     <div className="form-group">
                         <label>Mô tả địa điểm <span>*</span></label>
                         <CKEditor
                             editor={ClassicEditor}
                             config={{
                                 ckfinder: {
-                                    uploadUrl: 'http://localhost:4000/uploads'
+                                   uploadUrl: 'http://localhost:4000/api/v1/location/upload'
                                 }
                             }}
-                            onChange={handleEditorChange}
+                            onChange={(event, editor) => handleEditorChange(event, editor, 'description')}
                         />
                     </div>
                     <div className="form-actions">

@@ -64,7 +64,7 @@ const AddTour = () => {
         if (name === 'tour_image' && files && files.length > 0) {
             setFormData(prev => ({
                 ...prev,
-                tour_image: Array.from(files) // Chuyển files thành mảng
+                tour_image: Array.from(files) 
             }));
         } else {
             setFormData(prev => ({ ...prev, [name]: value }));
@@ -163,7 +163,6 @@ const AddTour = () => {
     
         const formDataObj = new FormData();
     
-        // Append individual fields from formData to formDataObj
         formDataObj.append('name', formData.name);
         formDataObj.append('description_itinerary', formData.description_itinerary);
         formDataObj.append('price', formData.price);

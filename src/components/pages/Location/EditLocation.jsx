@@ -26,13 +26,12 @@ const EditLocation = () => {
                 const response = await axios.get(`${BASE_URL}/location/${id}`);
                 const locationData = response.data.data;
 
-                
                 setFormData({
                     name: locationData.name,
                     location_img: locationData.location_img,
                     description: locationData.description,
                     parent_id: locationData.parent_id,
-                    status: locationData.status.data[1]
+                    status: locationData.status
                 });
             } catch (error) {
                 toast.error('Error fetching location data');
@@ -42,27 +41,22 @@ const EditLocation = () => {
     }, [id]);
 
     const statusOptions = [
-        { value: 0, label: 'Hiển thị' },
-        { value: 1, label: 'Không hiển thị' },
+        { value: "Hiển thị", label: 'Hiển thị' },
+        { value: "Không hiển thị", label: 'Không hiển thị' },
     ];
 
     const handleChange = async (e) => {
         const { name, value, files } = e.target;
     
         if (name === 'location_img' && files && files[0]) {
-            const formData = new FormData();
-            formData.append('upload', files[0]);
-    
-            try {
-                const response = await axios.post('http://localhost:4000/uploads', formData);
-                if (response.data.uploaded) {
-                    setFormData(prev => ({ ...prev, location_img: response.data.url }));
-                } else {
-                    toast.error('Image upload failed');
-                }
-            } catch (error) {
-                toast.error('Error uploading image');
-            }
+            const file = files[0]
+            const imageUrl = URL.createObjectURL(file)
+
+            setFormData(prev => ({
+                ...prev,
+                location_img: file,
+                imagePreview: imageUrl 
+            }))
         } else {
             setFormData(prev => ({ ...prev, [name]: value }));
         }
@@ -80,7 +74,17 @@ const EditLocation = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.put(`${BASE_URL}/location/${id}`, formData)
+            const formDataToSubmit = new FormData(); 
+            formDataToSubmit.append('name', formData.name);
+            formDataToSubmit.append('description', formData.description);
+            formDataToSubmit.append('parent_id', formData.parent_id);
+            formDataToSubmit.append('location_img', formData.location_img);
+            formDataToSubmit.append('status', formData.status);
+            const res = await axios.put(`${BASE_URL}/location/${id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data' 
+                }
+            })
             if (res.status !== 200) {
                 return alert(res.data.message);
             }
@@ -112,9 +116,9 @@ const EditLocation = () => {
                     <div className="form-group">
                         <label>Hình ảnh </label>
                         <input type="file" name="location_img" onChange={handleChange} />
-                        {formData.location_img && (
+                        {formData.imagePreview && (
                             <div className="image-preview">
-                                <img src={formData.location_img} alt="Location Preview" style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }} />
+                                <img src={formData.imagePreview} alt="Location Preview" style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }} />
                             </div>
                         )}
                     </div>
@@ -124,7 +128,7 @@ const EditLocation = () => {
                             editor={ClassicEditor}
                             config={{
                                 ckfinder: {
-                                    uploadUrl: 'http://localhost:4000/uploads'
+                                    uploadUrl: 'http://localhost:4000/api/v1/location/upload'
                                 }
                             }}
                             data={formData.description}
