@@ -62,7 +62,7 @@ const ListLocation = () => {
                         <td>{location.name}</td>
                         <td>
                             <div className="image-container">
-                                <img src={location.location_img} alt={location.name} className="image" />
+                                <img src={location.location_img} alt={location.name} style={{width: "30%", borderRadius: "10px"}}/>
                             </div>
                         </td>
                         <td>{location.status}</td>

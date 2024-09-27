@@ -100,13 +100,6 @@
     align-items: center; 
     height: 100%;
 }
-
-.image {
-    border-radius: 15px;
-    max-width: 100%;
-    height: auto;
-    width: 60%;
-}
 .create {
     display: inline-block;
     padding: 10px 20px;
