@@ -101,8 +101,10 @@ const ListBooking = () => {
                                 </td>
                                 <td >
                                     <div className={
-                                        book.status === "Đang chờ xử lý" ? "gray":
+                                        book.status === "Chờ xác nhận" ? "gray":
                                         book.status === "Đã xác nhận" ? "green" :
+                                        book.status === "Chờ thanh toán" ? "pink" :
+                                        book.status === "Quá hạn thanh toán" ? "orange" :
                                         book.status === "Đã thanh toán" ? "aqua" :
                                         book.status === "Hoàn thành" ? "blue" :
                                         book.status === "Hủy bỏ" ? "red" : ""
@@ -115,6 +117,8 @@ const ListBooking = () => {
                                 <Form.Select onChange={(event) => statusHandler(event, book.id)} style={{padding:  '5px', borderRadius: '5px'}}>
                                     <option value="" selected disabled>Action</option>
                                     <option value="Đã xác nhận">Đã xác nhận</option>
+                                    <option value="Chờ thanh toán">Chờ thanh toán</option>
+                                    <option value="Quá hạn thanh toán">Quá hạn thanh toán</option>
                                     <option value="Đã thanh toán">Đã thanh toán</option>
                                     <option value="Hủy bỏ">Hủy bỏ</option>
                                     <option value="Nhắc nhỏ">Nhắc nhở</option>
