@@ -94,10 +94,7 @@ const ListBooking = () => {
                                     <p><b>Ghi chú: </b>{book.booking_note}</p>
                                 </td>
                                 <td>
-                                    {/* <p><b>Họ và tên: </b>{book.bookingUser.username}</p>
-                                    <p><b>Email: </b>{book.bookingUser.email}</p>
-                                    <p><b>Số điện thoại: </b>{book.bookingUser.phone}</p>
-                                    <p><b>Địa chỉ: </b>{book.bookingUser.address}</p> */}
+                                   <p>Phương thức thanh toán: <b>{book.payment_method}</b></p>
                                 </td>
                                 <td >
                                     <div className={
