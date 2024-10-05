@@ -19,6 +19,7 @@ const EditTour = () => {
         price: '',
         duration: '',
         departure_city: '',
+        transportation: '',
         tour_image: [], 
         introduct_tour: '',
         location_ids: [],
@@ -59,7 +60,7 @@ const EditTour = () => {
                     price: tourData.price,
                     duration: tourData.duration,
                     departure_city: tourData.departure_city,
-                    transportations: tourData.transportations,
+                    transportation: tourData.transportation,
                     introduct_tour: tourData.introduct_tour,
                     location_ids: locationIds || [],
                     tour_children: tourData.tourChildren || [{ 
@@ -221,7 +222,7 @@ const EditTour = () => {
         formDataObj.append('duration', formData.duration);
         formDataObj.append('departure_city', formData.departure_city);
         formDataObj.append('introduct_tour', formData.introduct_tour);
-
+        formDataObj.append('transportation', formData.transportation)
         if (formData.tour_image && formData.tour_image.length > 0) {
             for (let i = 0; i < formData.tour_image.length; i++) {
                 formDataObj.append('tour_image', formData.tour_image[i].file);
@@ -280,6 +281,10 @@ const EditTour = () => {
                     <div className="form-group">
                         <label>Địa điểm xuất phát <span>*</span></label>
                         <input type="text" name="departure_city" value={formData.departure_city} onChange={handleChange}  />
+                    </div>
+                    <div className="form-group">
+                        <label>Phương tiện di chuyển <span>*</span></label>
+                        <input type="text" name="transportation" value={formData.transportation} onChange={handleChange}  />
                     </div>
                 </div>                
 
