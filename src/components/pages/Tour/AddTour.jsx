@@ -235,7 +235,7 @@ const AddTour = () => {
                         </div>
                         <div className="form-group">
                             <label>Phương tiện di chuyển <span>*</span></label>
-                            <input type="text" name="transportion" value={formData.transportation} onChange={handleChange} />
+                            <input type="text" name="transportation" value={formData.transportation} onChange={handleChange} />
                         </div>
                     </div>
                     <div className="form-group">
