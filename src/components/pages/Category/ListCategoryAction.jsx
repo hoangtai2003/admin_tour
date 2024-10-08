@@ -5,7 +5,7 @@ import {BASE_URL} from '../../../utils/config'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
-const ListLocationAction = ({ id, onDelete }) => {
+const ListCategoryAction = ({ id, onDelete }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const handleDropdown = () => {
         setShowDropdown(!showDropdown);
@@ -25,17 +25,17 @@ const ListLocationAction = ({ id, onDelete }) => {
         document.addEventListener("mousedown", handleClickOutside);
         };
     }, []);
-    const handleDeleteLocation = async () => {
-        const confirmDelete = window.confirm("Are you sure you want to delete this location?");
+    const handleDeleteCategory = async () => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this category?");
         if (!confirmDelete) return;
 
         try {
-            const response  = await axios.delete(`${BASE_URL}/location/${id}`);
+            const response  = await axios.delete(`${BASE_URL}/category/${id}`);
             if (response.status === 200) {
                 onDelete(id);
-                toast.success("Tour successfully deleted");
+                toast.success("Xóa danh mục thành công");
             } else {
-                toast.error("Failed to delete the tour");
+                toast.error("Đã có lỗi xảy ra");
             }
         } catch (error) {
             toast.error("An error occurred while deleting the tour. Please try again.");
@@ -53,13 +53,13 @@ const ListLocationAction = ({ id, onDelete }) => {
             <div className="action-dropdown-menu" ref={dropdownRef}>
                 <ul className="dropdown-menu-list">
                     <li className="dropdown-menu-item">
-                        <Link to={`/edit-location/${id}`} className="dropdown-menu-link">
+                        <Link to={`/edit-category/${id}`} className="dropdown-menu-link">
                             Edit
                         </Link>
                     </li>
                     <li className="dropdown-menu-item">
                         <button 
-                            onClick={handleDeleteLocation} 
+                            onClick={handleDeleteCategory} 
                             className="dropdown-menu-link"
                             style={{ background: 'none', border: 'none', cursor: 'pointer' }}
                         >
@@ -74,4 +74,4 @@ const ListLocationAction = ({ id, onDelete }) => {
   );
 };
 
-export default ListLocationAction;
+export default ListCategoryAction;

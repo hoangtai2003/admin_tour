@@ -45,10 +45,10 @@ const ListUserAction = ({ id, onDelete }) => {
 
     return (
         <>
-            <button
-                type="button"
+            <div
                 className="action-dropdown-btn"
                 onClick={handleDropdown}
+                style={{ cursor: 'pointer' }}
             >
                 <HiDotsHorizontal size={18} />
                 {showDropdown && (
@@ -71,7 +71,7 @@ const ListUserAction = ({ id, onDelete }) => {
                         </ul>
                     </div>
                 )}
-            </button>
+            </div>
         </>
     );
 };

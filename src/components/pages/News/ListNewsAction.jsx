@@ -5,7 +5,7 @@ import {BASE_URL} from '../../../utils/config'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
-const ListLocationAction = ({ id, onDelete }) => {
+const ListNewsAction = ({ id, onDelete }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const handleDropdown = () => {
         setShowDropdown(!showDropdown);
@@ -74,4 +74,4 @@ const ListLocationAction = ({ id, onDelete }) => {
   );
 };
 
-export default ListLocationAction;
+export default ListNewsAction;

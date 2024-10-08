@@ -14,6 +14,10 @@ import ListUser from "./components/pages/User/ListUser"
 import AddUser from "./components/pages/User/AddUser"
 import EditUser from "./components/pages/User/EditUser"
 import ListBooking from "./components/pages/Booking/ListBooking";
+import ListNews from "./components/pages/News/ListNews"
+import ListCategory from './components/pages/Category/ListCategory'
+import AddCategory from "./components/pages/Category/AddCategory";
+import EditCategory from "./components/pages/Category/EditCategory";
 const  App = () => {
   return (
     <>
@@ -69,6 +73,26 @@ const  App = () => {
                     <Route path="/list-booking" element={
                         <PrivateRoute>
                             <ListBooking />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/list-news" element={
+                        <PrivateRoute>
+                            <ListNews />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/list-category" element={
+                        <PrivateRoute>
+                            <ListCategory />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/add-category" element={
+                        <PrivateRoute>
+                            <AddCategory />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/edit-category/:id" element={
+                        <PrivateRoute>
+                            <EditCategory />
                         </PrivateRoute>
                     } />
                     <Route path="*" element={<PageNotFound />} />

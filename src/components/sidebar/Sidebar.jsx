@@ -57,16 +57,16 @@ const Sidebar = () => {
                     <span className="menu-link-text">Bảng điều khiển</span>
                   </Link>
                 </li>
-                <li className={`menu-item ${activeLink === "/" ? "active" : ""}`}>
-                  <Link to="/" className="menu-link" onClick={() => setActiveLink("/")}>
+                <li className={`menu-item ${activeLink === "/list-category" ? "active" : ""}`}>
+                  <Link to="/list-category" className="menu-link" onClick={() => setActiveLink("/list-category")}>
                     <span className="menu-link-icon">
                       <TfiMenuAlt size={20} />
                     </span>
                     <span className="menu-link-text">Danh mục</span>
                   </Link>
                 </li>
-                <li className={`menu-item ${activeLink === "/" ? "active" : ""}`}>
-                  <Link to="/" className="menu-link" onClick={() => setActiveLink("/")}>
+                <li className={`menu-item ${activeLink === "/list-news" ? "active" : ""}`}>
+                  <Link to="/list-news" className="menu-link" onClick={() => setActiveLink("/list-news")}>
                     <span className="menu-link-icon">
                       <FaRegFileWord size={20}/>
                     </span>
