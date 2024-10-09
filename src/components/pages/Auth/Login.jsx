@@ -2,16 +2,16 @@ import React, { useContext, useState } from "react";
 import { Container, Form, FormGroup, Button } from "reactstrap";
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../context/AuthContext'
-import { BASE_URL } from '../../../utils/config'
 import './auth.css'
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import { SidebarContext } from "../../../context/SideBarContext";
 const Login = () => {
     const [formData, setFormData] = useState({
         email: "",  
         password: ""  
     })
-
+    const { url } = useContext(SidebarContext)
     const navigate = useNavigate()
     const { dispatch } = useContext(AuthContext)
 
@@ -24,7 +24,7 @@ const Login = () => {
         dispatch({ type: 'LOGIN_START' });
 
         try {
-            const response = await axios.post(`${BASE_URL}/auth/login`, formData)
+            const response = await axios.post(`${url}/auth/login`, formData)
             dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
             navigate('/list-tour');
             toast.success("Login successfully")

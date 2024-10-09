@@ -1,30 +1,12 @@
-import { useEffect, useRef, useState } from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import {BASE_URL} from '../../../utils/config'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
+import { useDropdown } from "../../Hooks/useDropdown";
 const ListCategoryAction = ({ id, onDelete }) => {
-    const [showDropdown, setShowDropdown] = useState(false);
-    const handleDropdown = () => {
-        setShowDropdown(!showDropdown);
-    };
-
-    const dropdownRef = useRef(null);
-
-    const handleClickOutside = (event) => {
-        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowDropdown(false);
-        }
-    };
-
-    useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-        document.addEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
+    const { isDropdownOpen, toggleDropdown, dropdownRef } = useDropdown(); 
     const handleDeleteCategory = async () => {
         const confirmDelete = window.confirm("Are you sure you want to delete this category?");
         if (!confirmDelete) return;
@@ -45,11 +27,11 @@ const ListCategoryAction = ({ id, onDelete }) => {
     <>
         <div
             className="action-dropdown-btn"
-            onClick={handleDropdown}
+            onClick={toggleDropdown}
             style={{ cursor: 'pointer' }}
         >
         <HiDotsHorizontal size={18} />
-        {showDropdown && (
+        {isDropdownOpen && (
             <div className="action-dropdown-menu" ref={dropdownRef}>
                 <ul className="dropdown-menu-list">
                     <li className="dropdown-menu-item">

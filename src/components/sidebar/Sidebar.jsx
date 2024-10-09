@@ -42,9 +42,6 @@ const Sidebar = () => {
             <div className="sidebar-brand">
               <span className="sidebar-brand-text">Travel tour.</span>
             </div>
-            <button className="sidebar-close-btn" onClick={closeSidebar}>
-              <MdOutlineClose size={24} />
-            </button>
           </div>
           <div className="sidebar-body">
             <div className="sidebar-menu">

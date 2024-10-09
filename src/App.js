@@ -18,6 +18,8 @@ import ListNews from "./components/pages/News/ListNews"
 import ListCategory from './components/pages/Category/ListCategory'
 import AddCategory from "./components/pages/Category/AddCategory";
 import EditCategory from "./components/pages/Category/EditCategory";
+import EditNews from "./components/pages/News/EditNews"
+import AddNews from "./components/pages/News/AddNews";
 const  App = () => {
   return (
     <>
@@ -93,6 +95,16 @@ const  App = () => {
                     <Route path="/edit-category/:id" element={
                         <PrivateRoute>
                             <EditCategory />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/add-news" element={
+                        <PrivateRoute>
+                            <AddNews />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/edit-news/:id" element={
+                        <PrivateRoute>
+                            <EditNews />
                         </PrivateRoute>
                     } />
                     <Route path="*" element={<PageNotFound />} />

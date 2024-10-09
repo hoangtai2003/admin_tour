@@ -19,7 +19,7 @@ const EditLocation = () => {
         status: '' 
     });
     const navigate = useNavigate();
-
+    const [imagePreview, setImagePreview] = useState('');
     useEffect(() => {
         const fetchLocationData = async () => {
             try {
@@ -33,6 +33,7 @@ const EditLocation = () => {
                     parent_id: locationData.parent_id,
                     status: locationData.status
                 });
+                setImagePreview(locationData.location_img);
             } catch (error) {
                 toast.error('Error fetching location data');
             }
@@ -50,13 +51,12 @@ const EditLocation = () => {
     
         if (name === 'location_img' && files && files[0]) {
             const file = files[0]
-            const imageUrl = URL.createObjectURL(file)
-
             setFormData(prev => ({
                 ...prev,
                 location_img: file,
-                imagePreview: imageUrl 
             }))
+            const previewURL = URL.createObjectURL(file);
+            setImagePreview(previewURL);
         } else {
             setFormData(prev => ({ ...prev, [name]: value }));
         }
@@ -116,11 +116,11 @@ const EditLocation = () => {
                     <div className="form-group">
                         <label>Hình ảnh </label>
                         <input type="file" name="location_img" onChange={handleChange} />
-                        {formData.imagePreview && (
-                            <div className="image-preview">
-                                <img src={formData.imagePreview} alt="Location Preview" style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }} />
-                            </div>
-                        )}
+                        {imagePreview && (
+                                <div className="image-preview">
+                                    <img src={imagePreview} alt="News Preview" style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }} />
+                                </div>
+                            )}
                     </div>
                     <div className="form-group">
                         <label>Mô tả địa điểm <span>*</span></label>

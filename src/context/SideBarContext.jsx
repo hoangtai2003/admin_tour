@@ -5,6 +5,7 @@ export const SidebarContext = createContext({});
 
 export const SidebarProvider = ({ children }) => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
+    const url = 'http://localhost:4000/api/v1'
     const openSidebar = () => {
       setSidebarOpen(true);
     };
@@ -19,6 +20,7 @@ export const SidebarProvider = ({ children }) => {
             isSidebarOpen,
             openSidebar,
             closeSidebar,
+            url
         }}
     >
         {children}    

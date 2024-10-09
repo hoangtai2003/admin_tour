@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ListNewsAction from "./ListNewsAction"
 import axios from "axios";
 import '../table.css'
@@ -7,32 +7,36 @@ import { IoMdAdd } from "react-icons/io";
 import Pagination from "../Pagination";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-const BASE_URL = "http://localhost:4000/api/v1"
+import { SidebarContext } from "../../../context/SideBarContext";
 const TABLE_HEADS = [
   "STT",
-  "Tên địa điểm",
+  "Tiêu đề",
   "Hình ảnh",
+  "Danh mục",
   "Trạng thái",
-  "Hành Động"
+  "Ngày đăng",
+  "Hành động"
+
 ];
 const ListNews = () => {
-    const [locations, setLocations] = useState([])
+    const [newsletter, setNewsletter] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0)
+    const { url } = useContext(SidebarContext)
     useEffect(() => {
-        const fetchLocations = async () => {
+        const fetchNews = async() => {
             try {
-                const response = await axios.get(`${BASE_URL}/location?page=${currentPage}`)
-                setLocations(response.data.data)
-                setTotalPages(response.data.totalPages)
+                const response = await axios.get(`${url}/news?page=${currentPage}`)
+                setNewsletter(response.data.data)
+                setTotalPages(response.data.totalPages) 
             } catch (error) {
-                toast.error('Error fetching locations');
+                toast.error('Không có dữ liệu của tin tức');
             }
         }
-        fetchLocations();
+        fetchNews()
     }, [currentPage])
     const handleDelete = (id) => {
-        setLocations(locations.filter(location => location.id !== id))
+        setNewsletter(newsletter.filter(news => news.id !== id))
     }
     const onPageChange = (newPage) => {
         if (newPage >=1 && newPage <= totalPages) {
@@ -43,8 +47,8 @@ const ListNews = () => {
       <section className="content-area-table">
         <ToastContainer />
         <div className="data-table-info">
-            <h4 className="data-table-title">Danh sách địa điểm</h4>
-            <Link to="/add-location" className="create"><IoMdAdd className="create_icon"/> Tạo mới</Link>
+            <h4 className="data-table-title">Danh sách tin tức</h4>
+            <Link to="/add-news" className="create"><IoMdAdd className="create_icon"/> Tạo mới</Link>
         </div>
         <div className="data-table-diagram">
           <table>
@@ -56,18 +60,20 @@ const ListNews = () => {
               </tr>
             </thead>
             <tbody>
-                {locations?.map((location, index) => (
-                    <tr key={location.id}>
+                {newsletter?.map((news, index) => (
+                    <tr key={news.id}>
                         <td className="index">{index + 1}</td>
-                        <td>{location.name}</td>
+                        <td>{news.news_name}</td>
                         <td>
                             <div className="image-container">
-                                <img src={location.location_img} alt={location.name} style={{width: "30%", borderRadius: "10px"}}/>
+                                <img src={news.news_image} alt={news.name} style={{width: "40%", borderRadius: "10px"}}/>
                             </div>
                         </td>
-                        <td>{location.status}</td>
+                        <td>{news.newsCate.cate_name}</td>
+                        <td>{news.news_status}</td>
+                        <td>{news.news_date}</td>
                         <td className="dt-cell-action">
-                            <ListNewsAction id={location.id} onDelete={handleDelete}/>
+                            <ListNewsAction id={news.id} onDelete={handleDelete}/>
                         </td>
                     </tr>
                 ))}

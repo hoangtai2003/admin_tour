@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Select from 'react-select';
 import axios from 'axios';
-import { BASE_URL } from '../../../utils/config';
 import { FaSave } from "react-icons/fa";
 import { GrPowerReset } from "react-icons/gr";
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { SidebarContext } from '../../../context/SideBarContext';
 
 const EditCategory = () => {
     const { id } = useParams()
+    const { url } = useContext(SidebarContext)
     const [formData, setFormData] = useState({
         cate_name: '',
         cate_description: '',
@@ -22,7 +23,7 @@ const EditCategory = () => {
     useEffect(() => {
         const fetchCategory = async() => {
             try {
-                const response = await axios.get(`${BASE_URL}/category/${id}`)
+                const response = await axios.get(`${url}/category/${id}`)
                 const categoryData = response.data.data
                 setFormData({
                     cate_name: categoryData.cate_name,
@@ -48,7 +49,7 @@ const EditCategory = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.put(`${BASE_URL}/category/${id}`, formData);
+            const res = await axios.put(`${url}/category/${id}`, formData);
             if (res.status !== 200) {
                 return alert(res.data.message);
             }
