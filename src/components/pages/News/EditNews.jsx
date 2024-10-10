@@ -36,12 +36,12 @@ const EditNews = () => {
             }
         };
         fetchCategory()
-    }, [])
+    }, [url])
    
    useEffect(() => {
         const fetchNews = async () => {
             try {
-                const response = await axios.get(`${url}/news/${id}`)
+                const response = await axios.get(`${url}/news/singleNews/${id}`)
                 const newsData = response.data.data
                 console.log(newsData)
                 setFormData({
