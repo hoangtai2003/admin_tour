@@ -16,6 +16,7 @@ const AddLocation = () => {
         news_image: '',
         news_date: '',
         news_status: "Xuất bản",
+        news_content: ''
     });
     const { url } = useContext(SidebarContext)
     const navigate = useNavigate();
@@ -84,6 +85,7 @@ const AddLocation = () => {
             formSubmit.append('news_status', formData.news_status);
             formSubmit.append('news_date', formData.news_date);
             formSubmit.append("cate_id", formData.cate_id)
+            formSubmit.append('news_content', formData.news_content)
             const res = await axios.post(`${url}/news`, formSubmit, {
                 headers: {
                     'Content-Type': 'multipart/form-data' 
@@ -135,7 +137,10 @@ const AddLocation = () => {
                             <input type='date' name='news_date' onChange={handleChange}/>
                         </div>
                     </div>
-
+                    <div className="form-group">
+                        <label>Nội dung tin tức</label>
+                        <textarea rows="10" style={{width: "100%"}} onChange={handleChange} name='news_content'/>
+                    </div>
                     <div className="form-group">
                         <label>Mô tả tin tức <span>*</span></label>
                         <CKEditor

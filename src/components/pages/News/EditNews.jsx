@@ -15,7 +15,8 @@ const EditNews = () => {
         news_description: '',
         news_image: '',
         news_date: '',
-        news_status: "",
+        news_status: '',
+        news_content: ''
     });
     const { url } = useContext(SidebarContext)
     const navigate = useNavigate();
@@ -49,7 +50,8 @@ const EditNews = () => {
                     news_image: newsData.news_image,
                     news_date: newsData.news_date,
                     news_status: newsData.news_status,
-                    cate_id: newsData.cate_id
+                    cate_id: newsData.cate_id,
+                    news_content: newsData.news_content
                 });
                 setImagePreview(newsData.news_image);
             } catch (error) {
@@ -104,6 +106,7 @@ const EditNews = () => {
             formSubmit.append('news_status', formData.news_status);
             formSubmit.append('news_date', formData.news_date);
             formSubmit.append("cate_id", formData.cate_id)
+            formSubmit.append('news_content', formData.news_content)
             const res = await axios.put(`${url}/news/${id}`, formSubmit, {
                 headers: {
                     'Content-Type': 'multipart/form-data' 
@@ -165,7 +168,10 @@ const EditNews = () => {
                             />
                         </div>
                     </div>
-
+                    <div className="form-group">
+                        <label>Nội dung tin tức</label>
+                        <textarea rows="10" style={{width: "100%"}} onChange={handleChange} value={formData.news_content} name='news_content'/>
+                    </div>
                     <div className="form-group">
                         <label>Mô tả tin tức <span>*</span></label>
                         <CKEditor
