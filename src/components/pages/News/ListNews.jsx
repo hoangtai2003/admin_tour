@@ -71,7 +71,7 @@ const ListNews = () => {
                         </td>
                         <td>{news.newsCate.cate_name}</td>
                         <td>{news.news_status}</td>
-                        <td>{news.news_date}</td>
+                        <td>{new Date(news.news_date).toLocaleDateString("vi-VN")}</td>
                         <td className="dt-cell-action">
                             <ListNewsAction id={news.id} onDelete={handleDelete}/>
                         </td>
