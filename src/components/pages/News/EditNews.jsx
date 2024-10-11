@@ -43,7 +43,6 @@ const EditNews = () => {
             try {
                 const response = await axios.get(`${url}/news/singleNews/${id}`)
                 const newsData = response.data.data
-                console.log(newsData)
                 setFormData({
                     news_name: newsData.news_name,
                     news_description: newsData.news_description,
@@ -161,7 +160,7 @@ const EditNews = () => {
                         <div className='form-group'>
                             <label>Ngày đăng</label>
                             <input 
-                                type='date' 
+                                type='datetime-local' 
                                 name='news_date' 
                                 value={formData.news_date}  
                                 onChange={handleChange}
