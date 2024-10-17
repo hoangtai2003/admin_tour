@@ -1,0 +1,145 @@
+.dashboard-title{
+    font-size: 22px;
+    color: var(--xl-text-color);
+    margin-bottom: 30px;
+}
+.dashboard-container {
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+.dashboard-wrapper-header {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-between; 
+}
+
+.dashboard_header-item {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    margin: 13px;
+    flex: 1 1 20%; 
+    max-width: calc(25% - 26px); 
+}
+
+.dashboard_header-item svg {
+    font-size: 56px;
+    margin-right: 15px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.dashboard_header-item:nth-child(1) svg {
+    color: #ffffff;
+    background-color: #00a1f1;
+}
+
+.dashboard_header-item:nth-child(2) svg {
+    color: #ffffff;
+    background-color: #7fba00;
+}
+.dashboard_header-item:nth-child(3) svg {
+    color: #ffffff;
+    background-color: rgb(185, 27, 27);
+}
+.dashboard_header-item:nth-child(4) svg {
+    color: #ffffff;
+    background-color: #00a1f1;
+}
+.dashboard_header-item:nth-child(5) svg {
+    color: #ffffff;
+    background-color: #00a1f1;
+}
+.dashboard_header-item:nth-child(6) svg {
+    color: #ffffff;
+    background-color: #00a1f1;
+}
+.dashboard_header-item:nth-child(7) svg {
+    color: #ffffff;
+    background-color: #00a1f1;
+}
+.dashboard_header-item--content {
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard_header-item--content p {
+    margin: 0;
+    font-size: 15px;
+    color: #666;
+}
+
+.dashboard_header-item--content span {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+.dashboard-wrapper-outstand{
+    margin-top: 30px;
+}
+.dashboard-outstand-title{
+    margin-bottom: 20px;
+}
+.dashboard-wrapper-outstand table {
+    min-width: 900px;
+    width: 100%;
+    border-collapse: collapse; 
+    border: 1px solid var(--tbl-border-color); 
+}
+
+.dashboard-wrapper-outstand table td,
+.dashboard-wrapper-outstand table th
+{
+    padding: 5px 10px;
+    border: 1px solid #eeecec; 
+}
+.dashboard-wrapper-outstand table th, tr{
+    text-align: center;
+}
+.dashboard-wrapper-outstand table p {
+    padding: 10px;
+}
+.dashboard-wrapper-outstand table thead {
+    text-align: left;
+    font-size: 17px;
+    background-color: var(--thead-bg-color);
+}
+
+.dashboard-wrapper-outstand table thead th:last-child {
+    text-align: center;
+}
+.dashboard-wrapper-chart {
+    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+}
+.dashboard-filter {
+    display: flex;
+    justify-content: left;
+    margin-top: 50px;
+}
+.dashboard-filter select{
+    width: 15%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+}
+.dashboard-filter button{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: green;
+    font-size: 15px;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px;
+}
+.dashboard-filter button svg{
+    margin-right: 10px;
+    font-size: 15px;
+    
+}
+  

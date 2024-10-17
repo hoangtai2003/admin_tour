@@ -46,8 +46,8 @@ const Sidebar = () => {
           <div className="sidebar-body">
             <div className="sidebar-menu">
               <ul className="menu-list">
-                <li className={`menu-item ${activeLink === "/" ? "active" : ""}`}>
-                  <Link to="/" className="menu-link" onClick={() => setActiveLink("/")}>
+                <li className={`menu-item ${activeLink === "/dashboard" ? "active" : ""}`}>
+                  <Link to="/dashboard" className="menu-link" onClick={() => setActiveLink("/dashboard")}>
                     <span className="menu-link-icon">
                       <FaHome size={18}/>
                     </span>
