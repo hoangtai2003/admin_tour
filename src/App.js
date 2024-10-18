@@ -12,7 +12,6 @@ import AddLocation from "./components/pages/Location/AddLocation";
 import EditLocation from "./components/pages/Location/EditLocation";
 import ListUser from "./components/pages/User/ListUser"
 import AddUser from "./components/pages/User/AddUser"
-import EditUser from "./components/pages/User/EditUser"
 import ListBooking from "./components/pages/Booking/ListBooking";
 import ListNews from "./components/pages/News/ListNews"
 import ListCategory from './components/pages/Category/ListCategory'
@@ -66,11 +65,6 @@ const  App = () => {
                     <Route path="/add-user" element={
                         <PrivateRoute>
                             <AddUser />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/edit-user/:id" element={
-                        <PrivateRoute>
-                            <EditUser />
                         </PrivateRoute>
                     } />
                     <Route path="/list-booking" element={

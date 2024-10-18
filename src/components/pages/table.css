@@ -21,7 +21,6 @@
     min-width: 900px;
     width: 100%;
     border-collapse: collapse; 
-    border: 1px solid var(--tbl-border-color); 
 }
 
 .content-area-table .data-table-diagram table td,
