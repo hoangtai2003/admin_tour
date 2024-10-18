@@ -1,13 +1,15 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const SidebarContext = createContext(null);
 
 export const SidebarProvider = (props) => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
-    const [token, setToken] = useState("")
+    const [ token, setToken ] = useState("")
     const [ user, setUser ] = useState([])
     const url = 'http://localhost:4000/api/v1'
+    const navigate = useNavigate()
     const openSidebar = () => {
       setSidebarOpen(true);
     };
@@ -29,8 +31,13 @@ export const SidebarProvider = (props) => {
                     }
                 })
                 setUser(response.data.data)
-            } catch(error){
-                console.error("Lỗi khi lấy thông tin người dùng", error);
+            } catch(error) {
+                if (error.response){
+                    localStorage.removeItem("token_admin");
+                    setToken(null)
+                    navigate('/login')
+                }
+                
             }
         }
         if(token){

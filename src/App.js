@@ -24,99 +24,97 @@ import ListReview from "./components/pages/Review/ListReview";
 const  App = () => {
   return (
     <>
-        <Router>
-            <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route element={<BaseLayout />}>
-                    <Route path="/list-tour" element={
-                        <PrivateRoute>
-                            <ListTour />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/add-tour" element={
-                        <PrivateRoute>
-                            <AddTour />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/edit-tour/:id" element={
-                        <PrivateRoute>
-                            <EditTour />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/list-location" element={
-                        <PrivateRoute>
-                            <ListLocation />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/add-location" element={
-                        <PrivateRoute>
-                            <AddLocation />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/edit-location/:id" element={
-                        <PrivateRoute>
-                            <EditLocation />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/list-user" element={
-                        <PrivateRoute>
-                            <ListUser />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/add-user" element={
-                        <PrivateRoute>
-                            <AddUser />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/list-booking" element={
-                        <PrivateRoute>
-                            <ListBooking />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/list-news" element={
-                        <PrivateRoute>
-                            <ListNews />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/list-category" element={
-                        <PrivateRoute>
-                            <ListCategory />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/add-category" element={
-                        <PrivateRoute>
-                            <AddCategory />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/edit-category/:id" element={
-                        <PrivateRoute>
-                            <EditCategory />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/add-news" element={
-                        <PrivateRoute>
-                            <AddNews />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/edit-news/:id" element={
-                        <PrivateRoute>
-                            <EditNews />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/dashboard" element={
-                        <PrivateRoute>
-                            <Dashboard />
-                        </PrivateRoute>
-                    } />
-                    <Route path="/list-review" element={
-                        <PrivateRoute>
-                            <ListReview />
-                        </PrivateRoute>
-                    } />
-                    <Route path="*" element={<PageNotFound />} />
-                </Route>
-            </Routes>
-        </Router>
+        <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route element={<BaseLayout />}>
+                <Route path="/list-tour" element={
+                    <PrivateRoute>
+                        <ListTour />
+                    </PrivateRoute>
+                } />
+                <Route path="/add-tour" element={
+                    <PrivateRoute>
+                        <AddTour />
+                    </PrivateRoute>
+                } />
+                <Route path="/edit-tour/:id" element={
+                    <PrivateRoute>
+                        <EditTour />
+                    </PrivateRoute>
+                } />
+                <Route path="/list-location" element={
+                    <PrivateRoute>
+                        <ListLocation />
+                    </PrivateRoute>
+                } />
+                <Route path="/add-location" element={
+                    <PrivateRoute>
+                        <AddLocation />
+                    </PrivateRoute>
+                } />
+                <Route path="/edit-location/:id" element={
+                    <PrivateRoute>
+                        <EditLocation />
+                    </PrivateRoute>
+                } />
+                <Route path="/list-user" element={
+                    <PrivateRoute>
+                        <ListUser />
+                    </PrivateRoute>
+                } />
+                <Route path="/add-user" element={
+                    <PrivateRoute>
+                        <AddUser />
+                    </PrivateRoute>
+                } />
+                <Route path="/list-booking" element={
+                    <PrivateRoute>
+                        <ListBooking />
+                    </PrivateRoute>
+                } />
+                <Route path="/list-news" element={
+                    <PrivateRoute>
+                        <ListNews />
+                    </PrivateRoute>
+                } />
+                <Route path="/list-category" element={
+                    <PrivateRoute>
+                        <ListCategory />
+                    </PrivateRoute>
+                } />
+                <Route path="/add-category" element={
+                    <PrivateRoute>
+                        <AddCategory />
+                    </PrivateRoute>
+                } />
+                <Route path="/edit-category/:id" element={
+                    <PrivateRoute>
+                        <EditCategory />
+                    </PrivateRoute>
+                } />
+                <Route path="/add-news" element={
+                    <PrivateRoute>
+                        <AddNews />
+                    </PrivateRoute>
+                } />
+                <Route path="/edit-news/:id" element={
+                    <PrivateRoute>
+                        <EditNews />
+                    </PrivateRoute>
+                } />
+                <Route path="/dashboard" element={
+                    <PrivateRoute>
+                        <Dashboard />
+                    </PrivateRoute>
+                } />
+                <Route path="/list-review" element={
+                    <PrivateRoute>
+                        <ListReview />
+                    </PrivateRoute>
+                } />
+                <Route path="*" element={<PageNotFound />} />
+            </Route>
+        </Routes>
     </>
   );
 }
