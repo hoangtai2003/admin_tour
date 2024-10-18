@@ -99,8 +99,8 @@ const Sidebar = () => {
                     <span className="menu-link-text">Danh sách đặt tour</span>
                   </Link>
                 </li>
-                <li className={`menu-item ${activeLink === "/" ? "active" : ""}`}>
-                  <Link to="/" className="menu-link" onClick={() => setActiveLink("/")}>
+                <li className={`menu-item ${activeLink === "/list-review" ? "active" : ""}`}>
+                  <Link to="/list-review" className="menu-link" onClick={() => setActiveLink("/list-review")}>
                     <span className="menu-link-icon">
                       <TiMessages size={20} />
                     </span>

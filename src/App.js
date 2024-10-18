@@ -20,6 +20,7 @@ import EditCategory from "./components/pages/Category/EditCategory";
 import EditNews from "./components/pages/News/EditNews"
 import AddNews from "./components/pages/News/AddNews";
 import Dashboard from "./components/pages/Dashboard/Dashboard"
+import ListReview from "./components/pages/Review/ListReview";
 const  App = () => {
   return (
     <>
@@ -105,6 +106,11 @@ const  App = () => {
                     <Route path="/dashboard" element={
                         <PrivateRoute>
                             <Dashboard />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/list-review" element={
+                        <PrivateRoute>
+                            <ListReview />
                         </PrivateRoute>
                     } />
                     <Route path="*" element={<PageNotFound />} />
