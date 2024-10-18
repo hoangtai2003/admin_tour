@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import LisTourAction from "./ListTourAction";
 import "../table.css";
-import { BASE_URL } from "../../../utils/config";
 import { IoMdAdd } from "react-icons/io";
 import Pagination from "../Pagination";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { SidebarContext } from "../../../context/SideBarContext";
 const TABLE_HEADS = [
   "STT",
   "Tiêu đề",
@@ -21,11 +21,11 @@ const ListTour = () => {
     const [tours, setTours] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
-
+    const { url } = useContext(SidebarContext)
     useEffect(() => {
         const fetchTours = async () => {
             try {
-                const response = await axios.get(`${BASE_URL}/tours?page=${currentPage}`);
+                const response = await axios.get(`${url}/tours?page=${currentPage}`);
                 setTours(response.data.data);
                 setTotalPages(response.data.totalPages);
             } catch (error) {

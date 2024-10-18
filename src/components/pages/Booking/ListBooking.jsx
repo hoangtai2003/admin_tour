@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import "../table.css"
-import { BASE_URL } from "../../../utils/config";
 import Pagination from "../Pagination";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Form } from 'react-bootstrap'
+import { SidebarContext } from "../../../context/SideBarContext";
 const TABLE_HEADS = [
   "STT",
   "Tên tour / Mã tour",
@@ -20,10 +20,10 @@ const ListBooking = () => {
     const [booking, setBooking] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
-
+    const { url } = useContext(SidebarContext)
     const fetchBooking = async () => {
         try {
-            const response = await axios.get(`${BASE_URL}/booking?page=${currentPage}`);
+            const response = await axios.get(`${url}/booking?page=${currentPage}`);
             setBooking(response.data.data);
             setTotalPages(response.data.totalPages);
         } catch (error) {
@@ -35,7 +35,7 @@ const ListBooking = () => {
     }, [currentPage]);
     const statusHandler = async (event, bookingId) => {
         try {
-            const response = await axios.post(`${BASE_URL}/booking/${bookingId}/status`, {
+            const response = await axios.post(`${url}/booking/${bookingId}/status`, {
                 status: event.target.value
             });
             if (response.data.success) {

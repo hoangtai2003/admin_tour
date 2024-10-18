@@ -1,35 +1,36 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { BASE_URL } from "../../../utils/config";
 import Select from 'react-select'
 import { FaSave } from "react-icons/fa";
 import { GrPowerReset } from "react-icons/gr";
 import { toast } from "react-toastify";
+import { SidebarContext } from "../../../context/SideBarContext";
 const EditUser = () => {
     const navigate = useNavigate()
     const { id } = useParams()
+    const { url } = useContext(SidebarContext)
     const [formData, setFormData] = useState({
         status: '',
         role: ''
     })
     const role = [
-        { value: 0, label: 'Administrator' },
-        { value: 1, label: 'User' },
-        { value: 2, label: 'Customer' }  
+        { value: 'Administrator', label: 'Administrator' },
+        { value: 'Nhân viên', label: 'Nhân viên' },
+        { value: 'Khách hàng', label: 'Khách hàng' }  
     ]
     const status = [
-        { value: 0, label: 'Hoạt động' },
-        { value: 1, label: 'Ngừng hoạt động' },
+        { value: 'Hoạt động', label: 'Hoạt động' },
+        { value: 'Ngừng hoạt động', label: 'Ngừng hoạt động' },
     ];
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get(`${BASE_URL}/users/${id}`)
+                const response = await axios.get(`${url}/users/${id}`)
                 const userData = response.data.data
 
                 setFormData({
-                    status: userData.status.data[1],
+                    status: userData.status,
                     role: userData.role
                 })
             } catch (error) {
@@ -37,7 +38,7 @@ const EditUser = () => {
             }
         }
         fetchUserData()
-    }, [id])
+    }, [id, url])
     const handleRoleChange = (selectedOption) => {
         setFormData(prev => ({ ...prev, role: selectedOption ? selectedOption.value : ''}))
     }
@@ -47,7 +48,7 @@ const EditUser = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response  = await axios.put(`${BASE_URL}/users/${id}`, formData)
+            const response  = await axios.put(`${url}/users/${id}`, formData)
             if (response.status !== 200) {
                 return alert(response.data.message);
             }
@@ -61,7 +62,7 @@ const EditUser = () => {
         <form onSubmit={handleSubmit}>
             <div className="tour-form-container">
                 <div className="tour-form-left">
-                    
+                    <div className="form-row">
                         <div className="form-group">
                             <label>Vai trò <span>*</span></label>
                             <Select 
@@ -78,6 +79,8 @@ const EditUser = () => {
                                 value={status.find(option => option.value === formData.status)}
                             />
                         </div>
+                    </div>
+
                     <div className="form-actions">
                         <button type="submit"><FaSave className='icon' />Lưu dữ liệu</button>
                         <button type="button" ><GrPowerReset className='icon' /> Reset</button>

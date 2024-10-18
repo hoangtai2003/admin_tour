@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './tour.css';
 import Select from 'react-select';
 import axios from 'axios';
-import { BASE_URL } from '../../../utils/config'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { FaSave } from "react-icons/fa";
@@ -10,6 +9,7 @@ import { GrPowerReset } from "react-icons/gr";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AiOutlineDelete } from "react-icons/ai";
+import { SidebarContext } from '../../../context/SideBarContext';
 const AddTour = () => {
     const [formData, setFormData] = useState({
         name: '',
@@ -40,7 +40,7 @@ const AddTour = () => {
             }
         ]
     });
-    
+    const {url} = useContext(SidebarContext)
     const [showTourChildren, setShowTourChildren] = useState(false); 
     const navigate = useNavigate();
     const [locations, setLocations] = useState([]);
@@ -48,7 +48,7 @@ const AddTour = () => {
     useEffect(() => {
         const fetchLocations = async () => {
             try {
-                const response = await axios.get(`${BASE_URL}/location/all/getAllLocation`);
+                const response = await axios.get(`${url}/location/all/getAllLocation`);
                 const transformedLocations = transformLocations(response.data.data);
                 setLocations(transformedLocations);
             } catch (error) {
@@ -181,7 +181,7 @@ const AddTour = () => {
         formDataObj.append('tour_children', JSON.stringify(formData.tour_children));
     
         try {
-            const res = await axios.post(`${BASE_URL}/tours`, formDataObj, {
+            const res = await axios.post(`${url}/tours`, formDataObj, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
     

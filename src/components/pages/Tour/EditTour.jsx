@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './tour.css';
 import Select from 'react-select';
 import axios from 'axios';
-import { BASE_URL } from '../../../utils/config'
 import { CKEditor} from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { FaSave } from "react-icons/fa";
@@ -10,9 +9,11 @@ import { GrPowerReset } from "react-icons/gr";
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import { AiOutlineDelete } from "react-icons/ai";
+import { SidebarContext } from '../../../context/SideBarContext';
 const EditTour = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { url } = useContext(SidebarContext)
     const [formData, setFormData] = useState({
         name: '',
         description_itinerary: '',
@@ -48,7 +49,7 @@ const EditTour = () => {
     useEffect(() => {
         const fetchTourData = async () => {
             try {
-                const response = await axios.get(`${BASE_URL}/tours/${id}`);
+                const response = await axios.get(`${url}/tours/${id}`);
                 const tourData = response.data.data;
 
                 const locationIds = tourData.locations.map(loc => loc.TourLocation.location_id);
@@ -100,7 +101,7 @@ const EditTour = () => {
     useEffect(() => {
         const fetchLocations = async () => {
             try {
-                const response = await axios.get(`${BASE_URL}/location/all/getAllLocation`);
+                const response = await axios.get(`${url}/location/all/getAllLocation`);
                 const transformedLocations = transformLocations(response.data.data);
                 setLocations(transformedLocations);
             } catch (error) {
@@ -231,7 +232,7 @@ const EditTour = () => {
         formDataObj.append('location_ids', JSON.stringify(formData.location_ids));
         formDataObj.append('tour_children', JSON.stringify(formData.tour_children));
         try {
-            const res = await axios.put(`${BASE_URL}/tours/${id}`, formDataObj, {
+            const res = await axios.put(`${url}/tours/${id}`, formDataObj, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             if (res.status !== 200) {

@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Select from 'react-select';
 import axios from 'axios';
-import { BASE_URL } from '../../../utils/config';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { FaSave } from "react-icons/fa";
 import { GrPowerReset } from "react-icons/gr";
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { SidebarContext } from '../../../context/SideBarContext';
 
 const EditLocation = () => {
     const { id } = useParams();
+    const { url } = useContext(SidebarContext)
     const [formData, setFormData] = useState({
         name: '',
         description: '',
@@ -23,7 +24,7 @@ const EditLocation = () => {
     useEffect(() => {
         const fetchLocationData = async () => {
             try {
-                const response = await axios.get(`${BASE_URL}/location/${id}`);
+                const response = await axios.get(`${url}/location/${id}`);
                 const locationData = response.data.data;
 
                 setFormData({
@@ -80,7 +81,7 @@ const EditLocation = () => {
             formDataToSubmit.append('parent_id', formData.parent_id);
             formDataToSubmit.append('location_img', formData.location_img);
             formDataToSubmit.append('status', formData.status);
-            const res = await axios.put(`${BASE_URL}/location/${id}`, formData, {
+            const res = await axios.put(`${url}/location/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data' 
                 }

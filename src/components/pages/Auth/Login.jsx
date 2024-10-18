@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Container, Form, FormGroup, Button } from "reactstrap";
 import { useNavigate } from 'react-router-dom'
-import { AuthContext } from '../../../context/AuthContext'
 import './auth.css'
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
@@ -11,26 +10,29 @@ const Login = () => {
         email: "",  
         password: ""  
     })
-    const { url } = useContext(SidebarContext)
+    const { url, setToken } = useContext(SidebarContext)
     const navigate = useNavigate()
-    const { dispatch } = useContext(AuthContext)
 
     const handleChange = (e) => {
-        setFormData(prev => ({ ...prev, [e.target.id]: e.target.value }));
+        const name = e.target.name
+        const value = e.target.value
+        setFormData(prev => ({ ...prev, [name]: value }));
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch({ type: 'LOGIN_START' });
-
         try {
             const response = await axios.post(`${url}/auth/login`, formData)
-            dispatch({ type: 'LOGIN_SUCCESS', payload: response.data });
-            navigate('/list-tour');
-            toast.success("Login successfully")
+            if (response.data.success){
+                setToken(response.data.token)
+                localStorage.setItem("token_admin", response.data.token)
+                navigate('/dashboard');
+                toast.success("Đăng nhập thành công!")
+            } else {
+                toast.error("Đăng nhập thất bại")
+            }
         } catch (error) {
-            dispatch({ type: 'LOGIN_FAILURE', payload: error.message });
-            toast.error("Login failed!");
+            toast.error("Đăng nhập thất bại");
         }
     }
 
@@ -42,7 +44,7 @@ const Login = () => {
                 <FormGroup>
                     <input
                         type='email'
-                        id="email"
+                        name="email"
                         placeholder='Email'
                         required
                         onChange={handleChange}
@@ -52,7 +54,7 @@ const Login = () => {
                 <FormGroup>
                     <input
                         type='password'
-                        id="password"
+                        name="password"
                         placeholder='Password'
                         required
                         onChange={handleChange}

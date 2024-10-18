@@ -1,22 +1,23 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaSave } from "react-icons/fa";
 import { GrPowerReset } from "react-icons/gr";
 import Select from 'react-select'
-import { BASE_URL } from "../../../utils/config";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { SidebarContext } from "../../../context/SideBarContext";
 const role = [
-    { value: 0, label: 'Administrator' },
-    { value: 1, label: 'User' },
-    { value: 2, label: 'Customer' }  
+    { value: 'Administrator', label: 'Administrator' },
+    { value: 'Nhân viên', label: 'Nhân viên' },
+    { value: 'Khách hàng', label: 'Khách hàng' }  
 ]
 const status = [
-    { value: 0, label: 'Hoạt động' },
-    { value: 1, label: 'Ngừng hoạt động' },
+    { value: 'Hoạt động', label: 'Hoạt động' },
+    { value: 'Ngừng hoạt động', label: 'Ngừng hoạt động' },
 ];
 const AddUser  = () => {
     const navigate = useNavigate()
+    const { url } = useContext(SidebarContext)
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -38,7 +39,7 @@ const AddUser  = () => {
     const handleSubmit =  async(e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${BASE_URL}/users`, formData)
+            const response = await axios.post(`${url}/users`, formData)
             if (response.status !== 200) {
                 return toast.error(response.data.message);
             }

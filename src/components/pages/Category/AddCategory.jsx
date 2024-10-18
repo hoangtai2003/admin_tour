@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
 import axios from 'axios';
-import { BASE_URL } from '../../../utils/config';
 import { FaSave } from "react-icons/fa";
 import { GrPowerReset } from "react-icons/gr";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { SidebarContext } from '../../../context/SideBarContext';
 
 const AddCategory = () => {
     const [formData, setFormData] = useState({
@@ -13,6 +13,7 @@ const AddCategory = () => {
         cate_description: '',
         cate_status: "Hiển thị" 
     });
+    const { url } = useState(SidebarContext)
     const navigate = useNavigate();
     const status = [
         { value: "Hiển thị", label: 'Hiển thị' },
@@ -32,7 +33,7 @@ const AddCategory = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post(`${BASE_URL}/category`, formData);
+            const res = await axios.post(`${url}/category`, formData);
             if (res.status !== 200) {
                 return alert(res.data.message);
             }

@@ -1,18 +1,20 @@
 import { HiDotsHorizontal } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import {BASE_URL} from '../../../utils/config'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 import { useDropdown } from "../../Hooks/useDropdown";
+import { useContext } from "react";
+import { SidebarContext } from "../../../context/SideBarContext";
 const ListCategoryAction = ({ id, onDelete }) => {
     const { isDropdownOpen, toggleDropdown, dropdownRef } = useDropdown(); 
+    const { url } = useContext(SidebarContext)
     const handleDeleteCategory = async () => {
         const confirmDelete = window.confirm("Are you sure you want to delete this category?");
         if (!confirmDelete) return;
 
         try {
-            const response  = await axios.delete(`${BASE_URL}/category/${id}`);
+            const response  = await axios.delete(`${url}/category/${id}`);
             if (response.status === 200) {
                 onDelete(id);
                 toast.success("Xóa danh mục thành công");

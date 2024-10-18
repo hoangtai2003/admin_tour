@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import ListUserAction from "./ListUserAction"
 import '../table.css'
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { IoMdAdd } from "react-icons/io";
-import { BASE_URL } from '../../../utils/config';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { SidebarContext } from '../../../context/SideBarContext';
 const TABLE_HEADS = [
     "STT",
     "Họ tên",
@@ -19,17 +19,18 @@ const TABLE_HEADS = [
 ];
 const ListUser = () =>  {
     const [users, setUser] = useState([])
+    const { url } = useContext(SidebarContext)
     useEffect(() => {
         const fetchUsers = async() => {
             try {
-                const response  = await axios.get(`${BASE_URL}/users`)
+                const response  = await axios.get(`${url}/users`)
                 setUser(response.data.data)
             } catch (error) {
                 toast.error('Error fetching users');
             }
         } 
         fetchUsers()
-    }, [])
+    }, [url])
     const handleDelete = (id) => {
         setUser(users.filter(user => user.id !== id));
     }
@@ -56,8 +57,8 @@ const ListUser = () =>  {
                             <td>{user.username}</td>
                             <td>{user.email}</td>
                             <td>{user.phone}</td>
-                            <td> {user.role === 0 ? "Administrator" : user.role === 1 ? "User" : "Customer"}</td>
-                            <td>{user.status.data[1] === 0 ? "Hoạt động" : "Không hoạt động" }</td>
+                            <td> {user.role}</td>
+                            <td>{user.status }</td>
                             <td className="dt-cell-action">
                                 <ListUserAction id={user.id} onDelete={handleDelete}/>
                             </td>

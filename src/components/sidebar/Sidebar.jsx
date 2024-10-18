@@ -1,7 +1,6 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 import {
   MdOutlineBarChart,
-  MdOutlineClose,
   MdOutlineLogout,
 } from "react-icons/md";
 import { FaUser, FaHome, FaRegFileWord, FaBed, FaShoppingCart, FaHammer } from "react-icons/fa";
@@ -11,27 +10,25 @@ import { SlLocationPin } from "react-icons/sl";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./sidebar.css";
 import { SidebarContext } from "../../context/SideBarContext";
-import { AuthContext } from "../../context/AuthContext";
 import { Button } from "reactstrap";
 
 const Sidebar = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
-    const { dispatch } = useContext(AuthContext);
+    const { isSidebarOpen, setToken } = useContext(SidebarContext);
     const navbarRef = useRef(null);
     
-    // Sử dụng state để lưu đường dẫn hiện tại
     const [activeLink, setActiveLink] = useState(location.pathname);
 
     useEffect(() => {
         setActiveLink(location.pathname);
     }, [location.pathname]);
 
-    const logout = () => {
-        dispatch({ type: "LOGOUT" });
-        navigate('/login');
-    }
+    const handleLogout = () => {
+        localStorage.removeItem("token_admin");
+        setToken(""); 
+        navigate("/login");
+    };
 
     return (
         <nav
@@ -40,7 +37,7 @@ const Sidebar = () => {
         >
           <div className="sidebar-top">
             <div className="sidebar-brand">
-              <span className="sidebar-brand-text">Travel tour.</span>
+              <span className="sidebar-brand-text">Du lịch Việt.</span>
             </div>
           </div>
           <div className="sidebar-body">
@@ -132,7 +129,7 @@ const Sidebar = () => {
             <div className="sidebar-menu sidebar-menu2">
               <ul className="menu-list">
                 <li className="menu-item">
-                  <Button type="submit" className="menu-link" onClick={logout}>
+                  <Button type="submit" className="menu-link" onClick={handleLogout}>
                     <span className="menu-link-icon">
                       <MdOutlineLogout size={20} />
                     </span>

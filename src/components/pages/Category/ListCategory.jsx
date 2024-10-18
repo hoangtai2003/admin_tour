@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ListCategoryAction from "./ListCategoryAction"
 import axios from "axios";
 import '../table.css'
@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { IoMdAdd } from "react-icons/io";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-const BASE_URL = "http://localhost:4000/api/v1"
+import { SidebarContext } from "../../../context/SideBarContext";
 const TABLE_HEADS = [
   "STT",
   "Tên danh mục",
@@ -15,10 +15,11 @@ const TABLE_HEADS = [
 ];
 const ListCategory = () => {
     const [category, setCategory] = useState([])
+    const {url} = useContext(SidebarContext)
     useEffect(() => {
         const fetchCategory = async () => {
             try {
-                const response = await axios.get(`${BASE_URL}/category`)
+                const response = await axios.get(`${url}/category`)
                 setCategory(response.data.data)
             } catch (error) {
                 toast.error('Đã có lỗi xảy ra!');

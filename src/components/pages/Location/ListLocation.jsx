@@ -1,5 +1,5 @@
 import ListLocationAction from "./ListLocationAction"
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import '../table.css'
 import { Link } from "react-router-dom";
@@ -7,7 +7,7 @@ import { IoMdAdd } from "react-icons/io";
 import Pagination from "../Pagination";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-const BASE_URL = "http://localhost:4000/api/v1"
+import { SidebarContext } from "../../../context/SideBarContext";
 const TABLE_HEADS = [
   "STT",
   "Tên địa điểm",
@@ -19,10 +19,11 @@ const ListLocation = () => {
     const [locations, setLocations] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0)
+    const { url } = useContext(SidebarContext)
     useEffect(() => {
         const fetchLocations = async () => {
             try {
-                const response = await axios.get(`${BASE_URL}/location?page=${currentPage}`)
+                const response = await axios.get(`${url}/location?page=${currentPage}`)
                 setLocations(response.data.data)
                 setTotalPages(response.data.totalPages)
             } catch (error) {

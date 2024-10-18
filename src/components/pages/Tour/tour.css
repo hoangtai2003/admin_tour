@@ -116,13 +116,11 @@
 .form-group input[type="file"] {
   padding: 3px;
 }
-
 .form-actions {
   display: flex;
-  justify-content: space-between;
   margin-top: 20px;
-}
 
+}
 .form-actions button {
   padding: 10px 20px;
   font-size: 16px;
@@ -135,6 +133,7 @@
 
 .form-actions button[type="button"] {
   background-color: #dc3545;
+  margin-left: 15px;
 }
 
 .form-actions button:hover {

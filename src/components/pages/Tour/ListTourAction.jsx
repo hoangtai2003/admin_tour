@@ -1,37 +1,20 @@
-import { useState, useEffect, useRef } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { HiDotsHorizontal } from 'react-icons/hi';
-import { BASE_URL } from '../../../utils/config';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { SidebarContext } from '../../../context/SideBarContext';
+import { useDropdown } from '../../Hooks/useDropdown';
 
 const ListTourAction = ({ id, onDelete }) => {
-    const [showDropdown, setShowDropdown] = useState(false);
-    const dropdownRef = useRef(null);
-
-    const handleDropdown = () => {
-        setShowDropdown(!showDropdown);
-    };
-
-    const handleClickOutside = (event) => {
-        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-            setShowDropdown(false);
-        }
-    };
-
-    useEffect(() => {
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
-
+    const { url } = useContext(SidebarContext)
+    const { isDropdownOpen, toggleDropdown, dropdownRef } = useDropdown(); 
     const handleDeleteTour = async () => {
         const confirmDelete = window.confirm("Are you sure you want to delete this tour?");
         if (!confirmDelete) return;
 
         try {
-            const response = await axios.delete(`${BASE_URL}/tours/${id}`);
+            const response = await axios.delete(`${url}/tours/${id}`);
 
             if (response.status === 200) {
                 onDelete(id);
@@ -48,11 +31,11 @@ const ListTourAction = ({ id, onDelete }) => {
         <>
             <div
                 className="action-dropdown-btn"
-                onClick={handleDropdown}
+                onClick={toggleDropdown}
                 style={{ cursor: 'pointer' }}
             >
                 <HiDotsHorizontal size={18} />
-                {showDropdown && (
+                {isDropdownOpen && (
                     <div className="action-dropdown-menu" ref={dropdownRef}>
                         <ul className="dropdown-menu-list">
                             <li className="dropdown-menu-item">
