@@ -97,8 +97,12 @@
     padding: 5px 10px;
     border: 1px solid #eeecec; 
 }
-.dashboard-wrapper-outstand table th, tr{
+.dashboard-wrapper-outstand table th,
+.dashboard-wrapper-outstand table tr {
     text-align: center;
+}
+.dashboard-wrapper-outstand table tr td{
+    background: #fff;
 }
 .dashboard-wrapper-outstand table p {
     padding: 10px;
@@ -119,16 +123,24 @@
 }
 .dashboard-filter {
     display: flex;
-    justify-content: left;
+    justify-content: center;
     margin-top: 50px;
 }
-.dashboard-filter select{
-    width: 15%;
-    border: 1px solid #ccc;
+.react-datepicker__input-container{
     border-radius: 5px;
-    padding: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background: #fff;
+    width: 135% !important;
+    
 }
-.dashboard-filter button{
+.react-datepicker__input-container input{
+    border: none;
+}
+.react-datepicker__input-container input:focus{
+    outline: none;
+}
+.dashboard-filter-button{
     border: 1px solid #ccc;
     border-radius: 5px;
     background: green;
@@ -136,6 +148,7 @@
     color: #fff;
     font-weight: 600;
     padding: 10px;
+    margin-left: 90px;
 }
 .dashboard-filter button svg{
     margin-right: 10px;
