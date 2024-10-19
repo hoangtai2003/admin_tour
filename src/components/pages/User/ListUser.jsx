@@ -11,11 +11,18 @@ import Select from 'react-select'
 const ListUser = () =>  {
     const [users, setUser] = useState([])
     const { url } = useContext(SidebarContext)
-    const role = [
-        { value: 'Administrator', label: 'Administrator' },
-        { value: 'Nhân viên', label: 'Nhân viên' },
-        { value: 'Khách hàng', label: 'Khách hàng' }  
-    ]
+    const [ role, setRole ] = useState([])
+    useEffect(() => {
+        const fetchRole = async() => {
+            const response = await axios.get(`${url}/role`)
+            const roleData = response.data.data.map(role => ({
+                value: role.id,
+                label: role.name
+            }))
+            setRole(roleData)
+        }
+        fetchRole()
+    }, [url])
     const status = [
         { value: 'Hoạt động', label: 'Hoạt động' },
         { value: 'Ngừng hoạt động', label: 'Ngừng hoạt động' },
@@ -34,10 +41,10 @@ const ListUser = () =>  {
     const handleRoleChange = async(selectedOption, userId) => {
         const updatedRole = selectedOption ? selectedOption.value : "";
         try {
-            await axios.put(`${url}/users/${userId}`, { role: updatedRole })
+            await axios.put(`${url}/users/${userId}`, { role_id: updatedRole })
             setUser((prevUsers) => 
                 prevUsers.map((user) => 
-                    user.id === userId ? { ...user, role: updatedRole } : user
+                    user.id === userId ? { ...user, role_id: updatedRole } : user
                 )
             )
             toast.success("Cập nhập thành công !");
@@ -107,7 +114,7 @@ const ListUser = () =>  {
                                     <Select 
                                         options={role} 
                                         onChange={(selectedOption) => handleRoleChange(selectedOption, user.id)}
-                                        value={role.find(option => option.value === user.role)}
+                                        value={role.find(option => option.value === user.role_id)}
                                     />
                                 </td>
                                 <td>

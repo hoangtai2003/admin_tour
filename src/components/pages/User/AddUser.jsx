@@ -1,31 +1,37 @@
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaSave } from "react-icons/fa";
 import { GrPowerReset } from "react-icons/gr";
 import Select from 'react-select'
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { SidebarContext } from "../../../context/SideBarContext";
-const role = [
-    { value: 'Administrator', label: 'Administrator' },
-    { value: 'Nhân viên', label: 'Nhân viên' },
-    { value: 'Khách hàng', label: 'Khách hàng' }  
-]
-const status = [
-    { value: 'Hoạt động', label: 'Hoạt động' },
-    { value: 'Ngừng hoạt động', label: 'Ngừng hoạt động' },
-];
 const AddUser  = () => {
     const navigate = useNavigate()
     const { url } = useContext(SidebarContext)
+    const [ role, setRole ] = useState([])
     const [formData, setFormData] = useState({
         username: '',
         email: '',
         phone: '',
-        role: '',
         status: '',
         password: ''
     })
+    const status = [
+        { value: 'Hoạt động', label: 'Hoạt động' },
+        { value: 'Ngừng hoạt động', label: 'Ngừng hoạt động' },
+    ];
+    useEffect(() => {
+        const fetchRole = async() => {
+            const response = await axios.get(`${url}/role`)
+            const roleData = response.data.data.map(role => ({
+                value: role.id,
+                label: role.name
+            }))
+            setRole(roleData)
+        }
+        fetchRole()
+    }, [url])
     const handleChange = async(e) => {
         const {name, value} = e.target;
         setFormData(prev => ({ ...prev, [name]: value }))
@@ -34,7 +40,7 @@ const AddUser  = () => {
         setFormData(prev => ({...prev, status: selectedOption ? selectedOption.value : ''}))
     }
     const handleRoleChange = async(selectedOption) => {
-        setFormData(prev => ({...prev, role: selectedOption ? selectedOption.value : ''}))
+        setFormData(prev => ({...prev, role_id: selectedOption ? selectedOption.value : ''}))
     }
     const handleSubmit =  async(e) => {
         e.preventDefault();
