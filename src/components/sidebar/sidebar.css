@@ -64,16 +64,27 @@
   
   .sidebar-brand {
     display: flex;
-    align-items: center;
-    column-gap: 6px;
+    align-items: flex-start; 
+    flex-direction: column; 
+    row-gap: 4px; 
+    padding: 10px; 
   }
   
   .sidebar-brand-text {
     text-transform: uppercase;
-    font-weight: 900;
+    font-weight: 700;
     color: var(--logo-color);
-    margin-bottom: 8px;
+    margin: 0; 
+    font-size: 18px; 
   }
+  
+  .sidebar-brand .sidebar-brand-user {
+    text-transform: none; 
+    font-weight: 600; 
+    color: var(--text-color);
+    font-size: 16px; 
+  }
+  
   
   @media (max-width: 1200px) {
     .sidebar-brand-text {

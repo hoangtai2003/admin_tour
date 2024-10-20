@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Select from 'react-select';
 import axios from 'axios';
 import { FaSave } from "react-icons/fa";
@@ -13,7 +13,7 @@ const AddCategory = () => {
         cate_description: '',
         cate_status: "Hiển thị" 
     });
-    const { url } = useState(SidebarContext)
+    const { url } = useContext(SidebarContext)
     const navigate = useNavigate();
     const status = [
         { value: "Hiển thị", label: 'Hiển thị' },

@@ -57,7 +57,7 @@ const AddTour = () => {
         };
 
         fetchLocations();
-    }, []);
+    }, [url]);
 
     const handleChange = (e) => {
         const { name, files, value } = e.target;

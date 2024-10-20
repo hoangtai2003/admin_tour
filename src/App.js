@@ -21,6 +21,10 @@ import EditNews from "./components/pages/News/EditNews"
 import AddNews from "./components/pages/News/AddNews";
 import Dashboard from "./components/pages/Dashboard/Dashboard"
 import ListReview from "./components/pages/Review/ListReview";
+import Unauthorized from "./components/pages/Unauthorized/Unauthorized";
+import ListRole from "./components/pages/Role/ListRole";
+import AddRole from "./components/pages/Role/AddRole"
+import EditRole from "./components/pages/Role/EditRole";
 const  App = () => {
   return (
     <>
@@ -28,90 +32,106 @@ const  App = () => {
             <Route path="/login" element={<Login />} />
             <Route element={<BaseLayout />}>
                 <Route path="/list-tour" element={
-                    <PrivateRoute>
+                    <PrivateRoute requiredPermission="danh-sach-tour">
                         <ListTour />
                     </PrivateRoute>
                 } />
                 <Route path="/add-tour" element={
-                    <PrivateRoute>
+                    <PrivateRoute requiredPermission="them-tour">
                         <AddTour />
                     </PrivateRoute>
                 } />
                 <Route path="/edit-tour/:id" element={
-                    <PrivateRoute>
+                    <PrivateRoute requiredPermission="sua-tour"> 
                         <EditTour />
                     </PrivateRoute>
                 } />
                 <Route path="/list-location" element={
-                    <PrivateRoute>
+                    <PrivateRoute requiredPermission="danh-sach-dia-diem">
                         <ListLocation />
                     </PrivateRoute>
                 } />
                 <Route path="/add-location" element={
-                    <PrivateRoute>
+                    <PrivateRoute requiredPermission="them-dia-diem">
                         <AddLocation />
                     </PrivateRoute>
                 } />
                 <Route path="/edit-location/:id" element={
-                    <PrivateRoute>
+                    <PrivateRoute requiredPermission="sua-dia-diem">
                         <EditLocation />
                     </PrivateRoute>
                 } />
                 <Route path="/list-user" element={
-                    <PrivateRoute>
+                    <PrivateRoute requiredPermission="danh-sach-user">
                         <ListUser />
                     </PrivateRoute>
                 } />
                 <Route path="/add-user" element={
-                    <PrivateRoute>
+                    <PrivateRoute requiredPermission="them-user">
                         <AddUser />
                     </PrivateRoute>
                 } />
                 <Route path="/list-booking" element={
-                    <PrivateRoute>
+                    <PrivateRoute requiredPermission="danh-sach-dat-tour">
                         <ListBooking />
                     </PrivateRoute>
                 } />
                 <Route path="/list-news" element={
-                    <PrivateRoute>
+                    <PrivateRoute requiredPermission="danh-sach-bai-viet">
                         <ListNews />
                     </PrivateRoute>
                 } />
                 <Route path="/list-category" element={
-                    <PrivateRoute>
+                    <PrivateRoute  requiredPermission="danh-sach-danh-muc">
                         <ListCategory />
                     </PrivateRoute>
                 } />
                 <Route path="/add-category" element={
-                    <PrivateRoute>
+                    <PrivateRoute requiredPermission="them-danh-muc">
                         <AddCategory />
                     </PrivateRoute>
                 } />
                 <Route path="/edit-category/:id" element={
-                    <PrivateRoute>
+                    <PrivateRoute requiredPermission="sua-danh-muc">
                         <EditCategory />
                     </PrivateRoute>
                 } />
                 <Route path="/add-news" element={
-                    <PrivateRoute>
+                    <PrivateRoute requiredPermission="them-bai-viet">
                         <AddNews />
                     </PrivateRoute>
                 } />
                 <Route path="/edit-news/:id" element={
-                    <PrivateRoute>
+                    <PrivateRoute requiredPermission="sua-bai-viet">
                         <EditNews />
                     </PrivateRoute>
                 } />
                 <Route path="/dashboard" element={
-                    <PrivateRoute>
+                    <PrivateRoute requiredPermission="danh-sach-danh-muc">
                         <Dashboard />
                     </PrivateRoute>
                 } />
                 <Route path="/list-review" element={
-                    <PrivateRoute>
+                    <PrivateRoute requiredPermission="danh-sach-binh-luan">
                         <ListReview />
                     </PrivateRoute>
                 } />
+                <Route path="/list-role" element={
+                    <PrivateRoute requiredPermission="danh-sach-vai-tro">
+                        <ListRole />
+                    </PrivateRoute>
+                } />
+                <Route path="/add-role" element={
+                    <PrivateRoute>
+                        <AddRole />
+                    </PrivateRoute>
+                } />
+                <Route path="/edit-role/:id" element={
+                    <PrivateRoute requiredPermission="sua-vai-tro">
+                        <EditRole />
+                    </PrivateRoute>
+                } />
+                <Route path="/unauthorized" element={<Unauthorized />}></Route>
                 <Route path="*" element={<PageNotFound />} />
             </Route>
         </Routes>

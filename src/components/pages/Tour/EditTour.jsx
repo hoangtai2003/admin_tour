@@ -110,7 +110,7 @@ const EditTour = () => {
         };
 
         fetchLocations();
-    }, []);
+    }, [url]);
 
     const handleChange = (e, index = null) => {
         const { name, value, files } = e.target;
