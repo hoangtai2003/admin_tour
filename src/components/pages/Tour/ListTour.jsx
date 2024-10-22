@@ -8,15 +8,6 @@ import Pagination from "../Pagination";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { SidebarContext } from "../../../context/SideBarContext";
-const TABLE_HEADS = [
-  "STT",
-  "Tiêu đề",
-  "Hình ảnh",
-  "Lịch trình / Giá",
-  "Thông tin / Địa điểm",
-  "Hành Động"
-];
-
 const ListTour = () => {
     const [tours, setTours] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -33,7 +24,7 @@ const ListTour = () => {
             }
         };
         fetchTours();
-    }, [currentPage]);
+    }, [currentPage, url]);
 
     const handleDelete = (id) => {
         setTours(tours.filter(tour => tour.id !== id)); 
@@ -56,9 +47,12 @@ const ListTour = () => {
                 <table>
                     <thead>
                         <tr>
-                            {TABLE_HEADS?.map((th, index) => (
-                                <th key={index}>{th}</th>
-                            ))}
+                            <th>STT</th>
+                            <th>Tiêu đề</th>
+                            <th>Hình ảnh</th>
+                            <th>Lịch trình / Giá</th>
+                            <th>Thông tin / Địa điểm</th>
+                            <th>Hành Động</th>
                         </tr>
                     </thead>
                     <tbody>

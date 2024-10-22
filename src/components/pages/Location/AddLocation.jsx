@@ -33,7 +33,7 @@ const AddLocation = () => {
         };
 
         fetchLocations();
-    }, []);
+    }, [url]);
 
     const status = [
         { value: "Hiển thị", label: 'Hiển thị' },

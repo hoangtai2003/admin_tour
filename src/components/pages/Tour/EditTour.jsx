@@ -96,7 +96,7 @@ const EditTour = () => {
         if (locations.length > 0) {
             fetchTourData();
         }
-    }, [id, locations]);
+    }, [id, locations, url]);
 
     useEffect(() => {
         const fetchLocations = async () => {

@@ -8,16 +8,6 @@ import Pagination from "../Pagination";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { SidebarContext } from "../../../context/SideBarContext";
-const TABLE_HEADS = [
-  "STT",
-  "Tiêu đề",
-  "Hình ảnh",
-  "Danh mục",
-  "Trạng thái",
-  "Ngày đăng",
-  "Hành động"
-
-];
 const ListNews = () => {
     const [newsletter, setNewsletter] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
@@ -34,7 +24,7 @@ const ListNews = () => {
             }
         }
         fetchNews()
-    }, [currentPage])
+    }, [currentPage, url])
     const handleDelete = (id) => {
         setNewsletter(newsletter.filter(news => news.id !== id))
     }
@@ -51,34 +41,38 @@ const ListNews = () => {
             <Link to="/add-news" className="create"><IoMdAdd className="create_icon"/> Tạo mới</Link>
         </div>
         <div className="data-table-diagram">
-          <table>
-            <thead>
-              <tr>
-                {TABLE_HEADS?.map((th, index) => (
-                  <th key={index}>{th}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-                {newsletter?.map((news, index) => (
-                    <tr key={news.id}>
-                        <td className="index">{index + 1}</td>
-                        <td>{news.news_name}</td>
-                        <td>
-                            <div className="image-container">
-                                <img src={news.news_image} alt={news.name} style={{width: "40%", borderRadius: "10px"}}/>
-                            </div>
-                        </td>
-                        <td>{news.newsCate.cate_name}</td>
-                        <td>{news.news_status}</td>
-                        <td>{new Date(news.news_date).toLocaleDateString("vi-VN")}</td>
-                        <td className="dt-cell-action">
-                            <ListNewsAction id={news.id} onDelete={handleDelete}/>
-                        </td>
+            <table>
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tiêu đề</th>
+                        <th>Hình ảnh</th>
+                        <th>Danh mục</th>
+                        <th>Trạng thái</th>
+                        <th>Ngày đăng</th>
+                        <th>Hành động</th>
                     </tr>
-                ))}
-            </tbody>
-          </table>
+                </thead>
+                <tbody>
+                    {newsletter?.map((news, index) => (
+                        <tr key={news.id}>
+                            <td className="index">{index + 1}</td>
+                            <td>{news.news_name}</td>
+                            <td>
+                                <div className="image-container">
+                                    <img src={news.news_image} alt={news.name} style={{width: "40%", borderRadius: "10px"}}/>
+                                </div>
+                            </td>
+                            <td>{news.newsCate.cate_name}</td>
+                            <td>{news.news_status}</td>
+                            <td>{new Date(news.news_date).toLocaleDateString("vi-VN")}</td>
+                            <td className="dt-cell-action">
+                                <ListNewsAction id={news.id} onDelete={handleDelete}/>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
                 <Pagination 
                     currentPage={currentPage}

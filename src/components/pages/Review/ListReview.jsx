@@ -1,8 +1,6 @@
 import React, { useContext } from 'react'
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { IoMdAdd } from "react-icons/io";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { SidebarContext } from '../../../context/SideBarContext';
@@ -14,15 +12,15 @@ const ListReview = () =>  {
         { value: 'Hiển thị', label: 'Hiển thị' },
         { value: 'Không hiển thị', label: 'Không hiển thị' },
     ];
-    const fetchReview = async() => {
-        try {
-            const response  = await axios.get(`${url}/review`)
-            setReview(response.data.data)
-        } catch (error) {
-            toast.error("Đã có lỗi xảy ra. Vui lòng thử lại !");
-        }
-    } 
     useEffect(() => {
+        const fetchReview = async() => {
+            try {
+                const response  = await axios.get(`${url}/review`)
+                setReview(response.data.data)
+            } catch (error) {
+                toast.error("Đã có lỗi xảy ra. Vui lòng thử lại !");
+            }
+        } 
         fetchReview()
     }, [url])
     const handleStatusChange = async(selectedOption, reviewId) => {

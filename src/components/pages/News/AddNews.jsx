@@ -36,7 +36,7 @@ const AddLocation = () => {
         };
 
         fetchCategory();
-    }, []);
+    }, [url]);
 
     const status = [
         { value: "Xuất bản", label: 'Xuất bản' },
@@ -86,7 +86,8 @@ const AddLocation = () => {
             formSubmit.append('news_date', formData.news_date);
             formSubmit.append("cate_id", formData.cate_id)
             formSubmit.append('news_content', formData.news_content)
-            const res = await axios.post(`${url}/news`, formSubmit, {
+            
+            await axios.post(`${url}/news`, formSubmit, {
                 headers: {
                     'Content-Type': 'multipart/form-data' 
                 }

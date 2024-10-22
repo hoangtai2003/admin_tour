@@ -26,6 +26,7 @@ export const SidebarProvider = (props) => {
             setIsLoading(false); 
         }
     }, []);
+    
     useEffect(() => {
         const fetchUserInfo = async () => {
             setIsLoading(true); 
@@ -43,14 +44,14 @@ export const SidebarProvider = (props) => {
                     navigate('/login');
                 }
             } finally {
-                setIsLoading(false); 
+                setIsLoading(false);  
             }
         };
     
         if (token) {
             fetchUserInfo();
         } else {
-            setIsLoading(false);
+            setIsLoading(false); 
         }
     }, [url, token, navigate]);
     

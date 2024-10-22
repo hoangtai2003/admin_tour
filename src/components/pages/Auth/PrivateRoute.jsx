@@ -3,14 +3,13 @@ import { Navigate } from 'react-router-dom';
 import { SidebarContext } from '../../../context/SideBarContext';
 
 const PrivateRoute = ({ children, requiredPermission }) => {
-    const { user, isLoading } = useContext(SidebarContext);
-    const userPermissions = user?.userRole?.rolePermission?.map(permission => permission.slug) || [];
-
+    const { user, isLoading, userPermissions } = useContext(SidebarContext);
+    
     if (isLoading) {
         return <div>Loading...</div>; 
     }
 
-    if (!user) {
+    if (!user || !userPermissions.length) {
         return <Navigate to="/login" />;
     }
 
@@ -20,6 +19,8 @@ const PrivateRoute = ({ children, requiredPermission }) => {
 
     return children;
 };
+
+
 
 
 export default PrivateRoute;

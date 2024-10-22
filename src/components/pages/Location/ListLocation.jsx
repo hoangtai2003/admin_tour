@@ -31,7 +31,7 @@ const ListLocation = () => {
             }
         }
         fetchLocations();
-    }, [currentPage])
+    }, [currentPage, url])
     const handleDelete = (id) => {
         setLocations(locations.filter(location => location.id !== id))
     }

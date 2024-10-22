@@ -1,7 +1,6 @@
 import "./app.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import BaseLayout from "./components/layout/BaseLayout";
-import { PageNotFound } from "./components/screens";
 import PrivateRoute from "./components/pages/Auth/PrivateRoute";
 import Login from "./components/pages/Auth/Login"
 import ListTour from "./components/pages/Tour/ListTour"
@@ -132,7 +131,7 @@ const  App = () => {
                     </PrivateRoute>
                 } />
                 <Route path="/unauthorized" element={<Unauthorized />}></Route>
-                <Route path="*" element={<PageNotFound />} />
+                <Route path="*" element={<Dashboard />} />
             </Route>
         </Routes>
     </>

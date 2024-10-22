@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { SidebarContext } from "../../../context/SideBarContext";
 const ListCategory = () => {
     const [category, setCategory] = useState([])
-    const { url, userPermissions} = useContext(SidebarContext)
+    const { url } = useContext(SidebarContext)
    
     useEffect(() => {
         const fetchCategory = async () => {

@@ -9,7 +9,7 @@ import { SidebarContext } from "../../../context/SideBarContext";
 import { FiEdit3 } from "react-icons/fi";
 
 const ListRole = () => {
-    const { url, userPermissions } = useContext(SidebarContext)
+    const { url } = useContext(SidebarContext)
     const [ roleUser, setRoleUser ] = useState([])
     useEffect(() => {
         const fetchRole = async() => {

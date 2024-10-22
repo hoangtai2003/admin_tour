@@ -40,7 +40,7 @@ const EditLocation = () => {
             }
         };
         fetchLocationData();
-    }, [id]);
+    }, [id, url]);
 
     const statusOptions = [
         { value: "Hiển thị", label: 'Hiển thị' },
