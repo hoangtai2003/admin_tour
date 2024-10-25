@@ -26,35 +26,28 @@ export const SidebarProvider = (props) => {
             setIsLoading(false); 
         }
     }, []);
-    
     useEffect(() => {
-        const fetchUserInfo = async () => {
-            setIsLoading(true); 
+        const fetchUserInfo = async() => {
             try {
                 const response = await axios.get(`${url}/auth/users`, {
                     headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                setUser(response.data.data);
-            } catch (error) {
-                if (error.response) {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                setUser(response.data.data)
+            } catch(error) {
+                if (error.response){
                     localStorage.removeItem("token_admin");
-                    setToken(null);
-                    navigate('/login');
+                    setToken(null)
+                    navigate('/login')
                 }
-            } finally {
-                setIsLoading(false);  
+                
             }
-        };
-    
-        if (token) {
-            fetchUserInfo();
-        } else {
-            setIsLoading(false); 
         }
-    }, [url, token, navigate]);
-    
+        if(token){
+            fetchUserInfo()
+        }
+    }, [url, token, navigate])
     const contextValue = {
         isSidebarOpen,
         openSidebar,
@@ -64,8 +57,7 @@ export const SidebarProvider = (props) => {
         setToken,
         user,
         setUser,
-        userPermissions,
-        isLoading
+        userPermissions
     }
     return (
         <SidebarContext.Provider value={contextValue}>

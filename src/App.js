@@ -24,6 +24,9 @@ import Unauthorized from "./components/pages/Unauthorized/Unauthorized";
 import ListRole from "./components/pages/Role/ListRole";
 import AddRole from "./components/pages/Role/AddRole"
 import EditRole from "./components/pages/Role/EditRole";
+import ListHotel from "./components/pages/Hotel/ListHotel"
+import AddHotel from "./components/pages/Hotel/AddHotel";
+import EditHotel from "./components/pages/Hotel/EditHotel";
 const  App = () => {
   return (
     <>
@@ -128,6 +131,21 @@ const  App = () => {
                 <Route path="/edit-role/:id" element={
                     <PrivateRoute requiredPermission="sua-vai-tro">
                         <EditRole />
+                    </PrivateRoute>
+                } />
+                <Route path="/list-hotel" element={
+                    <PrivateRoute requiredPermission="sua-vai-tro">
+                        <ListHotel />
+                    </PrivateRoute>
+                } />
+                <Route path="/add-hotel" element={
+                    <PrivateRoute requiredPermission="sua-vai-tro">
+                        <AddHotel />
+                    </PrivateRoute>
+                } />
+                <Route path="/edit-hotel/:slug" element={
+                    <PrivateRoute requiredPermission="sua-vai-tro">
+                        <EditHotel />
                     </PrivateRoute>
                 } />
                 <Route path="/unauthorized" element={<Unauthorized />}></Route>

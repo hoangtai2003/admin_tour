@@ -95,8 +95,8 @@ const Sidebar = () => {
 						</Link>
 					</li>
 				)}
-                <li className={`menu-item ${activeLink === "/" ? "active" : ""}`}>
-                  <Link to="/" className="menu-link" onClick={() => setActiveLink("/")}>
+                <li className={`menu-item ${activeLink === "/list-hotel" ? "active" : ""}`}>
+                  <Link to="/list-hotel" className="menu-link" onClick={() => setActiveLink("/list-hotel")}>
                     <span className="menu-link-icon">
                       <FaBed size={20} />
                     </span>

@@ -16,7 +16,8 @@ const AddLocation = () => {
         news_image: '',
         news_date: '',
         news_status: "Xuất bản",
-        news_content: ''
+        news_content: '',
+        cate_id: ''
     });
     const { url } = useContext(SidebarContext)
     const navigate = useNavigate();
@@ -86,7 +87,7 @@ const AddLocation = () => {
             formSubmit.append('news_date', formData.news_date);
             formSubmit.append("cate_id", formData.cate_id)
             formSubmit.append('news_content', formData.news_content)
-            
+
             await axios.post(`${url}/news`, formSubmit, {
                 headers: {
                     'Content-Type': 'multipart/form-data' 
