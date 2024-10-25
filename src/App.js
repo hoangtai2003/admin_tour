@@ -134,17 +134,17 @@ const  App = () => {
                     </PrivateRoute>
                 } />
                 <Route path="/list-hotel" element={
-                    <PrivateRoute requiredPermission="sua-vai-tro">
+                    <PrivateRoute requiredPermission="danh-sach-khach-san">
                         <ListHotel />
                     </PrivateRoute>
                 } />
                 <Route path="/add-hotel" element={
-                    <PrivateRoute requiredPermission="sua-vai-tro">
+                    <PrivateRoute requiredPermission="them-khach-san">
                         <AddHotel />
                     </PrivateRoute>
                 } />
                 <Route path="/edit-hotel/:slug" element={
-                    <PrivateRoute requiredPermission="sua-vai-tro">
+                    <PrivateRoute requiredPermission="sua-khach-san">
                         <EditHotel />
                     </PrivateRoute>
                 } />
