@@ -6,16 +6,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Form } from 'react-bootstrap'
 import { SidebarContext } from "../../../context/SideBarContext";
-const TABLE_HEADS = [
-  "STT",
-  "Tên tour / Mã tour",
-  "Thông tin khách hàng",
-  "Dữ liệu tour",
-  "Hình thức",
-  "Trạng thái",
-  "Hành động"
-];
-
 const ListBooking = () => {
     const [booking, setBooking] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -25,6 +15,7 @@ const ListBooking = () => {
         try {
             const response = await axios.get(`${url}/booking?page=${currentPage}`);
             setBooking(response.data.data);
+            console.log(response.data.data)
             setTotalPages(response.data.totalPages);
         } catch (error) {
             toast.error('Error fetching tours');
@@ -52,7 +43,6 @@ const ListBooking = () => {
             setCurrentPage(newPage);
         }
     };
-
     return (
         <section className="content-area-table">
             <ToastContainer />
@@ -63,9 +53,13 @@ const ListBooking = () => {
                 <table>
                     <thead>
                         <tr>
-                            {TABLE_HEADS?.map((th, index) => (
-                                <th key={index}>{th}</th>
-                            ))}
+                            <th>STT</th>
+                            <th>Tên tour / Mã tour</th>
+                            <th>Thông tin khách hàng</th>
+                            <th>Dữ liệu tour</th>
+                            <th>Hình thức</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -84,10 +78,10 @@ const ListBooking = () => {
                                     <p><b>Địa chỉ: </b>{book?.address}</p>
                                 </td>
                                 <td>
-                                    <p><b>Số người lớn: </b>{book.number_of_adults} - <b>Thành tiền: </b>{(book.number_of_adults * book?.bookingTourChild?.price_adult).toLocaleString('vi-VN')} vnđ</p>
-                                    <p><b>Số trẻ em: </b>{book.number_of_children} - <b>Thành tiền: </b>{(book.number_of_children * book?.bookingTourChild?.price_child).toLocaleString('vi-VN')} vnđ</p>
-                                    <p><b>Số trẻ nhỏ: </b>{book.number_of_toddler} - <b>Thành tiền: </b>{(book.number_of_toddler * book?.bookingTourChild?.price_toddler).toLocaleString('vi-VN')} vnđ</p>
-                                    <p><b>Số trẻ sơ sinh: </b>{book.number_of_baby} - <b>Thành tiền: </b>{(book.number_of_baby * book?.bookingTourChild?.price_baby).toLocaleString('vi-VN')} vnđ</p>
+                                    <p><b>Số người lớn: </b>{book.number_of_adults} - <b>Thành tiền: </b>{(book.number_of_adults * ((book?.bookingTourChild?.price_adult * (100 - book.bookingTourChild.price_sale)) / 100)).toLocaleString('vi-VN')} vnđ</p>
+                                    <p><b>Số trẻ em: </b>{book.number_of_children} - <b>Thành tiền: </b>{(book.number_of_children * ((book?.bookingTourChild?.price_child * (100 - book.bookingTourChild.price_sale)) / 100)).toLocaleString('vi-VN')} vnđ</p>
+                                    <p><b>Số trẻ nhỏ: </b>{book.number_of_toddler} - <b>Thành tiền: </b>{(book.number_of_toddler * ((book?.bookingTourChild?.price_toddler * (100 - book.bookingTourChild.price_sale)) / 100)).toLocaleString('vi-VN')} vnđ</p>
+                                    <p><b>Số trẻ sơ sinh: </b>{book.number_of_baby} - <b>Thành tiền: </b>{(book.number_of_baby * ((book?.bookingTourChild?.price_baby * (100 - book.bookingTourChild.price_sale)) / 100)).toLocaleString('vi-VN')} vnđ</p>
                                     <p><b>Tổng tiền: </b>{book.total_price.toLocaleString('vi-VN')} vnđ</p>
                                     <p><b>Mã booking: </b>{book.booking_code}</p>
                                     <p><b>Điểm đón: </b>{book?.bookingTourChild?.tour?.departure_city} </p>

@@ -67,13 +67,7 @@ const ListTour = () => {
                                 </td>
                                 <td>
                                     <p><b>Hành trình: </b>{tour.duration}</p>
-                                    {tour.tourChildren.length > 0 && (
-                                        <>
-                                        <p><b>Số người: </b>{tour.tourChildren[0].total_seats}</p>
-                                        <p><b>Giá người lớn: </b>{tour.tourChildren[0].price_adult} vnd</p>
-                                        <p><b>Giá trẻ em: </b>{tour.tourChildren[0].price_child} vnd</p>
-                                        </>
-                                    )}
+                                    <p><b>Giá tiền: </b>{tour.price.toLocaleString('vi-VN')} vnđ</p>
                                 </td>
                                 <td>
                                     <p><b>Địa điểm: </b>
@@ -82,12 +76,6 @@ const ListTour = () => {
                                         ))}
                                     </p>
                                     <p><b>Điểm xuất phát: </b>{tour.departure_city}</p>
-                                    {tour.tourChildren.length > 0 && (
-                                        <>
-                                        <p><b>Ngày đi: </b>{tour.tourChildren[0].start_date}</p>
-                                        <p><b>Ngày về: </b>{tour.tourChildren[0].end_date}</p>
-                                        </>
-                                    )}
                                 </td>
                                 <td className="dt-cell-action">
                                     <LisTourAction id={tour.id}  onDelete={handleDelete}/>
