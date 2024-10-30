@@ -46,8 +46,8 @@ const Sidebar = () => {
             <div className="sidebar-menu">
               <ul className="menu-list">
               	{userPermissions.includes('thong-ke') && (
-					<li className={`menu-item ${activeLink === "/dashboard" ? "active" : ""}`}>
-						<Link to="/dashboard" className="menu-link" onClick={() => setActiveLink("/dashboard")}>
+					<li className={`menu-item ${activeLink === "/thong-ke" ? "active" : ""}`}>
+						<Link to="/thong-ke" className="menu-link" onClick={() => setActiveLink("/thong-ke")}>
 							<span className="menu-link-icon">
 							<FaHome size={18}/>
 							</span>
@@ -95,6 +95,7 @@ const Sidebar = () => {
 						</Link>
 					</li>
 				)}
+				{userPermissions.includes('danh-sach-khach-san') && (
                 <li className={`menu-item ${activeLink === "/list-hotel" ? "active" : ""}`}>
                   <Link to="/list-hotel" className="menu-link" onClick={() => setActiveLink("/list-hotel")}>
                     <span className="menu-link-icon">
@@ -103,6 +104,7 @@ const Sidebar = () => {
                     <span className="menu-link-text">Khách sạn</span>
                   </Link>
                 </li>
+				)}
 				{userPermissions.includes('danh-sach-dat-tour') && (
 					<li className={`menu-item ${activeLink === "/list-booking" ? "active" : ""}`}>
 						<Link to="/list-booking" className="menu-link" onClick={() => setActiveLink("/")}>

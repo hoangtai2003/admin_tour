@@ -26,7 +26,7 @@ const Login = () => {
             if (response.data.success){
                 setToken(response.data.token)
                 localStorage.setItem("token_admin", response.data.token)
-                navigate('/dashboard');
+                navigate('/home');
                 toast.success("Đăng nhập thành công!")
             } else {
                 toast.error("Đăng nhập thất bại")

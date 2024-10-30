@@ -3,21 +3,24 @@ import { Navigate } from 'react-router-dom';
 import { SidebarContext } from '../../../context/SideBarContext';
 
 const PrivateRoute = ({ children, requiredPermission }) => {
-    const { user, isLoading } = useContext(SidebarContext);
-    const userPermissions = user?.userRole?.rolePermission?.map(permission => permission.slug) || [];
+    const { isLoading, token, userPermissions } = useContext(SidebarContext);
 
-    if (isLoading) {
-        return <div>Loading...</div>; 
+    // Hiển thị loading nếu đang tải dữ liệu hoặc chưa có dữ liệu permissions
+    if (isLoading || userPermissions.length === 0) {
+        return <div>Loading...</div>;
     }
 
-    if (!user) {
+    // Kiểm tra token, nếu không có thì chuyển đến trang login
+    if (!token) {
         return <Navigate to="/login" />;
     }
 
+    // Kiểm tra quyền truy cập, nếu không đủ quyền chuyển đến trang unauthorized
     if (!userPermissions.includes(requiredPermission)) {
         return <Navigate to="/unauthorized" />;
     }
 
+    // Nếu có token và quyền truy cập hợp lệ, render component con
     return children;
 };
 

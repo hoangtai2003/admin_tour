@@ -27,6 +27,8 @@ import EditRole from "./components/pages/Role/EditRole";
 import ListHotel from "./components/pages/Hotel/ListHotel"
 import AddHotel from "./components/pages/Hotel/AddHotel";
 import EditHotel from "./components/pages/Hotel/EditHotel";
+import PageNotFound from "./components/pages/PageNotFound/PageNotFound";
+import Page from "./components/pages/PageNotFound/Page";
 const  App = () => {
   return (
     <>
@@ -108,8 +110,8 @@ const  App = () => {
                         <EditNews />
                     </PrivateRoute>
                 } />
-                <Route path="/dashboard" element={
-                    <PrivateRoute requiredPermission="danh-sach-danh-muc">
+                <Route path="/thong-ke" element={
+                    <PrivateRoute requiredPermission="thong-ke">
                         <Dashboard />
                     </PrivateRoute>
                 } />
@@ -124,7 +126,7 @@ const  App = () => {
                     </PrivateRoute>
                 } />
                 <Route path="/add-role" element={
-                    <PrivateRoute>
+                    <PrivateRoute requiredPermission="them-vai-tro">
                         <AddRole />
                     </PrivateRoute>
                 } />
@@ -149,8 +151,9 @@ const  App = () => {
                     </PrivateRoute>
                 } />
                 <Route path="/unauthorized" element={<Unauthorized />}></Route>
-                <Route path="*" element={<Dashboard />} />
+                <Route path="/home" element={<Page />} />
             </Route>
+            <Route path="*" element={<PageNotFound />} />
         </Routes>
     </>
   );
