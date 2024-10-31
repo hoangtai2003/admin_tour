@@ -2,8 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { IoMdAdd } from "react-icons/io";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import { SidebarContext } from "../../../context/SideBarContext";
 import ListHotelAction from "./ListHotelAction";
 const ListHotel = () => {
@@ -25,7 +24,6 @@ const ListHotel = () => {
     }
     return (
         <section className="content-area-table">
-            <ToastContainer />
             <div className="data-table-info">
                 <h4 className="data-table-title">Danh sách khách sạn</h4>
                 <Link to="/add-hotel" className="create"><IoMdAdd className="create_icon"/> Tạo mới</Link>

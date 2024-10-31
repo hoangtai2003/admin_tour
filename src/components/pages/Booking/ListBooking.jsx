@@ -2,8 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import "../table.css"
 import Pagination from "../Pagination";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import { Form } from 'react-bootstrap'
 import { SidebarContext } from "../../../context/SideBarContext";
 const ListBooking = () => {
@@ -15,7 +14,6 @@ const ListBooking = () => {
         try {
             const response = await axios.get(`${url}/booking?page=${currentPage}`);
             setBooking(response.data.data);
-            console.log(response.data.data)
             setTotalPages(response.data.totalPages);
         } catch (error) {
             toast.error('Error fetching tours');
@@ -30,11 +28,11 @@ const ListBooking = () => {
                 status: event.target.value
             });
             if (response.data.success) {
-                toast.success("Update status successfully");
+                toast.success("Cập nhật trạng thái thành công");
                 fetchBooking();
             }
         } catch (error) {
-            toast.error("Failed to update status. Try again");
+            toast.error("Đã có lỗi xảy ra. Vui lòng thử lại !");
         }
     };
     
@@ -45,7 +43,6 @@ const ListBooking = () => {
     };
     return (
         <section className="content-area-table">
-            <ToastContainer />
             <div className="data-table-info">
                 <h4 className="data-table-title">Danh sách đặt Tour</h4>
             </div>

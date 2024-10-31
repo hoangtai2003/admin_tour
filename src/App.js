@@ -1,5 +1,7 @@
 import "./app.css";
 import { Routes, Route } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import BaseLayout from "./components/layout/BaseLayout";
 import PrivateRoute from "./components/pages/Auth/PrivateRoute";
 import Login from "./components/pages/Auth/Login"
@@ -32,6 +34,7 @@ import Page from "./components/pages/PageNotFound/Page";
 const  App = () => {
   return (
     <>
+      <ToastContainer />
         <Routes>
             <Route path="/login" element={<Login />} />
             <Route element={<BaseLayout />}>

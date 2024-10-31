@@ -3,8 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { AiOutlineDelete } from "react-icons/ai";
 import { IoMdAdd } from "react-icons/io";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import { SidebarContext } from "../../../context/SideBarContext";
 import { FiEdit3 } from "react-icons/fi";
 
@@ -26,7 +25,6 @@ const ListRole = () => {
     
     return (
         <section className="content-area-table">
-            <ToastContainer />
             <div className="data-table-info">
                 <h4 className="data-table-title">Danh sách vai trò</h4>
                 <Link to="/add-role" className="create"><IoMdAdd className="create_icon"/> Tạo mới</Link>

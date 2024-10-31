@@ -1,8 +1,7 @@
 import React, { useContext } from 'react'
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import { SidebarContext } from '../../../context/SideBarContext';
 import Select from 'react-select'
 const ListReview = () =>  {
@@ -39,7 +38,6 @@ const ListReview = () =>  {
     }
     return (
         <section className="content-area-table">
-            <ToastContainer />
             <div className="data-table-info">
                 <h4 className="data-table-title">Danh sách bình luận</h4>
             </div>

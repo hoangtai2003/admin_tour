@@ -5,8 +5,7 @@ import LisTourAction from "./ListTourAction";
 import "../table.css";
 import { IoMdAdd } from "react-icons/io";
 import Pagination from "../Pagination";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import { SidebarContext } from "../../../context/SideBarContext";
 const ListTour = () => {
     const [tours, setTours] = useState([]);
@@ -38,7 +37,6 @@ const ListTour = () => {
 
     return (
         <section className="content-area-table">
-            <ToastContainer />
             <div className="data-table-info">
                 <h4 className="data-table-title">Danh sách Tour</h4>
                 <Link to="/add-tour" className="create"><IoMdAdd className="create_icon"/> Tạo mới</Link>

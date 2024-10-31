@@ -3,7 +3,7 @@ import { Container, Form, FormGroup, Button } from "reactstrap";
 import { useNavigate } from 'react-router-dom'
 import './auth.css'
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { SidebarContext } from "../../../context/SideBarContext";
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -38,7 +38,6 @@ const Login = () => {
 
     return (
         <Container className="login-container">
-            <ToastContainer />
             <Form onSubmit={handleSubmit} className="login-form">
                 <h2 className="login-title">Login</h2>
                 <FormGroup>

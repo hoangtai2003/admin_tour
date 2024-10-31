@@ -4,8 +4,7 @@ import axios from "axios";
 import '../table.css'
 import { Link } from "react-router-dom";
 import { IoMdAdd } from "react-icons/io";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import { SidebarContext } from "../../../context/SideBarContext";
 const ListCategory = () => {
     const [category, setCategory] = useState([])
@@ -27,7 +26,6 @@ const ListCategory = () => {
     }
     return (
         <section className="content-area-table">
-            <ToastContainer />
             <div className="data-table-info">
                 <h4 className="data-table-title">Danh sách danh mục</h4>
 

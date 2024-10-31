@@ -35,7 +35,7 @@ const EditCategory = () => {
             }
         }
         fetchCategory()
-    }, [id])
+    }, [id, url])
     const handleChange = async (e) => {
        const name = e.target.name
        const value = e.target.value
@@ -53,8 +53,8 @@ const EditCategory = () => {
             if (res.status !== 200) {
                 return alert(res.data.message);
             }
-            navigate("/list-category");
             toast.success("Sửa danh mục thành công");
+            setTimeout(() => navigate('/list-category'), 500);
         } catch (error) {
             toast.error(error.response?.data?.message || error.message);
         }
