@@ -61,7 +61,7 @@ const Sidebar = () => {
 							<span className="menu-link-icon">
 							<TfiMenuAlt size={20} />
 							</span>
-							<span className="menu-link-text">Danh mục</span>
+							<span className="menu-link-text">Quản lý danh mục</span>
 						</Link>
 					</li>
 				)}
@@ -71,7 +71,7 @@ const Sidebar = () => {
 							<span className="menu-link-icon">
 							<FaRegFileWord size={20}/>
 							</span>
-							<span className="menu-link-text">Bài viết</span>
+							<span className="menu-link-text">Quản lý bài viết</span>
 						</Link>
 					</li>
 				)}
@@ -81,7 +81,7 @@ const Sidebar = () => {
 							<span className="menu-link-icon">
 							<SlLocationPin size={20} />
 							</span>
-							<span className="menu-link-text">Địa điểm</span>
+							<span className="menu-link-text">Quản lý địa điểm</span>
 						</Link>
 					</li>
 				)}
@@ -91,7 +91,7 @@ const Sidebar = () => {
 							<span className="menu-link-icon">
 							<MdOutlineBarChart size={20} />
 							</span>
-							<span className="menu-link-text">Tours</span>
+							<span className="menu-link-text">Quản lý tour</span>
 						</Link>
 					</li>
 				)}
@@ -101,7 +101,7 @@ const Sidebar = () => {
                     <span className="menu-link-icon">
                       <FaBed size={20} />
                     </span>
-                    <span className="menu-link-text">Khách sạn</span>
+                    <span className="menu-link-text">Quản lý khách sạn</span>
                   </Link>
                 </li>
 				)}
@@ -131,7 +131,7 @@ const Sidebar = () => {
 							<span className="menu-link-icon">
 							<FaUser size={18} />
 							</span>
-							<span className="menu-link-text">Người dùng</span>
+							<span className="menu-link-text">Quản lý người dùng</span>
 						</Link>
 					</li>
 				)}
@@ -141,7 +141,7 @@ const Sidebar = () => {
 							<span className="menu-link-icon">
 							<FaHammer size={18} />
 							</span>
-							<span className="menu-link-text">Vai trò</span>
+							<span className="menu-link-text">Quản lý vai trò</span>
 						</Link>
 					</li>
 				)}
