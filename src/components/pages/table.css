@@ -163,4 +163,27 @@
     color: white;
     background-color: orange;
 }
+.button_register{
+    background-color: rgb(65, 240, 240);
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 15px;
+}
+.button_register:hover{
+    background-color: rgb(50, 172, 172);
+}
+.form-information{
+    background-color: #fff;
+    padding: 12px 16px;
+}
+.btn-profile{
+    background-color: rgb(72, 230, 177);
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 15px;
+}
+.btn-profile svg {
+    margin-right: 10px;
+    font-size: 17px;
+}
   

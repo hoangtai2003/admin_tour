@@ -194,7 +194,10 @@
   max-width: 900px;
 }
 .icon_delete, 
-.icon_edit {
+.icon_edit,
+.icon_refuse,
+.icon_allow
+ {
   display: flex; 
   align-items: center; 
   justify-content: center; 
@@ -206,17 +209,25 @@
   cursor: pointer; 
   transition: background-color 0.3s ease, transform 0.2s ease; 
 }
-.icon_edit{
+.icon_edit, 
+.icon_allow{
   background-color: green; 
   margin-left: 10px;
 }
-.icon_delete:hover {
+.icon_delete:hover,
+.icon_refuse:hover {
   background-color: #c82333;
   transform: scale(1.1); 
 }
-
+.icon_edit:hover,
+.icon_allow:hover {
+  background-color: rgb(50, 136, 50);
+  transform: scale(1.1); 
+}
 .icon_delete svg,
-.icon_edit svg  {
+.icon_edit svg,
+.icon_allow svg,
+.icon_refuse svg  {
   font-size: 20px;
 }
 

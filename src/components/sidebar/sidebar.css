@@ -59,7 +59,7 @@
     justify-content: space-between;
     margin-bottom: 28px;
     padding-bottom: 4px;
-    border-bottom: 1px solid var(--border-color-inverted);
+    border-bottom: 1px solid #dad7d7;
   }
   
   .sidebar-brand {
@@ -218,5 +218,9 @@
   .menu-item.active .menu-link {
     background-color: #475be8; 
     color: white;
+  }
+  .sidebar-account{
+    border-top: 1px solid #dad7d7;
+    margin-top: 12px;
   }
   
