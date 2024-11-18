@@ -8,21 +8,11 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { SidebarContext } from '../../../context/SideBarContext';
 import Select from 'react-select'
+import { FaCheckCircle } from "react-icons/fa";
+import { HiXCircle } from "react-icons/hi";
 const ListUser = () =>  {
     const [users, setUser] = useState([])
     const { url } = useContext(SidebarContext)
-    const [ role, setRole ] = useState([])
-    useEffect(() => {
-        const fetchRole = async() => {
-            const response = await axios.get(`${url}/role`)
-            const roleData = response.data.data.map(role => ({
-                value: role.id,
-                label: role.name
-            }))
-            setRole(roleData)
-        }
-        fetchRole()
-    }, [url])
     const status = [
         { value: 'Hoạt động', label: 'Hoạt động' },
         { value: 'Ngừng hoạt động', label: 'Ngừng hoạt động' },
@@ -38,20 +28,6 @@ const ListUser = () =>  {
     useEffect(() => {
         fetchUsers()
     }, [url])
-    const handleRoleChange = async(selectedOption, userId) => {
-        const updatedRole = selectedOption ? selectedOption.value : "";
-        try {
-            await axios.put(`${url}/users/${userId}`, { role_id: updatedRole })
-            setUser((prevUsers) => 
-                prevUsers.map((user) => 
-                    user.id === userId ? { ...user, role_id: updatedRole } : user
-                )
-            )
-            toast.success("Cập nhập thành công !");
-        } catch (error) {
-            toast.error("Đã có lỗi xảy ra. Vui lòng thử lại !");
-        }
-    }
     const handleStatusChange = async(selectedOption, userId) => {
        const updatedStatus = selectedOption ? selectedOption.value : "";
         try {
@@ -83,6 +59,35 @@ const ListUser = () =>  {
             toast.error("Đã có lỗi xảy ra. Vui lòng thử lại !");
         }
     };
+    const handleRefuseUser = async (userId) => {
+        try {
+            const response = await axios.delete(`${url}/users/refuse/${userId}`);
+            
+            if (response.data.success) {
+                toast.success('Người dùng đã bị từ chối và xóa thành công!');
+                fetchUsers(); 
+            } else {
+                toast.error('Không thể từ chối người dùng. Vui lòng thử lại!');
+            }
+        } catch (error) {
+            toast.error('Đã có lỗi xảy ra khi từ chối người dùng');
+        }
+    };
+    
+    const handleApproveUser = async (userId) => {
+        try {
+            await axios.put(`${url}/users/allow/${userId}`);
+            setUser((prevUsers) =>
+                prevUsers.map((user) =>
+                    user.id === userId ? { ...user, status: "Hoạt động" } : user
+                )
+            );
+            toast.success("Cập nhật trạng thái thành công và email đã được gửi!");
+        } catch (error) {
+            toast.error("Đã có lỗi xảy ra. Vui lòng thử lại!");
+        }
+    };
+    
     return (
         <section className="content-area-table">
             <ToastContainer />
@@ -111,23 +116,46 @@ const ListUser = () =>  {
                                 <td>{user.email}</td>
                                 <td>{user.phone}</td>
                                 <td>
-                                    <Select 
-                                        options={role} 
-                                        onChange={(selectedOption) => handleRoleChange(selectedOption, user.id)}
-                                        value={role.find(option => option.value === user.role_id)}
-                                    />
+                                   {user.userRole.name}
                                 </td>
                                 <td>
-                                    <Select 
-                                        options={status} 
-                                        onChange={(selectedOption) => handleStatusChange(selectedOption, user.id)}
-                                        value={status.find(option => option.value === user.status)}
-                                        
-                                    />
+                                    {user.userRole.name === "Hướng dẫn viên" ? (
+                                        <div>
+                                            {user.status}
+                                        </div>
+                                    ) : (
+                                        <Select 
+                                            options={status} 
+                                            onChange={(selectedOption) => handleStatusChange(selectedOption, user.id)}
+                                            value={status.find(option => option.value === user.status)}
+                                        />
+                                    )}
+                                    
                                 </td>
-                                <td style={{display: "flex", justifyContent: "center"}}>
-                                    <button type='button' onClick={() => handleDeleteUser(user.id)}><div className='icon_delete'><AiOutlineDelete /></div></button>
-                                </td>
+                                {user.userRole.name === "Hướng dẫn viên" ? (
+                                    user.status === "Ngừng hoạt động" ? (
+                                        <td style={{display: "flex", justifyContent: "center"}}>
+                                            <button type='button' onClick={() => handleRefuseUser(user.id)}>
+                                                <div className='icon_refuse'><HiXCircle /></div>
+                                            </button>
+                                            <button type='button' onClick={() => handleApproveUser(user.id)}>
+                                                <div className='icon_allow'><FaCheckCircle /></div>
+                                            </button>
+                                        </td>
+                                    ) : (
+                                        <td style={{display: "flex", justifyContent: "center"}}>
+                                            <button type='button' onClick={() => handleDeleteUser(user.id)}>
+                                                <div className='icon_delete'><AiOutlineDelete /></div>
+                                            </button>
+                                        </td>
+                                    )
+                                    ) : (
+                                        <td style={{display: "flex", justifyContent: "center"}}>
+                                            <button type='button' onClick={() => handleDeleteUser(user.id)}>
+                                                <div className='icon_delete'><AiOutlineDelete /></div>
+                                            </button>
+                                        </td>
+                                )}
                             </tr>
                         ))}
                     </tbody>

@@ -36,7 +36,8 @@ const AddTour = () => {
                 time_goes_end: '',
                 time_comes_end: '',
                 total_seats: '', 
-                price_sale: '' 
+                price_sale: '' ,
+                status_guide: 'Chưa có hướng dẫn viên'
             }
         ]
     });
@@ -116,7 +117,8 @@ const AddTour = () => {
                         time_goes_end: '',
                         time_comes_end: '',
                         total_seats: '', 
-                        price_sale: '' 
+                        price_sale: '' ,
+                        status_guide: 'Chưa có hướng dẫn viên'
                     }
                 
                 ]

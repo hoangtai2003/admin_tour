@@ -1,5 +1,5 @@
 import "./app.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BaseLayout from "./components/layout/BaseLayout";
@@ -31,12 +31,19 @@ import AddHotel from "./components/pages/Hotel/AddHotel";
 import EditHotel from "./components/pages/Hotel/EditHotel";
 import PageNotFound from "./components/pages/PageNotFound/PageNotFound";
 import Page from "./components/pages/PageNotFound/Page";
+import ChangePassword from "./components/pages/User/ChangePassword";
+import ListTourGuide from "./components/pages/Guide/ListTourGuide";
+import ListGuide from "./components/pages/Guide/ListGuide";
+import Profile from "./components/pages/Auth/Profile";
+import ListRegistered from "./components/pages/Guide/ListRegistered";
 const  App = () => {
   return (
     <>
       <ToastContainer />
         <Routes>
+            <Route path='/' element={<Navigate to='login' />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/changePassword/:id" element={<ChangePassword />}></Route>
             <Route element={<BaseLayout />}>
                 <Route path="/list-tour" element={
                     <PrivateRoute requiredPermission="danh-sach-tour">
@@ -151,6 +158,26 @@ const  App = () => {
                 <Route path="/edit-hotel/:slug" element={
                     <PrivateRoute requiredPermission="sua-khach-san">
                         <EditHotel />
+                    </PrivateRoute>
+                } />
+                <Route path="/list-tour-sign" element={
+                    <PrivateRoute requiredPermission="dang-ky-tour" >
+                        <ListTourGuide />
+                    </PrivateRoute>
+                } />
+                <Route path="/list-guide" element={
+                    <PrivateRoute requiredPermission="danh-sach-huong-dan-vien" >
+                        <ListGuide />
+                    </PrivateRoute>
+                } />
+                <Route path="/profile" element={
+                    <PrivateRoute requiredPermission="quan-ly-tai-khoan">
+                        <Profile />
+                    </PrivateRoute>
+                } />
+                <Route path="/list-registered" element={
+                    <PrivateRoute requiredPermission="danh-sach-tour-da-dang-ky">
+                        <ListRegistered />
                     </PrivateRoute>
                 } />
                 <Route path="/unauthorized" element={<Unauthorized />}></Route>

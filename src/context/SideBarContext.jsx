@@ -8,7 +8,8 @@ export const SidebarProvider = (props) => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
     const [token, setToken] = useState("");
     const [user, setUser] = useState([]);
-    const [isLoading, setIsLoading] = useState(true); // Đặt isLoading ban đầu là true
+    const [requestApproved, setRequestApproved] = useState([])
+    const [isLoading, setIsLoading] = useState(true); 
     const url = 'http://localhost:4000/api/v1';
     const navigate = useNavigate();
     
@@ -49,6 +50,29 @@ export const SidebarProvider = (props) => {
             fetchUserInfo();
         }
     }, [token, url, navigate]);
+    useEffect(() => {
+        const fetchRequestApproved = async () => {
+            try {
+                setIsLoading(true); 
+                const response = await axios.get(`${url}/users/request/getAllApproved`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                setRequestApproved(response.data.data);
+            } catch (error) {
+                localStorage.removeItem("token_admin");
+                setToken("");
+                navigate('/login');
+            } finally {
+                setIsLoading(false); 
+            }
+        };
+
+        if (token) {
+            fetchRequestApproved();
+        }
+    }, [token, url, navigate]);
 
     const contextValue = {
         isSidebarOpen,
@@ -61,6 +85,8 @@ export const SidebarProvider = (props) => {
         setUser,
         userPermissions,
         isLoading,
+        setRequestApproved,
+        requestApproved
     };
 
     return (
