@@ -61,17 +61,16 @@ const EditHotel = () => {
     }, [url, slug])
     const handleChange = async(e) => {
         const { name, value, files } = e.target
-        if (name === "hotel_image" && files && files[0]){
+        if (name === 'hotel_image' && files && files[0]) {
             const file = files[0]
-            const imageUrl = URL.createObjectURL(file)
-
             setFormData(prev => ({
                 ...prev,
                 hotel_image: file,
-            imagePreview: imageUrl
             }))
+            const previewURL = URL.createObjectURL(file);
+            setImagePreview(previewURL);
         } else {
-            setFormData(prev => ({...prev, [name]:value }))
+            setFormData(prev => ({ ...prev, [name]: value }));
         }
     }
 
@@ -86,14 +85,7 @@ const EditHotel = () => {
         e.preventDefault();
         try {
             const formSubmit = new FormData();
-            formSubmit.append("hotel_name", formData.hotel_name)
-            formSubmit.append("hotel_title", formData.hotel_title)
-            formSubmit.append("hotel_price", formData.hotel_price)
-            formSubmit.append("hotel_address", formData.hotel_address)
-            formSubmit.append("hotel_phone", formData.hotel_phone)
-            formSubmit.append("hotel_image", formData.hotel_image)
-            formSubmit.append("location_id", formData.location_id)
-            formSubmit.append("hotel_description", formData.hotel_description)
+            Object.keys(formData).forEach(key => formSubmit.append(key, formData[key]))
             await axios.put(`${url}/hotel/${slug}`, formSubmit, {
                 headers: {
                     'Content-Type': 'multipart/form-data' 

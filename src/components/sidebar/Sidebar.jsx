@@ -41,6 +41,7 @@ const Sidebar = () => {
 				<div className="sidebar-brand">
 					<span className="sidebar-brand-text">Du lịch Việt.</span>
 					<span className="sidebar-brand-user">Xin chào, {user.username}</span>
+					<hr style={{width: "118%"}}></hr>
 					<div className="sidebar-account">
 						{userPermissions.includes('quan-ly-tai-khoan') && (
 							<div className={`menu-item ${activeLink === "/profile" ? "active" : ""}`} style={{marginLeft: "-10px"}}>
