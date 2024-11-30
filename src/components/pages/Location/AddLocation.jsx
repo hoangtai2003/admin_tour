@@ -102,12 +102,7 @@ const AddLocation = () => {
         e.preventDefault();
         try {
             const formDataToSubmit = new FormData(); 
-            formDataToSubmit.append('name', formData.name);
-            formDataToSubmit.append('description', formData.description);
-            formDataToSubmit.append('parent_id', formData.parent_id);
-            formDataToSubmit.append('location_img', formData.location_img);
-            formDataToSubmit.append('status', formData.status);
-    
+            Object.keys(formData).forEach(key => formDataToSubmit.append(key, formData[key]))
             const res = await axios.post(`${url}/location`, formDataToSubmit, {
                 headers: {
                     'Content-Type': 'multipart/form-data' 
