@@ -66,14 +66,7 @@ const AddHotel = () => {
         e.preventDefault();
         try {
             const formSubmit = new FormData();
-            formSubmit.append("hotel_name", formData.hotel_name)
-            formSubmit.append("hotel_title", formData.hotel_title)
-            formSubmit.append("hotel_price", formData.hotel_price)
-            formSubmit.append("hotel_address", formData.hotel_address)
-            formSubmit.append("hotel_phone", formData.hotel_phone)
-            formSubmit.append("hotel_image", formData.hotel_image)
-            formSubmit.append("location_id", formData.location_id)
-            formSubmit.append("hotel_description", formData.hotel_description)
+            Object.keys(formData).forEach(key => formSubmit.append(key, formData[key]))
             await axios.post(`${url}/hotel`, formSubmit, {
                 headers: {
                     'Content-Type': 'multipart/form-data' 

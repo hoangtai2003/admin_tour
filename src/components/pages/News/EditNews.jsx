@@ -99,13 +99,7 @@ const EditNews = () => {
         e.preventDefault();
         try {
             const formSubmit = new FormData(); 
-            formSubmit.append('news_name', formData.news_name);
-            formSubmit.append('news_description', formData.news_description)
-            formSubmit.append('news_image', formData.news_image);
-            formSubmit.append('news_status', formData.news_status);
-            formSubmit.append('news_date', formData.news_date);
-            formSubmit.append("cate_id", formData.cate_id)
-            formSubmit.append('news_content', formData.news_content)
+            Object.keys(formData).forEach(key => formSubmit.append(key, formData[key]))
             const res = await axios.put(`${url}/news/${id}`, formSubmit, {
                 headers: {
                     'Content-Type': 'multipart/form-data' 

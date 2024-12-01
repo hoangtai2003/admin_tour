@@ -75,12 +75,6 @@ const EditLocation = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const formDataToSubmit = new FormData(); 
-            formDataToSubmit.append('name', formData.name);
-            formDataToSubmit.append('description', formData.description);
-            formDataToSubmit.append('parent_id', formData.parent_id);
-            formDataToSubmit.append('location_img', formData.location_img);
-            formDataToSubmit.append('status', formData.status);
             const res = await axios.put(`${url}/location/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data' 
