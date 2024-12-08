@@ -172,7 +172,7 @@ const EditTour = () => {
 
         const formatOptions = (locations, indent = 0) => {
             return locations.flatMap(location => [
-                { value: location.id, label: `${'-'.repeat(indent)} ${location.name}` },
+                { value: location.id, label: ` ${location.name}` },
                 ...formatOptions(location.children, indent + 1)
             ]);
         };
@@ -239,7 +239,7 @@ const EditTour = () => {
                 return alert(res.data.message);
             }
             navigate("/list-tour");
-            toast.success("Edit tour successfully");
+            toast.success("Cập nhật tour thành công");
         } catch (error) {
             toast.error(error.response?.data?.message || error.message);
         }
