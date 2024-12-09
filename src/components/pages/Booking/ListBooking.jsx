@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import "../table.css"
 import Pagination from "../Pagination";
@@ -10,18 +10,19 @@ const ListBooking = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const { url } = useContext(SidebarContext)
-    const fetchBooking = async () => {
+    const fetchBooking = useCallback(async () => {
         try {
             const response = await axios.get(`${url}/booking?page=${currentPage}`);
             setBooking(response.data.data);
             setTotalPages(response.data.totalPages);
         } catch (error) {
-            toast.error('Error fetching tours');
+            toast.error('Có lỗi xảy ra. Vui lòng thử lại.');
         }
-    };
+    }, [currentPage, url]);
+    
     useEffect(() => {
         fetchBooking();
-    }, [currentPage]);
+    }, [fetchBooking]);
     const statusHandler = async (event, bookingId) => {
         try {
             const response = await axios.post(`${url}/booking/${bookingId}/status`, {

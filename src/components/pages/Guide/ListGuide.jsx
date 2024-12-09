@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { SidebarContext } from '../../../context/SideBarContext'
 import axios from 'axios'
 import { toast } from 'react-toastify'
@@ -6,13 +6,13 @@ import { toast } from 'react-toastify'
 const ListGuide = () => {
     const {url } = useContext(SidebarContext)
     const [requests, setRequests] = useState([])
-    const fetchAllRequest = async() => {
+    const fetchAllRequest = useCallback(async() => {
         const response = await axios.get(`${url}/users/request/getAll`)
         setRequests(response.data.data)
-    }
+    }, [url])
     useEffect(() => {
         fetchAllRequest()
-    }, [url])
+    }, [fetchAllRequest])
     const statusHandler = async(event, requestId) => {
         try {
             const response = await axios.put(`${url}/users/request/updateStatus/${requestId}`, {
@@ -61,7 +61,7 @@ const ListGuide = () => {
                                 <th>
                                 <div className={
                                         request.status === "Phê duyệt" ? "green" : 
-                                        request.status === "Từ chối" ? "#c82333" :
+                                        request.status === "Từ chối" ? "red" :
                                         request.status === "Đang chờ" ? "pink" : ""
                                 } style={{borderRadius: "5px", display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5px', textAlign: 'center'}}>
                                     {request.status}

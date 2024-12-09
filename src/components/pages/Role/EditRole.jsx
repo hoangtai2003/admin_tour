@@ -42,7 +42,7 @@ const EditRole = () => {
                 }))
                 setSelectedLocations(selectedOptions);
             } catch (error) {
-                console.log('Error fetching tour data');
+                toast.error('Đã có lỗi xảy ra. Vui lòng thử lại!');
             }   
         }
         fetchRole()

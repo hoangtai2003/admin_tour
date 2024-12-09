@@ -36,7 +36,7 @@ const EditLocation = () => {
                 });
                 setImagePreview(locationData.location_img);
             } catch (error) {
-                toast.error('Error fetching location data');
+                toast.error('Đã có lỗi xảy ra. Vui lòng thử lại.');
             }
         };
         fetchLocationData();
@@ -84,7 +84,7 @@ const EditLocation = () => {
                 return alert(res.data.message);
             }
             navigate("/list-location");
-            toast.success("Edit location successfullly")
+            toast.success("Cập nhật địa điểm thành công")
         } catch (error) {
             alert(error.response?.data?.message || error.message);
         }

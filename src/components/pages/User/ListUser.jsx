@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { AiOutlineDelete } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -17,17 +17,17 @@ const ListUser = () =>  {
         { value: 'Hoạt động', label: 'Hoạt động' },
         { value: 'Ngừng hoạt động', label: 'Ngừng hoạt động' },
     ];
-    const fetchUsers = async() => {
+    const fetchUsers = useCallback(async() => {
         try {
             const response  = await axios.get(`${url}/users`)
             setUser(response.data.data)
         } catch (error) {
             toast.error('Error fetching users');
         }
-    } 
+    }, [url])
     useEffect(() => {
         fetchUsers()
-    }, [url])
+    }, [fetchUsers])
     const handleStatusChange = async(selectedOption, userId) => {
        const updatedStatus = selectedOption ? selectedOption.value : "";
         try {

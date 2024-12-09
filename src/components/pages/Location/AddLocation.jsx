@@ -28,7 +28,7 @@ const AddLocation = () => {
                 const transformedLocations = transformLocations(response.data.data);
                 setLocations(transformedLocations);
             } catch (error) {
-                toast.error('Error fetching locations');
+                toast.error('Đã có lỗi xảy ra. Vui lòng thử lại!');
             }
         };
 
@@ -90,7 +90,7 @@ const AddLocation = () => {
 
         const formatOptions = (locations, indent = 0) => {
             return locations.flatMap(location => [
-                { value: location.id, label: `${' '.repeat(indent * 2)}${location.name}` },
+                { value: location.id, label: `${location.name}` },
                 ...formatOptions(location.children, indent + 1)
             ]);
         };
@@ -113,7 +113,7 @@ const AddLocation = () => {
                 return alert(res.data.message);
             }
             navigate("/list-location");
-            toast.success("Create location successfully");
+            toast.success("Thêm địa điểm thành công");
         } catch (error) {
             toast.error(error.response?.data?.message || error.message);
         }

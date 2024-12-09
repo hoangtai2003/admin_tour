@@ -89,7 +89,7 @@ const EditTour = () => {
                 }));
                 setSelectedLocations(selectedOptions);
             } catch (error) {
-                toast.error('Error fetching tour data');
+                toast.error('Đã có lỗi xảy ra. Vui lòng thử lại');
             }
         };
 
@@ -105,12 +105,21 @@ const EditTour = () => {
                 const transformedLocations = transformLocations(response.data.data);
                 setLocations(transformedLocations);
             } catch (error) {
-                console.error('Error fetching locations:', error);
+                toast.error('Đã có lỗi xảy ra. Vui lòng thử lại');
             }
         };
 
         fetchLocations();
     }, [url]);
+
+    const updateTourChild = (index, name, value) => {
+        setFormData(prev => ({
+            ...prev,
+            tour_children: prev.tour_children.map((child, i) =>
+                i === index ? { ...child, [name]: value } : child
+            )
+        }));
+    };
 
     const handleChange = (e, index = null) => {
         const { name, value, files } = e.target;
@@ -127,15 +136,12 @@ const EditTour = () => {
                 tour_image: [...prev.tour_image, ...newImages]
             }));
         } else if (index !== null) {
-            const updatedChildren = [...formData.tour_children];
-            updatedChildren[index] = { ...updatedChildren[index], [name]: value };
-            setFormData(prev => ({ ...prev, tour_children: updatedChildren }));
+            updateTourChild(index, name, value);
         } else {
             setFormData(prev => ({ ...prev, [name]: value }));
         }
     };
     
-
     const handleSelectChange = selectedOptions => {
         setSelectedLocations(selectedOptions);
         const ids = selectedOptions.map(option => option.value);

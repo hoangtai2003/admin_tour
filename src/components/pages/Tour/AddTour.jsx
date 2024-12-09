@@ -53,7 +53,7 @@ const AddTour = () => {
                 const transformedLocations = transformLocations(response.data.data);
                 setLocations(transformedLocations);
             } catch (error) {
-                console.error('Error fetching locations:', error);
+                toast.error('Đã có lỗi xảy ra. Vui lòng thử lại!');
             }
         };
 
@@ -72,8 +72,6 @@ const AddTour = () => {
         }
     };
     
-    
-
     const handleSelectChange = (selectedOptions) => {
         const selectedValues = selectedOptions ? selectedOptions.map(option => option.value) : [];
         setFormData(prev => ({ ...prev, location_ids: selectedValues }));
@@ -93,7 +91,6 @@ const AddTour = () => {
             )
         }));
     };
-
 
     const handleAddTourChild = () => {
         if (!showTourChildren) {
@@ -120,13 +117,11 @@ const AddTour = () => {
                         price_sale: '' ,
                         status_guide: 'Chưa có hướng dẫn viên'
                     }
-                
                 ]
             }));
         }
     };
     
-
     const handleRemoveTourChild = (index) => {
         setFormData(prev => ({
             ...prev,
@@ -198,8 +193,6 @@ const AddTour = () => {
         }
     };
     
-    
-
     return (
         <form onSubmit={handleSubmit}>
             <div className="tour-form-container">
