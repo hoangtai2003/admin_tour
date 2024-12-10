@@ -187,28 +187,27 @@ const EditTour = () => {
     };
 
     const handleAddTourChild = () => {
+        const newChild = {
+            start_date: '',
+            end_date: '',
+            price_adult: '',
+            price_child: '',
+            price_toddler: '',
+            price_baby: '',
+            transportion_start: '',
+            transportion_end: '',
+            time_goes_start: '',
+            time_comes_start: '',
+            time_goes_end: '',
+            time_comes_end: '',
+            total_seats: '',
+            price_sale: '',
+            status_guide: 'Chưa có hướng dẫn viên',
+        };
+    
         setFormData(prev => ({
             ...prev,
-            tour_children: [
-                ...prev.tour_children, 
-                { 
-                    start_date: '', 
-                    end_date: '', 
-                    price_adult: '', 
-                    price_child: '', 
-                    price_toddler: '', 
-                    price_baby: '', 
-                    transportion_start: '', 
-                    transportion_end: '',
-                    time_goes_start: '',
-                    time_comes_start: '',
-                    time_goes_end: '',
-                    time_comes_end: '',
-                    total_seats: '', 
-                    price_sale: '' 
-                }
-            
-            ]
+            tour_children: [...prev.tour_children, newChild],
         }));
     };
 

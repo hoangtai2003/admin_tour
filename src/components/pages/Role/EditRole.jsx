@@ -10,7 +10,7 @@ const EditRole = () => {
     const [permission, setPermission] = useState([]);
     const { url } = useContext(SidebarContext);
     const { id } = useParams()
-    const [selectedLocations, setSelectedLocations] = useState([]);
+    const [selectedPermission, setSelectedPermission] = useState([]);
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
         permission_id: []
@@ -40,7 +40,7 @@ const EditRole = () => {
                     value: permission.RolePermissions.permission_id,
                     label: permission.name
                 }))
-                setSelectedLocations(selectedOptions);
+                setSelectedPermission(selectedOptions);
             } catch (error) {
                 toast.error('Đã có lỗi xảy ra. Vui lòng thử lại!');
             }   
@@ -48,7 +48,7 @@ const EditRole = () => {
         fetchRole()
     }, [url, id])
     const handleSelectChange = (selectedOptions) => {
-        setSelectedLocations(selectedOptions);
+        setSelectedPermission(selectedOptions);
         const ids = selectedOptions.map(option => option.value);
         setFormData(prevState => ({
             ...prevState,
@@ -87,7 +87,7 @@ const EditRole = () => {
                             isMulti
                             options={permission}
                             onChange={handleSelectChange}
-                            value={selectedLocations}
+                            value={selectedPermission}
                         />
                     </div>
                     <div className="form-actions">
