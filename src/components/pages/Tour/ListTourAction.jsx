@@ -23,7 +23,7 @@ const ListTourAction = ({ id, onDelete }) => {
                 toast.error("Failed to delete the tour");
             }
         } catch (error) {
-            toast.error("An error occurred while deleting the tour. Please try again.");
+            toast.error(error.response?.data?.message || error.message);
         }
     };
 
